@@ -14,6 +14,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -29,8 +30,8 @@ public class MainAppSurfaceElementsVisibleTest {
     @Test
     public void testButtonsVisible() {
 
-        onView(withId(R.id.txtAddVocabularies)).check(matches(isDisplayed()));
-        onView(withId(R.id.btnAddVocabulary)).check(matches(isDisplayed()));
-        onView(withId(R.id.lstViewVocabularies)).check(matches(isDisplayed()));
+        onView(withId(R.id.btMainAddWords)).check(matches(isDisplayed()));
+        onView(withId(R.id.btMainAddWords)).check(matches(withText("Add Words")));
+
     }
 }

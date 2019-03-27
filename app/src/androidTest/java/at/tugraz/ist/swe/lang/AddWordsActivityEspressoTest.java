@@ -31,34 +31,18 @@ public class AddWordsActivityEspressoTest {
     }
 
     @Test
-    public void testYourWordsVisible() {
-        onView(withId(R.id.tvYourWords)).check(matches(isDisplayed()));
+    public void testAddEnglishVisible() {
+        onView(withId(R.id.ptAddEnglish)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void testAddWordVisible() {
-        onView(withId(R.id.ptAddWord)).check(matches(isDisplayed()));
+    public void testAddEnglishVisible() {
+        onView(withId(R.id.ptAddGerman)).check(matches(isDisplayed()));
     }
 
     @Test
     public void testWordListVisible() {
         onView(withId(R.id.lvWordList)).check(matches(isDisplayed()));
     }
-
-    @Test
-    public void testWordListAddWord() {
-        EditText ptAddWord = addWordsActivityTestRule.getActivity().findViewbyId(R.id.ptAddWord);
-        Thread.sleep(100);
-
-        ptAddWord.setText("hello");
-        Thread.sleep(100);
-
-        onView(withId(R.id.btAdd)).perform(click());
-        Thread.sleep(100);
-
-        //TODO: test if list view is not empty
-        //onView(withId(R.id.tvYourWords)).check(matches(isDisplayed()));
-    }
-
 
 }

@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Lang</string>
+    <string-array name="dewords">
+        <item>DEWORD1</item>
+        <item>DEWORD2</item>
+        <item>DEWORD3</item>
+        <item>DEWORD4</item>
+        <item>DEWORD5</item>
+        <item>DEWORD6</item>
+
+
+    </string-array>
+    <string-array name="enwords">
+        <item>ENWORD1</item>
+        <item>ENWORD2</item>
+        <item>ENWORD3</item>
+        <item>ENWORD4</item>
+        <item>ENWORD5</item>
+        <item>ENWORD6</item>
+    </string-array>
+
 </resources>

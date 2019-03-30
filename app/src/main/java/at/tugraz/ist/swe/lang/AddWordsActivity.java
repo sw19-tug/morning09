@@ -100,7 +100,7 @@ public class AddWordsActivity extends AppCompatActivity {
 
     public void insertToJson(Context context, String englishWord, String germanWord) {
         try{
-            String json = readFromJson(getApplicationContext());
+            String json = readFromJson(context);
 
             JSONObject existingJsonData;
             JSONObject newJsonData = new JSONObject();
@@ -123,7 +123,7 @@ public class AddWordsActivity extends AppCompatActivity {
             String jsonString = newJsonData.toString();
 
             Log.d("Write to Json File: ", jsonString);
-            FileOutputStream fos = getApplicationContext().openFileOutput("vocabulary.json", Context.MODE_PRIVATE);
+            FileOutputStream fos = context.openFileOutput("vocabulary.json", Context.MODE_PRIVATE);
 
             fos.write(jsonString.getBytes());
             fos.close();

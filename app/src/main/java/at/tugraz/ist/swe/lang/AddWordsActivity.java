@@ -21,19 +21,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AddWordsActivity extends AppCompatActivity {
 
     Button btnAdd;
-
-
     EditText ptAddEnglish, ptAddGerman;
     ListView lvWordList;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,26 +39,26 @@ public class AddWordsActivity extends AppCompatActivity {
         ptAddGerman = (EditText)findViewById(R.id.ptAddGerman);
         lvWordList = (ListView)findViewById(R.id.lvWordList);
         btnAdd = (Button)findViewById(R.id.btnAdd);
-        final ArrayList<String> wordArray = new ArrayList<String>();
 
-
-        //FOR TESTING ALWAYS DELETES VOCAB FIRST
+        // uncomment to delete vocab file everytime
         File deleteFile = new File(getApplicationContext().getFilesDir(),"vocabulary.json");
         deleteFile.delete();
 
+
         File file = new File(getApplicationContext().getFilesDir(), "vocabulary.json");
-        try {
-            file.createNewFile();
-        } catch (Exception e) {
-            Log.d("FILE_CREATION", "new file wasn't created");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
+        updateListView();
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View v) {
-
 
                 String englishWord = ptAddEnglish.getText().toString();
                 String germanWord = ptAddGerman.getText().toString();
@@ -72,107 +67,94 @@ public class AddWordsActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Empty input!", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    insertToJson(englishWord, germanWord);
+                    insertToJson(getApplicationContext(), englishWord, germanWord);
                 }
 
+                updateListView();
 
-                try{
-                    String data = readFromJson();
-                    JSONObject newJsonDB = new JSONObject(data);
-                    JSONArray jsonArray = newJsonDB.getJSONArray("vocabulary");
-
-                    for(int i=0; i < jsonArray.length();i++){
-                        String entry = jsonArray.getJSONObject(i).getString("englishWord") + " : " + jsonArray.getJSONObject(i).getString("germanWord");
-                        wordArray.add(entry);
-                    }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddWordsActivity.this, android.R.layout.simple_list_item_1, wordArray);
-
-                    lvWordList.setAdapter(adapter);
-                }
-                catch(Exception e){
-
-                }
-
-
+                ptAddEnglish.getText().clear();
+                ptAddGerman.getText().clear();
             }
-
-
-
         });
     }
 
-    public void insertToJson(String englishWord, String germanWord) {
+    public void updateListView() {
+        try{
+            String data = readFromJson(getApplicationContext());
+            JSONObject newJsonData = new JSONObject(data);
+            JSONArray jsonArray = newJsonData.getJSONArray("vocabulary");
 
-        try
-        {
-            String json = readFromJson();
+            ArrayList<String> wordArray = new ArrayList<String>();
 
+            for(int i=0; i < jsonArray.length();i++){
+                String entry = jsonArray.getJSONObject(i).getString("english") + " : " + jsonArray.getJSONObject(i).getString("german");
+                wordArray.add(entry);
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddWordsActivity.this, android.R.layout.simple_list_item_1, wordArray);
+            lvWordList.setAdapter(adapter);
 
-            JSONObject existingJsonDB;
-            JSONObject newJsonDB = new JSONObject();
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+    }
 
+    public void insertToJson(Context context, String englishWord, String germanWord) {
+        try{
+            String json = readFromJson(getApplicationContext());
 
+            JSONObject existingJsonData;
+            JSONObject newJsonData = new JSONObject();
             JSONObject newJsonObj = new JSONObject();
 
-            newJsonObj.put("englishWord", englishWord);
-            newJsonObj.put("germanWord", germanWord);
+            newJsonObj.put("english", englishWord);
+            newJsonObj.put("german", germanWord);
 
             JSONArray jsonArray;
 
-
-
             if(json.length() > 0){
-                existingJsonDB = new JSONObject(json);
-                jsonArray = existingJsonDB.getJSONArray("vocabulary");
-            }
-            else
-            {
+                existingJsonData = new JSONObject(json);
+                jsonArray = existingJsonData.getJSONArray("vocabulary");
+            } else {
                 jsonArray = new JSONArray();
             }
 
             jsonArray.put(newJsonObj);
-            newJsonDB.put("vocabulary",jsonArray);
+            newJsonData.put("vocabulary",jsonArray);
+            String jsonString = newJsonData.toString();
 
-            String jsonString = newJsonDB.toString();
-            Log.d("INSERT", jsonString);
+            Log.d("Write to Json File: ", jsonString);
             FileOutputStream fos = getApplicationContext().openFileOutput("vocabulary.json", Context.MODE_PRIVATE);
 
             fos.write(jsonString.getBytes());
             fos.close();
 
-        } catch (FileNotFoundException fileNotFound) {
-            Log.d("INSERT_JASON", "File not found");
-        } catch (IOException ioException) {
-            Log.d("INSERT_JASON", "I/O Exception");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("INSERT_JASON", "something else");
         }
     }
 
-    public String readFromJson() {
+    public String readFromJson(Context context) {
         String json = null;
         try{
-            InputStream is = getApplicationContext().openFileInput("vocabulary.json");
+            InputStream is = context.openFileInput("vocabulary.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
             json = new String(buffer, "UTF-8");
 
-        }
-        catch(IOException e){
-            Log.d("Read Json", "exception");
-
+        } catch(IOException e){
             e.printStackTrace();
-
         }
-        if(json == null){
-            Log.d("Read Json", "shit");
 
+        if(json == null){
+            Log.d("Read Json", "Vocabulary not read");
         }
 
         return json;
-
     }
 }

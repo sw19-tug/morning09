@@ -41,8 +41,9 @@ public class AddWordsActivity extends AppCompatActivity {
         btnAdd = (Button)findViewById(R.id.btnAdd);
 
         // uncomment to delete vocab file everytime
-        File deleteFile = new File(getApplicationContext().getFilesDir(),"vocabulary.json");
-        deleteFile.delete();
+
+        /*File deleteFile = new File(getApplicationContext().getFilesDir(),"vocabulary.json");
+        deleteFile.delete();*/
 
 
         File file = new File(getApplicationContext().getFilesDir(), "vocabulary.json");
@@ -130,7 +131,7 @@ public class AddWordsActivity extends AppCompatActivity {
     public void insertToFile(Context context, String filename, String saveString) {
 
         try{
-            FileOutputStream fos = context.openFileOutput("vocabulary.json", Context.MODE_PRIVATE);
+            FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
             fos.write(saveString.getBytes());
             fos.close();
 

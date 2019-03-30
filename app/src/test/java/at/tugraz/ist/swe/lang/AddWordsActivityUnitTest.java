@@ -1,33 +1,30 @@
 package at.tugraz.ist.swe.lang;
-
-
-import android.content.Context;
-
 import org.junit.*;
-
 import static org.junit.Assert.*;
 
 public class AddWordsActivityUnitTest {
 
-    AddWordsActivity newTest = new AddWordsActivity();
-
-    @Before
-    public void firstInsertToJson(){
-
-        newTest.insertToJson("apple", "Apfel");
-
-    }
-
+    AddWordsActivity newTest = new DummyAddWordsActivity();
 
     @Test
-    public void nowReadFromJson(){
+    public void insertToJsonEmptyTest(){
 
-        String testString = newTest.readFromJson();
-        String expectedString = "{\"vocabulary\":[{\"english\":\"apple\",\"german\":\"Apfel\"}]}";
-        assertEquals(testString, expectedString);
+        ((DummyAddWordsActivity)newTest).jsonDataDummy = "";
 
+        newTest.insertToJson(null,"apple", "Apfel");
+
+        assertEquals(((DummyAddWordsActivity)newTest).tmpSave, "{\"vocabulary\":[{\"german\":\"Apfel\",\"english\":\"apple\"}]}");
     }
 
+    @Test
+    public void insertToJsonNotEmptyTest(){
+
+        ((DummyAddWordsActivity)newTest).jsonDataDummy = "{\"vocabulary\":[{\"german\":\"Apfel\",\"english\":\"apple\"}]}";
+
+        newTest.insertToJson(null,"pear", "Birne");
+
+        assertEquals(((DummyAddWordsActivity)newTest).tmpSave, "{\"vocabulary\":[{\"german\":\"Apfel\",\"english\":\"apple\"},{\"german\":\"Birne\",\"english\":\"pear\"}]}");
+    }
 
 
 }

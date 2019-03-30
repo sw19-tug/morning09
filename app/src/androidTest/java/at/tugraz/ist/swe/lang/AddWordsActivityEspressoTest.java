@@ -57,7 +57,7 @@ public class AddWordsActivityEspressoTest {
         onData(anything())
                 .inAdapterView(withId(R.id.lvWordList))
                 .atPosition(0)
-                .check(matches(display))
+                .check(matches(withText(display)));
     }
 
     @Test

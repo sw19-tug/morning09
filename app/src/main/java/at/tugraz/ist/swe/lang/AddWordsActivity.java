@@ -41,8 +41,9 @@ public class AddWordsActivity extends AppCompatActivity {
         btnAdd = (Button)findViewById(R.id.btnAdd);
 
         // uncomment to delete vocab file everytime
-        File deleteFile = new File(getApplicationContext().getFilesDir(),"vocabulary.json");
-        deleteFile.delete();
+
+        /*File deleteFile = new File(getApplicationContext().getFilesDir(),"vocabulary.json");
+        deleteFile.delete();*/
 
 
         File file = new File(getApplicationContext().getFilesDir(), "vocabulary.json");
@@ -80,7 +81,7 @@ public class AddWordsActivity extends AppCompatActivity {
 
     public void updateListView() {
         try{
-            String data = readFromJson(getApplicationContext());
+            String data = readFromFile(getApplicationContext(), "vocabulary.json");
             JSONObject newJsonData = new JSONObject(data);
             JSONArray jsonArray = newJsonData.getJSONArray("vocabulary");
 
@@ -100,7 +101,7 @@ public class AddWordsActivity extends AppCompatActivity {
 
     public void insertToJson(Context context, String englishWord, String germanWord) {
         try{
-            String json = readFromJson(context);
+            String json = readFromFile(context, "vocabulary.json");
 
             JSONObject existingJsonData;
             JSONObject newJsonData = new JSONObject();
@@ -120,41 +121,41 @@ public class AddWordsActivity extends AppCompatActivity {
 
             jsonArray.put(newJsonObj);
             newJsonData.put("vocabulary",jsonArray);
-            String jsonString = newJsonData.toString();
+            insertToFile(context, "vocabulary.json",  newJsonData.toString());
 
-            Log.d("Write to Json File: ", jsonString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertToFile(Context context, String filename, String saveString) {
+
+        try{
             FileOutputStream fos = context.openFileOutput("vocabulary.json", Context.MODE_PRIVATE);
-
-            fos.write(jsonString.getBytes());
+            fos.write(saveString.getBytes());
             fos.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-    public String readFromJson(Context context) {
-        String json = null;
-        try{
-            InputStream is = context.openFileInput("vocabulary.json");
+    public String readFromFile(Context context, String filename) {
+
+        String readString = null;
+        try {
+            InputStream is = context.openFileInput(filename);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
-
+            readString = new String(buffer, "UTF-8");
         } catch(IOException e){
             e.printStackTrace();
         }
 
-        if(json == null){
-            Log.d("Read Json", "Vocabulary not read");
-        }
-
-        return json;
+        return readString;
     }
 }

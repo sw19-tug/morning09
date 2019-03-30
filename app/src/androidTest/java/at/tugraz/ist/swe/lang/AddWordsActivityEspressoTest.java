@@ -5,6 +5,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,9 +55,12 @@ public class AddWordsActivityEspressoTest {
 
         onView(withId(R.id.btnAdd)).perform(click());
 
+        ListView lvWordList = (ListView)addWordsActivityTestRule.getActivity().findViewById(R.id.lvWordList);
+        int lvItemsCount = lvWordList.getAdapter().getCount();
+
         onData(anything())
                 .inAdapterView(withId(R.id.lvWordList))
-                .atPosition(0)
+                .atPosition(lvItemsCount-1)
                 .check(matches(withText(display)));
     }
 

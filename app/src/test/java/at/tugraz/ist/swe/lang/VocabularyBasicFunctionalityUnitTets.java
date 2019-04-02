@@ -9,33 +9,33 @@ public class VocabularyBasicFunctionalityUnitTets {
 
     @Test
     public void VocabularyAddEntryTest() {
-        assertNotEquals(0, Vocabulary.Add("Haus"));
+        assertNotEquals(0, vocabulary.Add("Haus"));
     }
 
     @Test
     public void VocabularyFindByNameTest() {
-        assertNotEquals(0, Vocabulary.findVocuabularyByName("Haus"));
+        assertNotEquals(0, vocabulary.findVocuabularyByName("Haus"));
     }
 
     @Test
     public void VocabularyFindByIdTest() {
-        assertNotEquals(null, Vocabulary.findVocuabularyByID(1));
+        assertNotEquals(null, vocabulary.findVocuabularyByID(1));
     }
 
     @Test
     public void VocabularyRemoveEntryTest() {
-        assertNotEquals(false, Vocabulary.RemoveByName("Haus"));
+        assertNotEquals(false, vocabulary.RemoveByName("Haus"));
 
     }
 
     @Test
     public void VocabularyLoadJsonTest() {
-        assertNotEquals(false, Vocabulary.Load());
+        assertNotEquals(false, vocabulary.Load());
     }
 
     @Test
     public void VocabularyStoreJsonTest() {
-        assertNotEquals(false, Vocabulary.Store());
+        assertNotEquals(false, vocabulary.Store());
     }
 
 }

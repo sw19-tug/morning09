@@ -5,6 +5,9 @@ import android.util.Log;
 
 import org.json.JSONArray;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Vocabulary {
 
@@ -12,6 +15,7 @@ public class Vocabulary {
     private String vocabularyId;
     private String vocabularyName;
     private static String FullFileName;
+    private Map<String,String> vocabularyMap;
 
     public static final String ERROR = Vocabulary.class.getSimpleName();
     public static final String INFO = Vocabulary.class.getSimpleName();
@@ -19,6 +23,7 @@ public class Vocabulary {
 
 
     public Vocabulary() {
+        vocabularyMap = new HashMap<String, String>();
 
     }
 
@@ -33,20 +38,21 @@ public class Vocabulary {
         JSONArray currentArray = new JSONArray();
         // ToDO Return Found File as JSON ARRAY Object, or null
 
-        Log.d(INFO, "Loading Successful \n");
+        //Log.d(INFO, "Loading Successful \n");
         return currentArray;
     }
 
     public int Add (String vocabularyName )
     {
-        boolean addSuccessFul = true;
-        int vocabularyId = 0 ;
+        vocabularyMap.put(vocabularyName, vocabularyName);
 
-        // ToDO Save here.
+
+        boolean addSuccessFul = vocabularyMap.containsKey(vocabularyName);
+        //int vocabularyId = 0 ; // TODO change return
 
         if (addSuccessFul == true)
         {
-            return vocabularyId;
+            return 1;
         }
         return 0;
     }
@@ -61,6 +67,10 @@ public class Vocabulary {
 
         int vocabularyId = 0 ;
 
+        boolean addSuccessFul = vocabularyMap.containsKey(vocabularyName);
+        if (addSuccessFul) {
+            vocabularyId = 1;
+        }
         return  vocabularyId;
     }
 
@@ -71,24 +81,26 @@ public class Vocabulary {
      */
     public Vocabulary findVocuabularyByID(int vocabularyID)
     {
+        // TODO wait for DB implementatoin..
+        return null;
         //ToDo Check Vocabulary not null
-        int vocabularyId = vocabularyID ;
+        //int vocabularyId = vocabularyID ;
 
-        Vocabulary foundVocabulary = new Vocabulary();
+        //Vocabulary foundVocabulary = new Vocabulary();
 
         // ToDo Determine Vocabulary and prepare to return
 
-        return  foundVocabulary;
+        //return  foundVocabulary;
     }
 
     public boolean RemoveByName (String vocabularyName )
     {
         boolean removeSuccessFul = true;
-        int vocabularyId = 0 ;
+        vocabularyMap.remove(vocabularyName);
 
-        // ToDO Search And Delete here.
+        removeSuccessFul = vocabularyMap.containsKey(vocabularyName);
 
-        return removeSuccessFul;
+        return !removeSuccessFul;
     }
 
     public String getVocabularyId()
@@ -108,5 +120,10 @@ public class Vocabulary {
     public void setVocabularyName (String vocabularyName)
     {
         this.vocabularyName = vocabularyName;
+    }
+
+    public Object Store() {
+        //TODO wait for JSON or DB implemtation...
+        return null;
     }
 }

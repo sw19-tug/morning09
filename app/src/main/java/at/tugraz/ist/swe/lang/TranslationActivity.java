@@ -31,8 +31,7 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
         String[] enwords = getResources().getStringArray(R.array.enwords);
         Button btn_de = findViewById(R.id.de_btn);
         Button btn_en = findViewById(R.id.en_btn);
-
-
+        
         final ListView listView = (ListView) findViewById(R.id.word_list);
         adapter_de = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dewords
         );

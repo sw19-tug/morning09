@@ -4,13 +4,33 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import android.content.Context;
+
+import org.junit.runner.RunWith;
+import org.mockito.*;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.io.File;
+
+@RunWith(MockitoJUnitRunner.class)
 public class VocabularyBasicFunctionalityUnitTets {
 
-    Vocabulary vocabulary = new Vocabulary();
+    Vocabulary vocabulary;
+
+    @Mock
+    Context mockContext;
+
 
     @Before
     public void setUp() {
+        vocabulary = new Vocabulary(mockContext);
         vocabulary.Add("Haus");
+    }
+
+    @Test
+    public void VocabularyStoreTest() {
+        File file = new File(mockContext.getFilesDir(), "vocabulary.json");
+        assert(file.exists());
     }
 
     @Test

@@ -1,21 +1,14 @@
 package at.tugraz.ist.swe.lang;
 
-import android.os.Build;
-import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import at.tugraz.ist.swe.lang.R;
 
 public class TranslationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -31,7 +24,7 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
         String[] enwords = getResources().getStringArray(R.array.enwords);
         Button btn_de = findViewById(R.id.de_btn);
         Button btn_en = findViewById(R.id.en_btn);
-        
+
         final ListView listView = (ListView) findViewById(R.id.word_list);
         adapter_de = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dewords
         );

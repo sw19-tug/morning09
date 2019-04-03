@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Lang</string>
+    <string-array id="dewords" name="dewords">
+        <item>Fuß</item>
+        <item>Raum</item>
+        <item>Licht</item>
+        <item>Acht</item>
+        <item>Mirror</item>
+        <item>Jacket</item>
+
+
+    </string-array>
+    <string-array id="enwords" name="enwords">
+        <item>Foot</item>
+        <item>Room</item>
+        <item>Light</item>
+        <item>Eight</item>
+        <item>Spiegel</item>
+        <item>Jacke</item>
+    </string-array>
+
 </resources>

@@ -24,18 +24,19 @@ public class VocabularyBasicFunctionalityUnitTets {
     @Before
     public void setUp() {
         vocabulary = new Vocabulary(mockContext);
-        vocabulary.Add("Haus");
+        vocabulary.add("Haus", "House");
     }
 
     @Test
     public void VocabularyStoreTest() {
+        vocabulary.storeFile();
         File file = new File(mockContext.getFilesDir(), "vocabulary.json");
         assert(file.exists());
     }
 
     @Test
     public void VocabularyAddEntryTest() {
-        assertNotEquals(0, vocabulary.Add("Haus"));
+        assertNotEquals(0, vocabulary.add("Haus", "House"));
     }
 
     @Test

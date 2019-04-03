@@ -18,7 +18,7 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_translate);
 
         String[] dewords = getResources().getStringArray(R.array.dewords);
         String[] enwords = getResources().getStringArray(R.array.enwords);

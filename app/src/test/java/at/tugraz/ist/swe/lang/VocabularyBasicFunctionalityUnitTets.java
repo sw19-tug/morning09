@@ -1,11 +1,17 @@
 package at.tugraz.ist.swe.lang;
 
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class VocabularyBasicFunctionalityUnitTets {
 
     Vocabulary vocabulary = new Vocabulary();
+
+    @Before
+    public void setUp() {
+        vocabulary.Add("Haus");
+    }
 
     @Test
     public void VocabularyAddEntryTest() {
@@ -18,24 +24,8 @@ public class VocabularyBasicFunctionalityUnitTets {
     }
 
     @Test
-    public void VocabularyFindByIdTest() {
-        assertNotEquals(null, vocabulary.findVocuabularyByID(1));
-    }
-
-    @Test
     public void VocabularyRemoveEntryTest() {
         assertNotEquals(false, vocabulary.RemoveByName("Haus"));
 
     }
-
-    @Test
-    public void VocabularyLoadJsonTest() {
-        assertNotEquals(false, vocabulary.Load());
-    }
-
-    @Test
-    public void VocabularyStoreJsonTest() {
-        assertNotEquals(false, vocabulary.Store());
-    }
-
 }

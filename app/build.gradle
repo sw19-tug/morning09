@@ -34,4 +34,6 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mokito_versoin"
     // required if you want to use Mockito for Android tests
     androidTestImplementation "org.mockito:mockito-android:$mokito_versoin"
+    testImplementation 'org.mockito:mockito-inline:2.13.0'
+
 }

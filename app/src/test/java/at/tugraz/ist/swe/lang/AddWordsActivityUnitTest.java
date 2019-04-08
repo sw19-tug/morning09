@@ -25,6 +25,4 @@ public class AddWordsActivityUnitTest {
 
         assertEquals(((DummyAddWordsActivity)newTest).tmpSave, "{\"vocabulary\":[{\"german\":\"Apfel\",\"english\":\"apple\"},{\"german\":\"Birne\",\"english\":\"pear\"}]}");
     }
-
-
 }

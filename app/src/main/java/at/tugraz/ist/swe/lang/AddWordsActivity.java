@@ -29,7 +29,6 @@ public class AddWordsActivity extends AppCompatActivity {
     Button btnAdd;
     EditText ptAddEnglish, ptAddGerman;
     ListView lvWordList;
-    Vocabulary vocabulary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +39,23 @@ public class AddWordsActivity extends AppCompatActivity {
         ptAddGerman = (EditText)findViewById(R.id.ptAddGerman);
         lvWordList = (ListView)findViewById(R.id.lvWordList);
         btnAdd = (Button)findViewById(R.id.btnAdd);
-        vocabulary = new Vocabulary(getApplicationContext());
 
         // uncomment to delete vocab file everytime
 
+        /*File deleteFile = new File(getApplicationContext().getFilesDir(),"vocabulary.json");
+        deleteFile.delete();*/
 
 
+        File file = new File(getApplicationContext().getFilesDir(), "vocabulary.json");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-        //updateListView();
+        updateListView();
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,17 +68,17 @@ public class AddWordsActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Empty input!", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    vocabulary.add(germanWord,englishWord);
+                    insertToJson(getApplicationContext(), englishWord, germanWord);
                 }
 
-                //updateListView();
+                updateListView();
 
                 ptAddEnglish.getText().clear();
                 ptAddGerman.getText().clear();
             }
         });
     }
-/*
+
     public void updateListView() {
         try{
             String data = readFromFile(getApplicationContext(), "vocabulary.json");
@@ -119,5 +127,35 @@ public class AddWordsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-*/
+
+    public void insertToFile(Context context, String filename, String saveString) {
+
+        try{
+            FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
+            fos.write(saveString.getBytes());
+            fos.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String readFromFile(Context context, String filename) {
+
+        String readString = null;
+        try {
+            InputStream is = context.openFileInput(filename);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            readString = new String(buffer, "UTF-8");
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return readString;
+    }
 }

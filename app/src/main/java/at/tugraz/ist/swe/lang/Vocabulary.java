@@ -81,6 +81,7 @@ public class Vocabulary {
             vocabulary_.put("vocabulary",vocabArray_);
         } catch(JSONException e){
             e.printStackTrace();
+            return -1;
         }
 
         return 0;

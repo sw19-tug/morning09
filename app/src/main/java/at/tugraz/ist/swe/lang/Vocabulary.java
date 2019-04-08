@@ -22,7 +22,6 @@ import java.util.Map;
 public class Vocabulary {
 
 
-    private Map<String,String> vocabularyMap;
     private Context context_;
     public File file_;
     private JSONArray vocabArray_;
@@ -45,11 +44,14 @@ public class Vocabulary {
                 e.printStackTrace();
             }
         }
+    }
 
+    public void init()
+    {
         //convert to json
         try {
             //for unit tests, we probably need to restructure this
-            String data = "";//readFromFile(filename);
+            String data = readFromFile();
 
             if(data.length() > 0){
                 vocabulary_ = new JSONObject(data);
@@ -63,9 +65,6 @@ public class Vocabulary {
         } catch(JSONException e){
             e.printStackTrace();
         }
-
-
-
     }
 
     public int add(String german, String english)
@@ -84,8 +83,6 @@ public class Vocabulary {
             e.printStackTrace();
         }
 
-        storeFile();
-
         return 0;
     }
 
@@ -94,22 +91,51 @@ public class Vocabulary {
     /**
      * return ID of enterend string, or -1 when not found
      * @param vocabularyName
-     * @return
+     * @return i
      */
-    public int findVocuabularyByName(String vocabularyName)
+    public int findByName(String vocabularyName)
     {
-        boolean addSuccessFul = vocabularyMap.containsKey(vocabularyName);
+        try {
+            for(int i=0; i < vocabArray_.length();i++){
+                JSONObject entry = vocabArray_.getJSONObject(i);
 
-        return  addSuccessFul ? 1 : 0;
+                if(entry.getString("german") == vocabularyName)
+                {
+                    return i;
+                }
+            }
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 
-    public boolean RemoveByName (String vocabularyName )
+    public boolean removeByName(String vocabularyName)
     {
-        vocabularyMap.remove(vocabularyName);
+        boolean found = false;
+        int i = -1;
 
-        boolean removeSuccessFul = vocabularyMap.containsKey(vocabularyName);
+        try {
+            for(i=0; i < vocabArray_.length();i++){
+                JSONObject entry = vocabArray_.getJSONObject(i);
 
-        return !removeSuccessFul;
+                if(entry.getString("german") == vocabularyName)
+                {
+                    found = true;
+                    break;
+                }
+            }
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        if(found) {
+            vocabArray_.remove(i);
+            return true;
+        }
+
+        return false;
     }
 
     public void storeFile() {
@@ -128,7 +154,7 @@ public class Vocabulary {
         }
     }
 
-    public String readFromFile(String filename) {
+    public String readFromFile() {
 
         String readString = null;
         try {

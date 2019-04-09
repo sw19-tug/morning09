@@ -33,8 +33,8 @@ public class Vocabulary {
         context_ = context;
 
         //uncomment if you are testing and want a new vocab
-        //File deleteFile = new File(context.getFilesDir(),filename);
-        //deleteFile.delete();
+        File deleteFile = new File(context.getFilesDir(),filename);
+        deleteFile.delete();
 
         //check if file exists
         file_ = new File(context.getFilesDir(), filename);
@@ -47,6 +47,9 @@ public class Vocabulary {
         }
     }
 
+    /**
+     * init function, reads array from file or creates a new one
+     */
     public void init()
     {
         //convert to json
@@ -68,6 +71,12 @@ public class Vocabulary {
         }
     }
 
+    /**
+     * Adds a new Entry, first is german and second engilish word
+     * @param german
+     * @param english
+     * @return 0 on Success or -1 on Failure
+     */
     public int add(String german, String english)
     {
 
@@ -106,7 +115,7 @@ public class Vocabulary {
             for(int i=0; i < vocabArray_.length();i++){
                 JSONObject entry = vocabArray_.getJSONObject(i);
 
-                if(entry.getString("german") == vocabularyName)
+                if(entry.getString("german").equals(vocabularyName))
                 {
                     return i;
                 }
@@ -118,6 +127,11 @@ public class Vocabulary {
         return -1;
     }
 
+    /**
+     * removes Entry from Vocabulary
+     * @param vocabularyName
+     * @return true if removed, false if not
+     */
     public boolean removeByName(String vocabularyName)
     {
         boolean found = false;
@@ -145,6 +159,9 @@ public class Vocabulary {
         return false;
     }
 
+    /**
+     * Stores Json into File
+     */
     public void storeFile() {
 
         String output = vocabulary_.toString();
@@ -161,6 +178,10 @@ public class Vocabulary {
         }
     }
 
+    /**
+     * Reads content (Json) from file
+     * @return returnString
+     */
     public String readFromFile() {
 
         String readString = null;
@@ -178,6 +199,10 @@ public class Vocabulary {
         return readString;
     }
 
+    /**
+     * Get Vocabulary Json Array
+     * @return JsonArray
+     */
     public JSONArray getVocabArray() {
         return vocabArray_;
     }

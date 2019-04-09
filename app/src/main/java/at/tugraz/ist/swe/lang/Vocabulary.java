@@ -32,8 +32,9 @@ public class Vocabulary {
     public Vocabulary(Context context) {
         context_ = context;
 
-        File deleteFile = new File(context.getFilesDir(),filename);
-        deleteFile.delete();
+        //uncomment if you are testing and want a new vocab
+        //File deleteFile = new File(context.getFilesDir(),filename);
+        //deleteFile.delete();
 
         //check if file exists
         file_ = new File(context.getFilesDir(), filename);
@@ -69,6 +70,11 @@ public class Vocabulary {
 
     public int add(String german, String english)
     {
+
+        if(findByName(german) != -1)
+        {
+            return 0;
+        }
 
         try{
             JSONObject newJsonObj = new JSONObject();
@@ -170,5 +176,9 @@ public class Vocabulary {
         }
 
         return readString;
+    }
+
+    public JSONArray getVocabArray() {
+        return vocabArray_;
     }
 }

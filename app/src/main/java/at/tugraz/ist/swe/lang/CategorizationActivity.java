@@ -14,6 +14,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import static android.icu.lang.UCharacter.toLowerCase;
 
 public class CategorizationActivity extends AppCompatActivity {
 
@@ -21,6 +26,7 @@ public class CategorizationActivity extends AppCompatActivity {
     Spinner spLanguageSort, spTagSort;
     Vocabulary vocabulary;
     ListView lvVocabulary;
+    private JSONArray vocabArray = new JSONArray();
 
     // Temp
     ArrayList<String> languageList = new ArrayList<String>();
@@ -37,9 +43,9 @@ public class CategorizationActivity extends AppCompatActivity {
         spLanguageSort = (Spinner)findViewById(R.id.spLanguageSort);
         spTagSort = (Spinner)findViewById(R.id.spTagSort);
         lvVocabulary = (ListView)findViewById(R.id.lvVocabulary);
-
         vocabulary = new Vocabulary(getApplicationContext());
         vocabulary.init();
+        vocabArray = vocabulary.getVocabArray();
 
         updateLanguages();
         updateTags();
@@ -47,16 +53,70 @@ public class CategorizationActivity extends AppCompatActivity {
         btnAlphabeticSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if ("Select language".compareTo(spLanguageSort.getSelectedItem().toString()) !=0){
+                    sortAlphabet(spLanguageSort.getSelectedItem().toString());
+                }
+                else
+                {
+                    Toast.makeText(getBaseContext(), "No language selected!", Toast.LENGTH_LONG).show();
+                }
 
             }
         });
     }
 
+
+    public void sortAlphabet(String choice) {
+        try{
+            JSONArray jsonArray = vocabulary.getVocabArray();
+            ArrayList<String> wordArray = new ArrayList<String>();
+
+            JSONArray sortedJsonArray = new JSONArray();
+
+            List<JSONObject> jsonValues = new ArrayList<JSONObject>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                jsonValues.add(jsonArray.getJSONObject(i));
+            }
+            final String temp_choice = choice;
+            Collections.sort( jsonValues, new Comparator<JSONObject>() {
+                @Override
+                public int compare(JSONObject a, JSONObject b) {
+                    String KEY_NAME = temp_choice;
+                    String valA = "";
+                    String valB = "";
+
+                    try {
+                        valA = (String) a.get(KEY_NAME);
+                        valB = (String) b.get(KEY_NAME);
+                    }
+                    catch (JSONException e) {
+                        //do something
+                    }
+                    String lowerA = valA.toLowerCase();
+                    String lowerB = valB.toLowerCase();
+                    return lowerA.compareTo(lowerB);
+                }
+            });
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                sortedJsonArray.put(jsonValues.get(i));
+            }
+
+            vocabArray = sortedJsonArray;
+
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        updateVocabulary();
+
+    }
+
     public void updateLanguages() {
 
         languageList.add("Select language");
-        languageList.add("German");
-        languageList.add("English");
+        languageList.add("german");
+        languageList.add("english");
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(CategorizationActivity.this, android.R.layout.simple_dropdown_item_1line, languageList);
         spLanguageSort.setAdapter(adapter);
 
@@ -74,7 +134,7 @@ public class CategorizationActivity extends AppCompatActivity {
 
     public void updateVocabulary() {
         try{
-            JSONArray jsonArray = vocabulary.getVocabArray();
+            JSONArray jsonArray = vocabArray;//
             ArrayList<String> wordArray = new ArrayList<String>();
 
             for(int i=0; i < jsonArray.length();i++){

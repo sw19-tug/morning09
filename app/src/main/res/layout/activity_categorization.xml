@@ -7,16 +7,6 @@
     android:orientation="vertical"
     tools:context=".CategorizationActivity" >
 
-    <Button
-        android:id="@+id/btnAlphabeticSort"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sort by alphabet" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="17dp" />
-
     <Spinner
         android:id="@+id/spLanguageSort"
         android:layout_width="match_parent"
@@ -30,6 +20,16 @@
         android:id="@+id/spTagSort"
         android:layout_width="match_parent"
         android:layout_height="36dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="17dp" />
+
+    <Button
+        android:id="@+id/btnAlphabeticSort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sort" />
 
     <ListView
         android:id="@+id/lvVocabulary"

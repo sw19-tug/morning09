@@ -33,8 +33,8 @@ public class Vocabulary {
         context_ = context;
 
         //uncomment if you are testing and want a new vocab
-        File deleteFile = new File(context.getFilesDir(),filename);
-        deleteFile.delete();
+        //File deleteFile = new File(context.getFilesDir(),filename);
+        //deleteFile.delete();
 
         //check if file exists
         file_ = new File(context.getFilesDir(), filename);

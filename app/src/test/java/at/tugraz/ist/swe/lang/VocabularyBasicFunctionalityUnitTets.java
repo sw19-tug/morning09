@@ -89,4 +89,14 @@ public class VocabularyBasicFunctionalityUnitTets {
         assertNotEquals(false, vocabulary.removeByName("Haus"));
 
     }
+
+    @Test
+    public void VocabularyStoreByName() {
+        vocabulary.init();
+
+        String filename = "testfile.json";
+        vocabulary.storeFileByName(filename);
+        File file = new File(mockContext.getFilesDir(), filename);
+        assert (file.exists());
+    }
 }

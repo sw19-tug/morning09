@@ -1,5 +1,9 @@
 package at.tugraz.ist.swe.lang;
 
+import android.content.ClipData;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,14 +17,12 @@ import java.text.BreakIterator;
 import java.util.Random;
 
 public class SimpleTestActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    ArrayAdapter adapter;
     private String myAnswer;
     private int myScore = 0;
+    private int myAttemps = 0;
     private ArrayAdapter answers;
-    private int myQuestionLength;
     Random r;
     String[] random_question;
-    //protected Questions myQuestions;
     TextView score, question;
     ListView multiple;
 
@@ -34,9 +36,10 @@ public class SimpleTestActivity extends AppCompatActivity implements AdapterView
         question = findViewById(R.id.question);
         multiple = findViewById(R.id.multiple);
         Questions myQuestions = new Questions();
-        String[] a = myQuestions.getItems(myScore);
+        //String[] a = myQuestions.getItems(myScore);
+        updateQuestion(myScore);
         score.setText("Score: " + myScore);
-        answers = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,a
+        answers = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,random_question
         );
         multiple.setAdapter(answers);
         multiple.setOnItemClickListener(this);
@@ -51,12 +54,48 @@ public class SimpleTestActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        myScore++;
-        Questions myQuestions = new Questions();
-        String[] a = myQuestions.getItems(myScore);
-        //score.setText("Score: " + myScore);
-        updateArray(a);
-        updateQuestion(myScore);
+        if (random_question[position] == myAnswer) {
+            myScore++;
+            if (myScore == 6) {
+                youWin();
+            }
+            else {
+                Questions myQuestions = new Questions();
+                String[] a = myQuestions.getItems(myScore);
+                updateArray(a);
+                updateQuestion(myScore);
+            }
+        }
+        myAttemps++;
+
+    }
+
+    private void youWin() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SimpleTestActivity.this);
+        alertDialogBuilder
+                .setMessage("Well done!!! You passed your exam with: " +myScore + " Correct Answers in " +myAttemps + " Attemps")
+                .setCancelable(false)
+                .setPositiveButton("Retry?",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                startActivity(new Intent(getApplicationContext(),SimpleTestActivity.class));
+                                finish();
+
+                            }
+                        })
+                .setNegativeButton("Exit",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                finish();
+
+                            }
+                        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void updateArray(String[] a) {

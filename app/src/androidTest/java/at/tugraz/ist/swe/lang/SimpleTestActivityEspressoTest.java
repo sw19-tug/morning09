@@ -26,9 +26,9 @@ public class SimpleTestActivityEspressoTest {
 
     @Test
     public void onViewElements() {
-        onView(withId(id.score)).check(matches(isDisplayed()));
-        onView(withId(id.question)).check(matches(isDisplayed()));
-        onView(withId(id.multiple)).check(matches(isDisplayed()));
+        onView(withId(R.id.score)).check(matches(isDisplayed()));
+        onView(withId(R.id.question)).check(matches(isDisplayed()));
+        onView(withId(R.id.multiple)).check(matches(isDisplayed()));
 
     }
 }

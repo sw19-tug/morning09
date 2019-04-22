@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.BreakIterator;
 import java.util.Random;
@@ -21,7 +22,6 @@ public class SimpleTestActivity extends AppCompatActivity implements AdapterView
     private int myScore = 0;
     private int myAttemps = 0;
     private ArrayAdapter answers;
-    Random r;
     String[] random_question;
     TextView score, question;
     ListView multiple;
@@ -35,8 +35,6 @@ public class SimpleTestActivity extends AppCompatActivity implements AdapterView
         score = findViewById(R.id.score);
         question = findViewById(R.id.question);
         multiple = findViewById(R.id.multiple);
-        Questions myQuestions = new Questions();
-        //String[] a = myQuestions.getItems(myScore);
         updateQuestion(myScore);
         score.setText("Score: " + myScore);
         answers = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,random_question
@@ -54,6 +52,7 @@ public class SimpleTestActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        myAttemps++;
         if (random_question[position] == myAnswer) {
             myScore++;
             if (myScore == 6) {
@@ -61,13 +60,15 @@ public class SimpleTestActivity extends AppCompatActivity implements AdapterView
             }
             else {
                 Questions myQuestions = new Questions();
-                String[] a = myQuestions.getItems(myScore);
-                updateArray(a);
+                String[] newitems = myQuestions.getItems(myScore);
+                updateArray(newitems);
                 updateQuestion(myScore);
             }
         }
-        myAttemps++;
-
+        else
+        {
+            Toast.makeText(getApplicationContext(),"Invalid answer",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void youWin() {
@@ -98,8 +99,8 @@ public class SimpleTestActivity extends AppCompatActivity implements AdapterView
         alertDialog.show();
     }
 
-    private void updateArray(String[] a) {
-        answers = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,a
+    private void updateArray(String[] newview) {
+        answers = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,newview
         );
         multiple.setAdapter(answers);
         score.setText("Score: " + myScore);

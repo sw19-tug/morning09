@@ -74,11 +74,13 @@ public class AddWordsActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //setContentView(R.layout.activity_rating);
-                    openRatingActivity();
+                    openRatingActivity(position);
 
 
                     String Value = (String) lvWordList.getItemAtPosition(position);
                     System.out.println(Value);
+
+
                 }
 
             });
@@ -88,9 +90,25 @@ public class AddWordsActivity extends AppCompatActivity {
         }
     }
 
-    public void openRatingActivity() {
+    public void openRatingActivity(int position) {
         Intent intent = new Intent(this, RatingActivity.class);
         startActivity(intent);
+
+        System.out.println("Position Clicked is:");
+        System.out.println(position);
+
+        TextView textViewDe = (TextView)findViewById(R.id.textViewDe);
+        TextView textViewEn = (TextView)findViewById(R.id.textViewEn);
+        System.out.println("Texxt Views Found:");
+
+        String[] sel_word_de;
+        sel_word_de =  getResources().getStringArray(R.array.dewords);
+        String[] sel_word_en;
+        sel_word_en =  getResources().getStringArray(R.array.enwords);
+
+        textViewDe.setText(sel_word_de[position]);
+        textViewEn.setText(sel_word_en[position]);
+
 
     }
     }

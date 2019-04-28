@@ -11,21 +11,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="51dp"
-        tools:layout_editor_absoluteY="81dp" />
+        app:layout_constraintBaseline_creator="@android:integer/config_shortAnimTime"
+        tools:layout_editor_absoluteX="175dp"
+        tools:layout_editor_absoluteY="16dp" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="51dp"
-        tools:layout_editor_absoluteY="134dp" />
+        tools:layout_editor_absoluteX="175dp"
+        tools:layout_editor_absoluteY="60dp" />
 
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="72dp"
-        tools:layout_editor_absoluteY="292dp" />
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="125dp" />
 </android.support.constraint.ConstraintLayout>

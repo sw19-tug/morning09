@@ -74,10 +74,11 @@ public class AddWordsActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //setContentView(R.layout.activity_rating);
-                    openRatingActivity(position);
+                    //openRatingActivity(position);
 
 
                     String Value = (String) lvWordList.getItemAtPosition(position);
+                    openRatingActivity(position, Value);
                     System.out.println(Value);
 
 
@@ -90,24 +91,33 @@ public class AddWordsActivity extends AppCompatActivity {
         }
     }
 
-    public void openRatingActivity(int position) {
+    public void openRatingActivity(int position, String germanVocabulary) {
         Intent intent = new Intent(this, RatingActivity.class);
         startActivity(intent);
 
         System.out.println("Position Clicked is:");
         System.out.println(position);
+        System.out.println("Position Clicked was:");
+
+        String Voc = (String) lvWordList.getItemAtPosition(position);
+
+        Vocabulary myVocabulary = (Vocabulary) lvWordList.getItemAtPosition(position);
+
+
 
         TextView textViewDe = (TextView)findViewById(R.id.textViewDe);
         TextView textViewEn = (TextView)findViewById(R.id.textViewEn);
         System.out.println("Texxt Views Found:");
 
         String[] sel_word_de;
-        sel_word_de =  getResources().getStringArray(R.array.dewords);
+     //   sel_word_de =  getResources().getStringArray(R.array.dewords);
         String[] sel_word_en;
-        sel_word_en =  getResources().getStringArray(R.array.enwords);
+       // sel_word_en =  getResources().getStringArray(R.array.enwords);
+        System.out.println("Ressources  Found:");
 
-        textViewDe.setText(sel_word_de[position]);
-        textViewEn.setText(sel_word_en[position]);
+
+        textViewDe.setText(germanVocabulary);
+        textViewEn.setText(germanVocabulary);
 
 
     }

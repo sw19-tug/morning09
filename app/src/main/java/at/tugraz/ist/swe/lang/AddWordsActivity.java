@@ -76,8 +76,10 @@ public class AddWordsActivity extends AppCompatActivity {
                     //setContentView(R.layout.activity_rating);
                     //openRatingActivity(position);
 
-
+                    System.out.println("Position Value is:");
                     String Value = (String) lvWordList.getItemAtPosition(position);
+
+                    System.out.println(Value);
                     openRatingActivity(position, Value);
                     System.out.println(Value);
 
@@ -103,7 +105,7 @@ public class AddWordsActivity extends AppCompatActivity {
 
         Vocabulary myVocabulary = (Vocabulary) lvWordList.getItemAtPosition(position);
 
-
+        setContentView(R.layout.activity_rating);
 
         TextView textViewDe = (TextView)findViewById(R.id.textViewDe);
         TextView textViewEn = (TextView)findViewById(R.id.textViewEn);
@@ -113,7 +115,9 @@ public class AddWordsActivity extends AppCompatActivity {
      //   sel_word_de =  getResources().getStringArray(R.array.dewords);
         String[] sel_word_en;
        // sel_word_en =  getResources().getStringArray(R.array.enwords);
-        System.out.println("Ressources  Found:");
+        System.out.println("Vocabulary is:" );
+        System.out.println(germanVocabulary);
+
 
 
         textViewDe.setText(germanVocabulary);

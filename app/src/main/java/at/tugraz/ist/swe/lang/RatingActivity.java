@@ -14,3 +14,6 @@ public class RatingActivity extends AppCompatActivity {
         TextView text = (TextView)findViewById(R.id.textViewEn);
     }
 }
+
+// TODO: problem könnte daran liegen, dass alles in addword ausgeführt wird und am ende noch mal
+// die ratingactivity aufgerufen wird. 

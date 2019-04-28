@@ -90,6 +90,8 @@ public class Vocabulary {
 
             newJsonObj.put("english", english);
             newJsonObj.put("german", german);
+            newJsonObj.put("rating", 2);
+
 
             vocabArray_.put(newJsonObj);
 

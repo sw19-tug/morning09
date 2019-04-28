@@ -105,6 +105,7 @@ public class AddWordsActivity extends AppCompatActivity {
 
         Vocabulary myVocabulary = (Vocabulary) lvWordList.getItemAtPosition(position);
 
+        System.out.println("Set Content View 1" );
         setContentView(R.layout.activity_rating);
 
         TextView textViewDe = (TextView)findViewById(R.id.textViewDe);
@@ -117,8 +118,6 @@ public class AddWordsActivity extends AppCompatActivity {
        // sel_word_en =  getResources().getStringArray(R.array.enwords);
         System.out.println("Vocabulary is:" );
         System.out.println(germanVocabulary);
-
-
 
         textViewDe.setText(germanVocabulary);
         textViewEn.setText(germanVocabulary);

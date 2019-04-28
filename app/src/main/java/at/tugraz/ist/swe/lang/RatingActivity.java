@@ -9,6 +9,7 @@ public class RatingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("Set Content View 2" );
         setContentView(R.layout.activity_rating);
         TextView text = (TextView)findViewById(R.id.textViewEn);
     }

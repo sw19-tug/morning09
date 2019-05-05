@@ -3,6 +3,8 @@ package at.tugraz.ist.swe.lang;
 import static org.hamcrest.Matchers.anything;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.Toast;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,4 +33,46 @@ public class SimpleTestActivityEspressoTest {
         onView(withId(R.id.multiple)).check(matches(isDisplayed()));
 
     }
+
+    @Test
+    public void checkFirstAnswer(){
+
+        onData(anything())
+                .inAdapterView(withId(id.multiple))
+                .atPosition(1)
+                .perform(click());
+        onView(withId(id.question)).check(matches(withText("Room")));
+
+
+
+    }
+
+    @Test
+    public void checkInvalidAnswer(){
+
+        onData(anything())
+                .inAdapterView(withId(id.multiple))
+                .atPosition(0)
+                .perform(click());
+        onView(withId(id.score)).check(matches(withText("1")));
+
+
+
+    }
+
+
+    /*@Test
+    public void checkMessage(){
+
+        onData(anything())
+                .inAdapterView(withId(id.multiple))
+                .atPosition(0)
+                .perform(click());
+        onView(withId(R.id.myAttemps)).check(matches(withText("2")));
+
+
+
+    }*/
+
+
 }

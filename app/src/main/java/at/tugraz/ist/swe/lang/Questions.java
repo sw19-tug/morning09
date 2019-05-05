@@ -10,7 +10,7 @@ public class Questions extends SimpleTestActivity {
             "Translate the following word: Eight",
             "Translate the following word: Mirror",
             "Translate the following word/phrase: Black Board",
-            "Translate the following word/phrase: Mobi",
+            "Translate the following word/phrase: Mobile",
             "Translate the following word: Mirror",
             "Translate the following word: Mirror",
             "Translate the following word: Mirror",
@@ -27,10 +27,11 @@ public class Questions extends SimpleTestActivity {
             {"Acht","Raum","Spiegel","Fuß"},
             {"Licht","Fuß","Jacke","Spiegel"},
             {"Jacke","Acht","Spiegel","Raum"},
+            {"Jacke","Acht","Spiegel","Tafel"},
 
     };
 
-    private String myCorrectAnswers[] = {"Fuß", "Raum", "Licht", "Acht","Spiegel", "Jacke"};
+    private String myCorrectAnswers[] = {"Fuß", "Raum", "Licht", "Acht","Spiegel", "Jacke", "Tafel"};
 
 
     public String getQuestion (int a){

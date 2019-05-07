@@ -27,12 +27,8 @@ public class CategorizationActivity extends AppCompatActivity {
     Vocabulary vocabulary;
     ListView lvVocabulary;
     private JSONArray vocabArray = new JSONArray();
-
-    // Temp
     ArrayList<String> languageList = new ArrayList<String>();
     ArrayList<String> tagList = new ArrayList<String>();
-    ArrayList<String> vocabList = new ArrayList<String>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +65,6 @@ public class CategorizationActivity extends AppCompatActivity {
     public void sortAlphabet(String choice) {
         try{
             JSONArray jsonArray = vocabulary.getVocabArray();
-            ArrayList<String> wordArray = new ArrayList<String>();
-
             JSONArray sortedJsonArray = new JSONArray();
 
             List<JSONObject> jsonValues = new ArrayList<JSONObject>();
@@ -90,7 +84,6 @@ public class CategorizationActivity extends AppCompatActivity {
                         valB = (String) b.get(KEY_NAME);
                     }
                     catch (JSONException e) {
-                        //do something
                     }
                     String lowerA = valA.toLowerCase();
                     String lowerB = valB.toLowerCase();
@@ -110,6 +103,10 @@ public class CategorizationActivity extends AppCompatActivity {
 
         updateVocabulary();
 
+    }
+
+    public void filterTags() {
+        // needs tag implementation first, shifting to new issue 
     }
 
     public void updateLanguages() {

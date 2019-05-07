@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Lang</string>
-    <string-array id="dewords" name="dewords">
+    <string-array name="dewords" id="dewords">
         <item>Fuß</item>
         <item>Raum</item>
         <item>Licht</item>
@@ -10,7 +10,7 @@
 
 
     </string-array>
-    <string-array id="enwords" name="enwords">
+    <string-array name="enwords" id="enwords">
         <item>Foot</item>
         <item>Room</item>
         <item>Light</item>

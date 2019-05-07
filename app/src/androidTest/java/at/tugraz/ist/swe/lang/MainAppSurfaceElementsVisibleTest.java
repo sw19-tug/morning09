@@ -33,5 +33,9 @@ public class MainAppSurfaceElementsVisibleTest {
 
         onView(withId(R.id.btMainAddWords)).check(matches(isDisplayed()));
         onView(withId(R.id.btMainAddWords)).check(matches(withText("Add Words")));
+        onView(withId(R.id.main_btn_translate)).check(matches(isDisplayed()));
+        onView(withId(R.id.main_btn_translate)).check(matches(withText("Translate Words")));
+        onView(withId(R.id.btnCategory)).check(matches(isDisplayed()));
+        onView(withId(R.id.btnCategory)).check(matches(withText("Show All Words")));
     }
 }

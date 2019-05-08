@@ -12,6 +12,8 @@
         <activity android:name=".TranslationActivity"></activity>
         <activity android:name=".AddWordsActivity"></activity>
         <activity android:name=".SimpleTestActivity"></activity>
+        <activity android:name=".CategorizationActivity"></activity>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     private Button addWords;
     private Button translation;
     private Button simpleTest;
+    private Button btnCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openAddWordsActivity();
+            }
+        });
+
+        btnCategory = findViewById(R.id.btnCategory);
+        btnCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCategorizationActivity();
             }
         });
 
@@ -59,4 +68,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent_test);
 
     }
+
+    public void openCategorizationActivity() {
+        Intent intent = new Intent(this, CategorizationActivity.class);
+        startActivity(intent);
+    }
 }
+

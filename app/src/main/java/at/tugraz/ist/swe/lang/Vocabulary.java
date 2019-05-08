@@ -209,11 +209,18 @@ public class Vocabulary {
 
         String output = vocabulary_.toString();
         System.out.println(output);
+        file_ = new File(context_.getFilesDir(), filename);
+        if (!file_.exists()) {
+            try {
+                file_.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         try{
             FileOutputStream fos = context_.openFileOutput(filename, Context.MODE_PRIVATE);
             fos.write(output.getBytes());
             fos.close();
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

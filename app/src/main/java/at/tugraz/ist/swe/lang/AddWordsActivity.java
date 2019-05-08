@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class AddWordsActivity extends AppCompatActivity {
 
@@ -97,13 +98,24 @@ public class AddWordsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RatingActivity.class);
         startActivity(intent);
 
-        System.out.println("Position Clicked is:");
-        System.out.println(position);
-        System.out.println("Position Clicked was:");
+        try {
+            System.out.println("Position Clicked is:");
+            System.out.println(position);
+            System.out.println("Position Clicked was:");
 
-        String Voc = (String) lvWordList.getItemAtPosition(position);
+            String Voc = (String) lvWordList.getItemAtPosition(position);
 
-        Vocabulary myVocabulary = (Vocabulary) lvWordList.getItemAtPosition(position);
+            JSONArray myJson = vocabulary.getVocabArray();
+            JSONObject myVocabulary = myJson.getJSONObject(vocabulary.findByName(Voc));
+            System.out.println(myVocabulary.getString("german"));
+            System.out.println(myVocabulary.getString("english"));
+
+        }
+        catch(JSONException e) {
+            e.printStackTrace();
+            //
+        }
+
 
         System.out.println("Set Content View 1" );
         setContentView(R.layout.activity_rating);
@@ -121,6 +133,7 @@ public class AddWordsActivity extends AppCompatActivity {
 
         textViewDe.setText(germanVocabulary);
         textViewEn.setText(germanVocabulary);
+
 
 
     }

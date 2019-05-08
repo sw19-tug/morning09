@@ -9,11 +9,21 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+
 
 public class TranslationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private ArrayAdapter adapter_de;
     private ArrayAdapter adapter_en;
+    ListView lvVocabulary;
+    Vocabulary vocabulary;
+    private JSONArray vocabArray = new JSONArray();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,25 +34,25 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
         String[] enwords = getResources().getStringArray(R.array.enwords);
         Button btn_de = findViewById(R.id.btnGerman);
         Button btn_en = findViewById(R.id.btnEnglish);
+        lvVocabulary = (ListView)findViewById(R.id.lvVocabulary);
+        vocabulary = new Vocabulary(getApplicationContext());
+        vocabulary.init();
+        vocabArray = vocabulary.getVocabArray();
 
-        final ListView listView = (ListView) findViewById(R.id.lvVocabulary);
-        adapter_de = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dewords
-        );
-        adapter_en = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, enwords
-        );
-        listView.setAdapter(adapter_de);
+        updateVocabulary();
+
+        lvVocabulary.setAdapter(adapter_de);
         btn_de.setOnClickListener(new View.OnClickListener(){
             public void onClick (View v){
-                listView.setAdapter(adapter_de);
+                lvVocabulary.setAdapter(adapter_de);
             }
         });
         btn_en.setOnClickListener(new View.OnClickListener(){
             public void onClick (View v){
-                listView.setAdapter(adapter_en);
+                lvVocabulary.setAdapter(adapter_en);
             }
         });
-        listView.setOnItemClickListener(this);
-
+        lvVocabulary.setOnItemClickListener(this);
     }
     @Override
     public void onItemClick(AdapterView <?> parent, View view, int arg2, long arg3) {
@@ -56,5 +66,31 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
             sel_word = getResources().getStringArray(R.array.dewords);
         }
         text.setText(sel_word[arg2]);
+    }
+
+    public void updateVocabulary() {
+        try {
+            JSONArray jsonArray = vocabArray;//
+            ArrayList<String> wordArrayEn = new ArrayList<String>();
+            ArrayList<String> wordArrayGer = new ArrayList<String>();
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String entry = jsonArray.getJSONObject(i).getString("english");
+                wordArrayEn.add(entry);
+            }
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String entry = jsonArray.getJSONObject(i).getString("german");
+                wordArrayGer.add(entry);
+            }
+            adapter_en = new ArrayAdapter<String>(TranslationActivity.this, android.R.layout.simple_list_item_1, wordArrayEn);
+            adapter_de = new ArrayAdapter<String>(TranslationActivity.this, android.R.layout.simple_list_item_1, wordArrayGer);
+            //lvVocabulary.setAdapter(adapter);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+
+        }
     }
 }

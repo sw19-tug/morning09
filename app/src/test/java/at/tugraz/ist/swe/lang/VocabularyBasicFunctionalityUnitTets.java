@@ -120,7 +120,7 @@ public class VocabularyBasicFunctionalityUnitTets {
     @Test
     public void VocabularyLoadByName() {
         String filename = "testfile.json";
-        vocabulary.loadFileByName(filename);
+        assert(vocabulary.loadFileByName(filename));
         assert(vocabulary.file_.getName().equals(filename));
     }
 }

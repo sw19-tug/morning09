@@ -26,11 +26,11 @@ public class TranslationActivityEspressoTest {
 
     @Test
     public void onViewElements() {
-        onView(withId(R.id.de_btn)).check(matches(isDisplayed()));
+        onView(withId(R.id.btnGerman)).check(matches(isDisplayed()));
         onView(withId(R.id.en_btn)).check(matches(isDisplayed()));
-        onView(withId(R.id.word_list)).check(matches(isDisplayed()));
-        onView(withId(R.id.translated_word)).check(matches(isDisplayed()));
-        onView(withId(R.id.de_btn)).check(matches(withText("GERMAN")));
+        onView(withId(R.id.lvVocabulary)).check(matches(isDisplayed()));
+        onView(withId(R.id.tvTranslatedWord)).check(matches(isDisplayed()));
+        onView(withId(R.id.btnGerman)).check(matches(withText("GERMAN")));
         onView(withId(R.id.en_btn)).check(matches(withText("ENGLISH")));
     }
 
@@ -38,21 +38,19 @@ public class TranslationActivityEspressoTest {
     @Test
     public void onViewList() {
 
-        onView(withId(id.de_btn)).perform(click());
+        onView(withId(id.btnGerman)).perform(click());
         onData(startsWith("Raum")).perform(click());
         onView(withId(id.en_btn)).perform(click());
         onData(startsWith("Room")).perform(click());
-
-
     }
 
     @Test
     public void onViewTranslate(){
         onData(anything())
-                .inAdapterView(withId(R.id.word_list))
+                .inAdapterView(withId(R.id.lvVocabulary))
                 .atPosition(0)
                 .perform(click());
-        onView(withId(R.id.translated_word)).check(matches(withText("Foot")));
+        onView(withId(R.id.tvTranslatedWord)).check(matches(withText("Foot")));
 
     }
 

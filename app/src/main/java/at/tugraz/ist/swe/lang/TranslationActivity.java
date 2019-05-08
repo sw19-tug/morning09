@@ -22,10 +22,10 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
 
         String[] dewords = getResources().getStringArray(R.array.dewords);
         String[] enwords = getResources().getStringArray(R.array.enwords);
-        Button btn_de = findViewById(R.id.de_btn);
-        Button btn_en = findViewById(R.id.en_btn);
+        Button btn_de = findViewById(R.id.btnGerman);
+        Button btn_en = findViewById(R.id.btnEnglish);
 
-        final ListView listView = (ListView) findViewById(R.id.word_list);
+        final ListView listView = (ListView) findViewById(R.id.lvVocabulary);
         adapter_de = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dewords
         );
         adapter_en = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, enwords
@@ -46,7 +46,7 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
     }
     @Override
     public void onItemClick(AdapterView <?> parent, View view, int arg2, long arg3) {
-        TextView text = (TextView)findViewById(R.id.translated_word);
+        TextView text = (TextView)findViewById(R.id.tvTranslatedWord);
         String[] sel_word;
         if (parent.getAdapter() == adapter_de) {
             sel_word = getResources().getStringArray(R.array.enwords);

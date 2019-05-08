@@ -9,7 +9,7 @@
 tools:context=".TranslationActivity">
 
 <Button
-    android:id="@+id/de_btn"
+    android:id="@+id/btnGerman"
     android:layout_width="197dp"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
@@ -18,7 +18,7 @@ tools:context=".TranslationActivity">
     app:layout_constraintTop_toTopOf="parent" />
 
 <Button
-    android:id="@+id/en-btn"
+    android:id="@+id/btnEnglish"
     android:layout_width="197dp"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
@@ -27,7 +27,7 @@ tools:context=".TranslationActivity">
     app:layout_constraintTop_toTopOf="parent" />
 
 <ListView
-    android:id="@+id/word_list"
+    android:id="@+id/lvVocabulary"
     android:layout_width="395dp"
     android:layout_height="545dp"
     android:layout_marginStart="8dp"
@@ -36,7 +36,7 @@ tools:context=".TranslationActivity">
     app:layout_constraintTop_toTopOf="parent" />
 
 <TextView
-    android:id="@+id/translated_word"
+    android:id="@+id/tvTranslatedWord"
     android:layout_width="401dp"
     android:layout_height="91dp"
     android:layout_marginStart="2dp"

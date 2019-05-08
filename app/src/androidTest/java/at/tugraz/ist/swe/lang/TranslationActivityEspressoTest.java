@@ -27,11 +27,11 @@ public class TranslationActivityEspressoTest {
     @Test
     public void onViewElements() {
         onView(withId(R.id.btnGerman)).check(matches(isDisplayed()));
-        onView(withId(R.id.en_btn)).check(matches(isDisplayed()));
+        onView(withId(R.id.btnEnglish)).check(matches(isDisplayed()));
         onView(withId(R.id.lvVocabulary)).check(matches(isDisplayed()));
         onView(withId(R.id.tvTranslatedWord)).check(matches(isDisplayed()));
         onView(withId(R.id.btnGerman)).check(matches(withText("GERMAN")));
-        onView(withId(R.id.en_btn)).check(matches(withText("ENGLISH")));
+        onView(withId(R.id.btnEnglish)).check(matches(withText("ENGLISH")));
     }
 
 
@@ -40,7 +40,7 @@ public class TranslationActivityEspressoTest {
 
         onView(withId(id.btnGerman)).perform(click());
         onData(startsWith("Raum")).perform(click());
-        onView(withId(id.en_btn)).perform(click());
+        onView(withId(id.btnEnglish)).perform(click());
         onData(startsWith("Room")).perform(click());
     }
 

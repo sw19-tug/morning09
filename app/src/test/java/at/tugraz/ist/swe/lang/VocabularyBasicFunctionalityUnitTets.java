@@ -119,8 +119,6 @@ public class VocabularyBasicFunctionalityUnitTets {
 
     @Test
     public void VocabularyLoadByName() {
-        vocabulary.init();
-
         String filename = "testfile.json";
         vocabulary.loadFileByName(filename);
         assert(vocabulary.file_.getName().equals(filename));

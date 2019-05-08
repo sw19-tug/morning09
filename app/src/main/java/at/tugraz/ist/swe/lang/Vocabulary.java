@@ -227,4 +227,23 @@ public class Vocabulary {
             e.printStackTrace();
         }
     }
+
+    /**
+     * load a different vocabulary from a file
+     * @param filename
+     * @return
+     */
+    public boolean loadFileByName(String filename) {
+
+        filename_ = filename;
+
+        //check if file exists
+        file_ = new File(context_.getFilesDir(), filename_);
+        if (!file_.exists()) {
+            return false;
+        }
+
+        init();
+        return true;
+    }
 }

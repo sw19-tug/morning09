@@ -41,7 +41,7 @@ public class SimpleTestActivityEspressoTest {
                 .inAdapterView(withId(id.multiple))
                 .atPosition(1)
                 .perform(click());
-        onView(withId(id.question)).check(matches(withText("Room")));
+        onView(withId(id.score)).check(matches(withText("Score: 1")));
 
 
 
@@ -54,7 +54,7 @@ public class SimpleTestActivityEspressoTest {
                 .inAdapterView(withId(id.multiple))
                 .atPosition(0)
                 .perform(click());
-        onView(withId(id.score)).check(matches(withText("1")));
+        onView(withId(id.score)).check(matches(withText("Score: 0")));
 
 
 

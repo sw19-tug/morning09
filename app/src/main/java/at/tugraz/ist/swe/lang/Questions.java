@@ -9,11 +9,6 @@ public class Questions extends SimpleTestActivity {
             "Translate the following word: Light",
             "Translate the following word: Eight",
             "Translate the following word: Mirror",
-            "Translate the following word/phrase: Black Board",
-            "Translate the following word/phrase: Mobile",
-            "Translate the following word: Mirror",
-            "Translate the following word: Mirror",
-            "Translate the following word: Mirror",
             "Translate the following word: Jacket"
 
     };

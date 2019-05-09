@@ -37,11 +37,10 @@ public class TranslationActivityEspressoTest {
 
     @Test
     public void onViewList() {
-
         onView(withId(id.btnGerman)).perform(click());
-        onData(startsWith("Raum")).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.lvVocabulary)).atPosition(0).check(matches(withText("aa")));
         onView(withId(id.btnEnglish)).perform(click());
-        onData(startsWith("Room")).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.lvVocabulary)).atPosition(0).check(matches(withText("xx")));
     }
 
     @Test
@@ -50,7 +49,7 @@ public class TranslationActivityEspressoTest {
                 .inAdapterView(withId(R.id.lvVocabulary))
                 .atPosition(0)
                 .perform(click());
-        onView(withId(R.id.tvTranslatedWord)).check(matches(withText("Foot")));
+        onView(withId(R.id.tvTranslatedWord)).check(matches(withText("xx")));
 
     }
 

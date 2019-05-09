@@ -22,6 +22,8 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
     ListView lvVocabulary;
     Vocabulary vocabulary;
     private JSONArray vocabArray = new JSONArray();
+    ArrayList<String> wordArrayEn = new ArrayList<String>();
+    ArrayList<String> wordArrayGer = new ArrayList<String>();
 
 
 
@@ -52,27 +54,28 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
                 lvVocabulary.setAdapter(adapter_en);
             }
         });
+
         lvVocabulary.setOnItemClickListener(this);
     }
     @Override
-    public void onItemClick(AdapterView <?> parent, View view, int arg2, long arg3) {
+    public void onItemClick(AdapterView <?> parent, View view, int index, long arg3) {
         TextView text = (TextView)findViewById(R.id.tvTranslatedWord);
-        String[] sel_word;
+        String sel_word;
+
         if (parent.getAdapter() == adapter_de) {
-            sel_word = getResources().getStringArray(R.array.enwords);
+            sel_word = wordArrayEn.get(index);
         }
         else
         {
-            sel_word = getResources().getStringArray(R.array.dewords);
+            sel_word = wordArrayGer.get(index);
         }
-        text.setText(sel_word[arg2]);
+        text.setText(sel_word);
     }
 
     public void updateVocabulary() {
         try {
-            JSONArray jsonArray = vocabArray;//
-            ArrayList<String> wordArrayEn = new ArrayList<String>();
-            ArrayList<String> wordArrayGer = new ArrayList<String>();
+            JSONArray jsonArray = vocabArray;
+
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 String entry = jsonArray.getJSONObject(i).getString("english");

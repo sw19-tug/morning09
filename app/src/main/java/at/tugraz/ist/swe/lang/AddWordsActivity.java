@@ -122,7 +122,7 @@ public class AddWordsActivity extends AppCompatActivity {
 
         TextView textViewDe = (TextView)findViewById(R.id.textViewDe);
         TextView textViewEn = (TextView)findViewById(R.id.textViewEn);
-        System.out.println("Texxt Views Found:");
+        System.out.println("Text Views Found:");
 
         String[] sel_word_de;
         sel_word_de =  getResources().getStringArray(R.array.dewords);
@@ -132,7 +132,6 @@ public class AddWordsActivity extends AppCompatActivity {
 
         textViewDe.setText(sel_word_de[position]);
         textViewEn.setText(sel_word_en[position]);
-
 
 
     }

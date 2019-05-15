@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".RatingActivity"></activity>
+        <activity android:name=".CategorizationActivity"></activity>
         <activity android:name=".TranslationActivity" />
         <activity android:name=".AddWordsActivity" />
         <activity android:name=".MainActivity">

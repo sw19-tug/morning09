@@ -5,7 +5,6 @@
     android:id="@+id/clMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".TranslationActivity">
 
 
@@ -51,6 +50,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_btn_translate"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/simpleTest_btn"
+        android:layout_width="362dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="27dp"
+        android:text="Simple Test"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCategory" />
 
 
 </android.support.constraint.ConstraintLayout>

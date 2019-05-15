@@ -1,22 +1,16 @@
 package at.tugraz.ist.swe.lang;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class Vocabulary {
@@ -26,18 +20,14 @@ public class Vocabulary {
     public File file_;
     private JSONArray vocabArray_;
     JSONObject vocabulary_;
-    private String filename = "vocabulary.json";
+    private String filename_ = "vocabulary.json";
 
 
     public Vocabulary(Context context) {
         context_ = context;
 
-        //uncomment if you are testing and want a new vocab
-        File deleteFile = new File(context.getFilesDir(),filename);
-        deleteFile.delete();
-
         //check if file exists
-        file_ = new File(context.getFilesDir(), filename);
+        file_ = new File(context.getFilesDir(), filename_);
         if (!file_.exists()) {
             try {
                 file_.createNewFile();
@@ -90,6 +80,8 @@ public class Vocabulary {
 
             newJsonObj.put("english", english);
             newJsonObj.put("german", german);
+            newJsonObj.put("rating", 2);
+
 
             vocabArray_.put(newJsonObj);
 
@@ -167,7 +159,7 @@ public class Vocabulary {
         String output = vocabulary_.toString();
         System.out.println(output);
         try{
-            FileOutputStream fos = context_.openFileOutput(filename, Context.MODE_PRIVATE);
+            FileOutputStream fos = context_.openFileOutput(filename_, Context.MODE_PRIVATE);
             fos.write(output.getBytes());
             fos.close();
 
@@ -186,7 +178,7 @@ public class Vocabulary {
 
         String readString = null;
         try {
-            FileInputStream is = context_.openFileInput(filename);
+            FileInputStream is = context_.openFileInput(filename_);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -206,4 +198,56 @@ public class Vocabulary {
     public JSONArray getVocabArray() {
         return vocabArray_;
     }
+
+    /**
+     * Store to file by filename
+     * @param filename
+     */
+    public void storeFileByName(String filename) {
+
+        String output = vocabulary_.toString();
+        System.out.println(output);
+        file_ = new File(context_.getFilesDir(), filename);
+        if (!file_.exists()) {
+            try {
+                file_.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try{
+            FileOutputStream fos = context_.openFileOutput(filename, Context.MODE_PRIVATE);
+            fos.write(output.getBytes());
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * load a different vocabulary from a file
+     * @param filename
+     * @return
+     */
+    public boolean loadFileByName(String filename) {
+
+        filename_ = filename;
+
+        //check if file exists
+        file_ = new File(context_.getFilesDir(), filename_);
+        if (!file_.exists()) {
+            return false;
+        }
+
+        init();
+        return true;
+    }
+
+    public void deleteVocab() {
+        File deleteFile = new File(context_.getFilesDir(), filename_);
+        deleteFile.delete();
+    }
+
 }

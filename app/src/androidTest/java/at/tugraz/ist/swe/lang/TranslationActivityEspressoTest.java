@@ -3,6 +3,8 @@ package at.tugraz.ist.swe.lang;
 import static org.hamcrest.Matchers.anything;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.ListView;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,33 +28,44 @@ public class TranslationActivityEspressoTest {
 
     @Test
     public void onViewElements() {
-        onView(withId(R.id.de_btn)).check(matches(isDisplayed()));
-        onView(withId(R.id.en_btn)).check(matches(isDisplayed()));
-        onView(withId(R.id.word_list)).check(matches(isDisplayed()));
-        onView(withId(R.id.translated_word)).check(matches(isDisplayed()));
-        onView(withId(R.id.de_btn)).check(matches(withText("GERMAN")));
-        onView(withId(R.id.en_btn)).check(matches(withText("ENGLISH")));
+        onView(withId(R.id.btnGerman)).check(matches(isDisplayed()));
+        onView(withId(R.id.btnEnglish)).check(matches(isDisplayed()));
+        onView(withId(R.id.lvVocabulary)).check(matches(isDisplayed()));
+        onView(withId(R.id.tvTranslatedWord)).check(matches(isDisplayed()));
+        onView(withId(R.id.btnGerman)).check(matches(withText("GERMAN")));
+        onView(withId(R.id.btnEnglish)).check(matches(withText("ENGLISH")));
     }
 
 
     @Test
     public void onViewList() {
 
-        onView(withId(id.de_btn)).perform(click());
-        onData(startsWith("Raum")).perform(click());
-        onView(withId(id.en_btn)).perform(click());
-        onData(startsWith("Room")).perform(click());
+        Vocabulary vocabulary = (Vocabulary)mActivityTestRule.getActivity().vocabulary;
+        vocabulary.add("Apfel", "Apple");
 
+        ListView lvWordList = (ListView)mActivityTestRule.getActivity().findViewById(R.id.lvVocabulary);
+        int lvItemsCount = lvWordList.getAdapter().getCount();
 
+        onView(withId(id.btnGerman)).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.lvVocabulary)).atPosition(lvItemsCount-1).check(matches(withText("Apfel")));
+        onView(withId(id.btnEnglish)).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.lvVocabulary)).atPosition(lvItemsCount-1).check(matches(withText("Apple")));
     }
 
     @Test
     public void onViewTranslate(){
+
+        Vocabulary vocabulary = (Vocabulary)mActivityTestRule.getActivity().vocabulary;
+        vocabulary.add("Apfel", "Apple");
+
+        ListView lvWordList = (ListView)mActivityTestRule.getActivity().findViewById(R.id.lvVocabulary);
+        int lvItemsCount = lvWordList.getAdapter().getCount();
+
         onData(anything())
-                .inAdapterView(withId(R.id.word_list))
-                .atPosition(0)
+                .inAdapterView(withId(R.id.lvVocabulary))
+                .atPosition(lvItemsCount-1)
                 .perform(click());
-        onView(withId(R.id.translated_word)).check(matches(withText("Foot")));
+        onView(withId(R.id.tvTranslatedWord)).check(matches(withText("Apple")));
 
     }
 

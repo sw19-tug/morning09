@@ -3,6 +3,8 @@ package at.tugraz.ist.swe.lang;
 import static org.hamcrest.Matchers.anything;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.ListView;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,19 +39,33 @@ public class TranslationActivityEspressoTest {
 
     @Test
     public void onViewList() {
+
+        Vocabulary vocabulary = (Vocabulary)mActivityTestRule.getActivity().vocabulary;
+        vocabulary.add("Apfel", "Apple");
+
+        ListView lvWordList = (ListView)mActivityTestRule.getActivity().findViewById(R.id.lvVocabulary);
+        int lvItemsCount = lvWordList.getAdapter().getCount();
+
         onView(withId(id.btnGerman)).perform(click());
-        onData(anything()).inAdapterView(withId(R.id.lvVocabulary)).atPosition(0).check(matches(withText("aa")));
+        onData(anything()).inAdapterView(withId(R.id.lvVocabulary)).atPosition(lvItemsCount-1).check(matches(withText("Apfel")));
         onView(withId(id.btnEnglish)).perform(click());
-        onData(anything()).inAdapterView(withId(R.id.lvVocabulary)).atPosition(0).check(matches(withText("xx")));
+        onData(anything()).inAdapterView(withId(R.id.lvVocabulary)).atPosition(lvItemsCount-1).check(matches(withText("Apple")));
     }
 
     @Test
     public void onViewTranslate(){
+
+        Vocabulary vocabulary = (Vocabulary)mActivityTestRule.getActivity().vocabulary;
+        vocabulary.add("Apfel", "Apple");
+
+        ListView lvWordList = (ListView)mActivityTestRule.getActivity().findViewById(R.id.lvVocabulary);
+        int lvItemsCount = lvWordList.getAdapter().getCount();
+
         onData(anything())
                 .inAdapterView(withId(R.id.lvVocabulary))
-                .atPosition(0)
+                .atPosition(lvItemsCount-1)
                 .perform(click());
-        onView(withId(R.id.tvTranslatedWord)).check(matches(withText("xx")));
+        onView(withId(R.id.tvTranslatedWord)).check(matches(withText("Apple")));
 
     }
 

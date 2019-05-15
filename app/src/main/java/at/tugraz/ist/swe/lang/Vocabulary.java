@@ -26,10 +26,6 @@ public class Vocabulary {
     public Vocabulary(Context context) {
         context_ = context;
 
-        //uncomment if you are testing and want a new vocab
-        File deleteFile = new File(context.getFilesDir(), filename_);
-        deleteFile.delete();
-
         //check if file exists
         file_ = new File(context.getFilesDir(), filename_);
         if (!file_.exists()) {
@@ -248,4 +244,10 @@ public class Vocabulary {
         init();
         return true;
     }
+
+    public void deleteVocab() {
+        File deleteFile = new File(context_.getFilesDir(), filename_);
+        deleteFile.delete();
+    }
+
 }

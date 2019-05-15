@@ -81,7 +81,7 @@ public class AddWordsActivity extends AppCompatActivity {
                     String Value = (String) lvWordList.getItemAtPosition(position);
 
                     System.out.println(Value);
-                    openRatingActivity(position, Value);
+                    openRatingActivity(position);
                     System.out.println(Value);
 
 
@@ -94,7 +94,7 @@ public class AddWordsActivity extends AppCompatActivity {
         }
     }
 
-    public void openRatingActivity(int position, String germanVocabulary) {
+    public void openRatingActivity(int position) {
         Intent intent = new Intent(this, RatingActivity.class);
         startActivity(intent);
 
@@ -125,14 +125,13 @@ public class AddWordsActivity extends AppCompatActivity {
         System.out.println("Texxt Views Found:");
 
         String[] sel_word_de;
-     //   sel_word_de =  getResources().getStringArray(R.array.dewords);
+        sel_word_de =  getResources().getStringArray(R.array.dewords);
         String[] sel_word_en;
-       // sel_word_en =  getResources().getStringArray(R.array.enwords);
+        sel_word_en =  getResources().getStringArray(R.array.enwords);
         System.out.println("Vocabulary is:" );
-        System.out.println(germanVocabulary);
 
-        textViewDe.setText(germanVocabulary);
-        textViewEn.setText(germanVocabulary);
+        textViewDe.setText(sel_word_de[position]);
+        textViewEn.setText(sel_word_en[position]);
 
 
 

@@ -38,8 +38,9 @@ public class VocabularyBasicFunctionalityUnitTets {
     @Mock
     FileOutputStream fileOutputStream;
 
-    File file;
 
+    File file;
+    File testfile;
 
     @Before
     public void setUp() throws IOException {
@@ -53,9 +54,26 @@ public class VocabularyBasicFunctionalityUnitTets {
         fileOutputStream = new FileOutputStream(file);
         fileInputStream = new FileInputStream(file);
 
+
         when(mockContext.openFileOutput("vocabulary.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
         when(mockContext.openFileInput("vocabulary.json")).thenReturn(fileInputStream);
 
+        CreateTestFile();
+
+        when(mockContext.openFileOutput("testfile.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
+        when(mockContext.openFileInput("testfile.json")).thenReturn(fileInputStream);
+    }
+
+    public void CreateTestFile() {
+        String filename = "testfile.json";
+        testfile = new File(mockContext.getFilesDir(), filename);
+        if (!testfile.exists()) {
+            try {
+                testfile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Test
@@ -88,5 +106,21 @@ public class VocabularyBasicFunctionalityUnitTets {
         vocabulary.add("Haus", "House");
         assertNotEquals(false, vocabulary.removeByName("Haus"));
 
+    }
+
+    @Test
+    public void VocabularyStoreByName() {
+        vocabulary.init();
+
+        String filename = "testfile.json";
+        vocabulary.storeFileByName(filename);
+        assert (file.exists());
+    }
+
+    @Test
+    public void VocabularyLoadByName() {
+        String filename = "testfile.json";
+        assert(vocabulary.loadFileByName(filename));
+        assert(vocabulary.file_.getName().equals(filename));
     }
 }

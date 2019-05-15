@@ -12,6 +12,9 @@
         <activity android:name=".TranslationActivity"></activity>
         <activity android:name=".AddWordsActivity"></activity>
         <activity android:name=".SimpleTestActivity"></activity>
+
+        <activity android:name=".RatingActivity"></activity>
+
         <activity android:name=".CategorizationActivity"></activity>
 
         <activity android:name=".MainActivity">

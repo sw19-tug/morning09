@@ -2,6 +2,7 @@ package at.tugraz.ist.swe.lang;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SearchRecentSuggestionsProvider;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -90,32 +92,29 @@ public class SettingsActivity extends AppCompatActivity {
         String path = getApplicationContext().getFilesDir().toString();
         File directory = new File(path);
         File[] files = directory.listFiles();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose Backup Name");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SettingsActivity.this, android.R.layout.select_dialog_singlechoice);
+
         for(File file:files)
         {
             arrayAdapter.add(file.getName());
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choose Backup Name");
 
-        final EditText inputTxt = new EditText(this);
 
-        inputTxt.setInputType(InputType.TYPE_CLASS_TEXT);
-
-        String backupString = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault()).format(new Date());
-
-        inputTxt.setText(backupString);
-
-        builder.setView(inputTxt);
-
-        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+        builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                inputString = inputTxt.getText().toString();
+                String choice = arrayAdapter.getItem(which);
+                vocabulary.loadFileByName(choice);
 
-                vocabulary.storeFileByName(inputString);
+                Toast.makeText(getBaseContext(), "Loaded: "+choice, Toast.LENGTH_LONG).show();
             }
         });
+
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

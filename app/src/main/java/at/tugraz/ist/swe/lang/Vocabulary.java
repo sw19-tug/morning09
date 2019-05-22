@@ -20,7 +20,7 @@ public class Vocabulary {
     public File file_;
     private JSONArray vocabArray_;
     JSONObject vocabulary_;
-    private String filename_ = "vocabulary.json";
+    static String filename_ = "vocabulary.json";
 
 
     public Vocabulary(Context context) {

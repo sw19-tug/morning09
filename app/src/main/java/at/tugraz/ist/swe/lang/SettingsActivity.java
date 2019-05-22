@@ -25,6 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Button btnStore;
     private Button btnLoad;
+    private Button btnManage;
     private String inputString = "";
     Vocabulary vocabulary;
 
@@ -52,6 +53,52 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        btnManage = findViewById(R.id.btnManage);
+        btnManage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                manageBackup();
+            }
+        });
+
+    }
+
+    public void manageBackup() {
+        String path = getApplicationContext().getFilesDir().toString();
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Tap to remove");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SettingsActivity.this, android.R.layout.select_dialog_singlechoice);
+
+        for(File file:files)
+        {
+            arrayAdapter.add(file.getName());
+        }
+
+
+
+        builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String choice = arrayAdapter.getItem(which);
+                vocabulary.loadFileByName(choice);
+                vocabulary.deleteVocab();
+                vocabulary.loadFileByName("vocabulary.json");
+                Toast.makeText(getBaseContext(), "deleted: "+choice, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
 
@@ -96,7 +143,7 @@ public class SettingsActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose Backup Name");
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SettingsActivity.this, android.R.layout.select_dialog_singlechoice);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SettingsActivity.this, android.R.layout.select_dialog_item);
 
         for(File file:files)
         {

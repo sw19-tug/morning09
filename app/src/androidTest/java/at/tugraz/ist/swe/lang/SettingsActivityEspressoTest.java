@@ -26,7 +26,7 @@ import static org.hamcrest.core.IsNot.not;
 public class SettingsActivityEspressoTest {
 
     @Rule
-    public ActivityTestRule<SettingsActivity> settingsActivityTestRule = new ActivityTestRule<>(AddWordsActivity.class);
+    public ActivityTestRule<SettingsActivity> settingsActivityTestRule = new ActivityTestRule<>(SettingsActivity.class);
 
     @Test
     public void testElementsVisible() {

@@ -119,6 +119,27 @@ public class Vocabulary {
         return -1;
     }
 
+
+
+    public JSONObject getByName(String vocabularyName)
+    {
+        try {
+            for(int i=0; i < vocabArray_.length();i++){
+                JSONObject entry = vocabArray_.getJSONObject(i);
+
+                if(entry.getString("german").equals(vocabularyName))
+                {
+                    return entry;
+
+                }
+            }
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     /**
      * removes Entry from Vocabulary
      * @param vocabularyName

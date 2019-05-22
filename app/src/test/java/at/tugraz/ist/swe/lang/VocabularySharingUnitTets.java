@@ -92,7 +92,6 @@ public class VocabularySharingUnitTets {
 
     @Test
     public void VocabularySharingExportTest() {
-
         // ToDO: Export the entered Vocabulary here
         vocabulary.init();
         vocabulary.add("Haus_geteilt", "House_Shared");

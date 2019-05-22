@@ -96,10 +96,10 @@ public class VocabularySharingUnitTets {
         // ToDO: Export the entered Vocabulary here
         vocabulary.init();
         vocabulary.add("Haus_geteilt", "House_Shared");
-        JSONObject myMoc  = vocabulary.getByName("Haus_geteilt");
+        JSONObject myVoc  = vocabulary.getByName("Haus_geteilt");
 
         File export_file = new File(mockContext.getFilesDir(), "VocabularySharing_test.json");
-        myMoc.export(export_file);
+        vocabulary.exportVocabularyToFile(myVoc,export_file.toString());
         assert (file.exists());
 
 
@@ -113,7 +113,7 @@ public class VocabularySharingUnitTets {
         // ToDO: Clear the List before and then Import the entered Vocabulary here
         vocabulary.init();
         String filename = "VocabularySharing_test.json";
-        vocabulary.importSharedFile(filename);
+        vocabulary.importVocabularyTFromFile(filename);
         assert (file.exists());
 
         assertNotEquals(-1, vocabulary.findByName("Haus_geteilt"));

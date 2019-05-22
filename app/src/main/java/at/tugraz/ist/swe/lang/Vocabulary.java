@@ -21,6 +21,7 @@ public class Vocabulary {
     private JSONArray vocabArray_;
     JSONObject vocabulary_;
     private String filename_ = "vocabulary.json";
+    public File FileName;
 
 
     public Vocabulary(Context context) {
@@ -132,12 +133,20 @@ public class Vocabulary {
                     return entry;
 
                 }
+
             }
         } catch(JSONException e){
             e.printStackTrace();
         }
 
         return null;
+    }
+
+
+    public void exportToVocabulary(Vocabulary vocToExport, String FileName){
+        getByName(FileName);
+
+
     }
 
     /**
@@ -215,7 +224,7 @@ public class Vocabulary {
 
     }
 
-    private void importVocabularyTFromFile(String FileName)
+    public void importVocabularyTFromFile(String FileName)
     {
          String readString = null;
         try {

@@ -22,11 +22,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.core.IsNot.not;
 
-
+@RunWith(AndroidJUnit4.class)
 public class AddTagsEspressoTest {
 
     @Rule
-    public ActivityTestRule<AddWordsActivity> addTagsTestRule = new ActivityTestRule<>(AddWordsActivity.class);
+    public ActivityTestRule<RatingActivity> addTagsTestRule = new ActivityTestRule<>(RatingActivity.class);
 
     @Test
     public void testElementsVisible() {
@@ -38,5 +38,10 @@ public class AddTagsEspressoTest {
         onView(withId(R.id.btnAddTag)).check(matches(withText("ADD")));
 
     }
+
+
+
+
+
 
 }

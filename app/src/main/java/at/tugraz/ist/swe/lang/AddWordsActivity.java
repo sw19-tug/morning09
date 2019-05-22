@@ -95,44 +95,30 @@ public class AddWordsActivity extends AppCompatActivity {
     }
 
     public void openRatingActivity(int position) {
-        Intent intent = new Intent(this, RatingActivity.class);
-        startActivity(intent);
+        setContentView(R.layout.activity_rating);
+
+        TextView textViewEn = (TextView)findViewById(R.id.textViewEn);
+        TextView textViewDe = (TextView)findViewById(R.id.textViewDe);
 
         try {
             System.out.println("Position Clicked is:");
             System.out.println(position);
             System.out.println("Position Clicked was:");
 
-            String Voc = (String) lvWordList.getItemAtPosition(position);
+            String vocItem = (String) lvWordList.getItemAtPosition(position);
+            String[] vocArray = vocItem.split(":");
+            String vocToFind = vocArray[1].trim();
 
             JSONArray myJson = vocabulary.getVocabArray();
-            JSONObject myVocabulary = myJson.getJSONObject(vocabulary.findByName(Voc));
-            System.out.println(myVocabulary.getString("german"));
-            System.out.println(myVocabulary.getString("english"));
+            JSONObject myVocabulary = myJson.getJSONObject(vocabulary.findByName(vocToFind));
+
+            textViewEn.setText(myVocabulary.getString("english"));
+            textViewDe.setText(myVocabulary.getString("german"));
 
         }
         catch(JSONException e) {
+            System.out.println("exceptoin @ openRatingActivity");
             e.printStackTrace();
-            //
         }
-
-
-        System.out.println("Set Content View 1" );
-        setContentView(R.layout.activity_rating);
-
-        TextView textViewDe = (TextView)findViewById(R.id.textViewDe);
-        TextView textViewEn = (TextView)findViewById(R.id.textViewEn);
-        System.out.println("Text Views Found:");
-
-        String[] sel_word_de;
-        sel_word_de =  getResources().getStringArray(R.array.dewords);
-        String[] sel_word_en;
-        sel_word_en =  getResources().getStringArray(R.array.enwords);
-        System.out.println("Vocabulary is:" );
-
-        textViewDe.setText(sel_word_de[position]);
-        textViewEn.setText(sel_word_en[position]);
-
-
     }
-    }
+}

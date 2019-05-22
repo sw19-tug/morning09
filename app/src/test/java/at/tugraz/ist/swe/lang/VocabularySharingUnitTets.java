@@ -98,8 +98,9 @@ public class VocabularySharingUnitTets {
         vocabulary.add("Haus_geteilt", "House_Shared");
         JSONObject myVoc  = vocabulary.getByName("Haus_geteilt");
 
-        File export_file = new File(mockContext.getFilesDir(), "VocabularySharing_test.json");
-        vocabulary.exportVocabularyToFile(myVoc,export_file.toString());
+        //File export_file = new File(mockContext.getFilesDir(), "VocabularySharing_test.json");
+        vocabulary.storeFileByName("VocabularySharing_test.json");
+        vocabulary.exportVocabularyToFile(myVoc,"VocabularySharing_test.json");
         assert (file.exists());
 
 
@@ -127,4 +128,5 @@ public class VocabularySharingUnitTets {
         assert(vocabulary.loadFileByName(filename));
         assert(vocabulary.file_.getName().equals(filename));
     }
+
 }

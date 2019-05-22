@@ -35,6 +35,7 @@ public class AddWordsActivity extends AppCompatActivity {
         lvWordList = (ListView)findViewById(R.id.lvWordList);
         btnAdd = (Button)findViewById(R.id.btnAdd);
 
+
         vocabulary = new Vocabulary(getApplicationContext());
         vocabulary.init();
 

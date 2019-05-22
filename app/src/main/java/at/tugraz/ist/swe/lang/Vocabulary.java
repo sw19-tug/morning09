@@ -191,6 +191,68 @@ public class Vocabulary {
         }
     }
 
+    public void exportVocabularyToFile(JSONObject vocToExport, String FileName)
+    {
+        String output = vocToExport.toString();
+        System.out.println(output);
+        file_ = new File(context_.getFilesDir(), FileName);
+        if (!file_.exists()) {
+            try {
+                file_.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try{
+            FileOutputStream fos = context_.openFileOutput(FileName, Context.MODE_PRIVATE);
+            fos.write(output.getBytes());
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void importVocabularyTFromFile(String FileName)
+    {
+         String readString = null;
+        try {
+            FileInputStream is = context_.openFileInput(FileName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            readString = new String(buffer, "UTF-8");
+
+
+            JSONObject myImportedVoc = new JSONObject(readString);
+
+            if(findByName(myImportedVoc.get("german").toString()) > 0)
+            {
+                // Vocabulary not found
+                // ToDo: put popup here
+
+
+
+                return ;
+            }
+           vocabArray_.put(myImportedVoc);
+
+
+        } catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (JSONException e1)
+        {
+            e1.printStackTrace();
+        }
+
+        return;
+    }
+
     /**
      * Reads content (Json) from file
      * @return returnString

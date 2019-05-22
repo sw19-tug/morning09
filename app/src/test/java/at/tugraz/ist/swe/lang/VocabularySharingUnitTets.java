@@ -2,6 +2,7 @@ package at.tugraz.ist.swe.lang;
 
 import android.content.Context;
 
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -95,7 +96,7 @@ public class VocabularySharingUnitTets {
         // ToDO: Export the entered Vocabulary here
         vocabulary.init();
         vocabulary.add("Haus_geteilt", "House_Shared");
-        Vocabulary myMoc  = vocabulary.getByName("Haus_geteilt");
+        JSONObject myMoc  = vocabulary.getByName("Haus_geteilt");
 
         File export_file = new File(mockContext.getFilesDir(), "VocabularySharing_test.json");
         myMoc.export(export_file);

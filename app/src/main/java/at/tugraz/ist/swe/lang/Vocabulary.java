@@ -20,7 +20,7 @@ public class Vocabulary {
     public File file_;
     private JSONArray vocabArray_;
     JSONObject vocabulary_;
-    private String filename_ = "vocabulary.json";
+    static String filename_ = "vocabulary.json";
 
 
     public Vocabulary(Context context) {
@@ -69,12 +69,6 @@ public class Vocabulary {
      */
     public int add(String german, String english)
     {
-
-        if(findByName(german) != -1)
-        {
-            return 0;
-        }
-
         try{
             JSONObject newJsonObj = new JSONObject();
 

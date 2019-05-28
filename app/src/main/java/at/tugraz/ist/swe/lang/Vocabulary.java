@@ -69,12 +69,6 @@ public class Vocabulary {
      */
     public int add(String german, String english)
     {
-
-        if(findByName(german) != -1)
-        {
-            return 0;
-        }
-
         try{
             JSONObject newJsonObj = new JSONObject();
 

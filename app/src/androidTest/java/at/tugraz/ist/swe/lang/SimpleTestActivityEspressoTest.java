@@ -42,11 +42,11 @@ public class SimpleTestActivityEspressoTest {
         Vocabulary vocab = (Vocabulary)mActivityTestRule.getActivity().vocabulary;
         int score = (int)mActivityTestRule.getActivity().myScore;
 
-        TextView questionTxt = mActivityTestRule.getActivity().findViewById(R.id.question);
+        TextView questionTxt = mActivityTestRule.getActivity().findViewById(id.tvQuestion);
 
         String translateWord = questionTxt.getText().toString();
-
-        String answer = vocab.getTranslation("english", translateWord);
+        System.out.println(translateWord);
+        String answer = vocab.getTranslation("german", translateWord);
 
         onData(anything())
                 .inAdapterView(withText(answer))

@@ -14,7 +14,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.text.BreakIterator;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class SimpleTestActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -23,8 +27,10 @@ public class SimpleTestActivity extends AppCompatActivity implements AdapterView
     private int myAttemps = 0;
     private ArrayAdapter answers;
     String[] random_question;
+    ArrayList<String> quiz;
     TextView score, question;
     ListView multiple;
+    Vocabulary vocabulary;
 
 
     @Override
@@ -32,8 +38,11 @@ public class SimpleTestActivity extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_test);
 
+        vocabulary = new Vocabulary(getApplicationContext());
+        vocabulary.init();
+
         score = findViewById(R.id.score);
-        question = findViewById(R.id.question);
+        question = findViewById(R.id.tvQuestion);
         multiple = findViewById(R.id.multiple);
         updateQuestion(myScore);
         score.setText("Score: " + myScore);
@@ -104,6 +113,20 @@ public class SimpleTestActivity extends AppCompatActivity implements AdapterView
         );
         multiple.setAdapter(answers);
         score.setText("Score: " + myScore);
+    }
+
+    public void generateQuestions(int quantity) {
+        JSONArray jsonArray = vocabulary.getVocabArray();
+
+        for (int i=0; i<quantity; i++) {
+            int random = 1;
+            try {
+                jsonArray.getJSONObject(random).getString("german");
+            }
+            catch(JSONException e){
+            e.printStackTrace();
+        }
+        }
     }
 }
 

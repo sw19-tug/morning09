@@ -17,6 +17,12 @@ public class TestsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tests);
 
         btnTakeTest = findViewById(R.id.btnTakeTest);
+        btnTakeTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTakeTest();
+            }
+        });
 
         btnCreateTest = findViewById(R.id.btnCreateTest);
         btnCreateTest.setOnClickListener(new View.OnClickListener() {
@@ -27,6 +33,11 @@ public class TestsActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void openTakeTest() {
+        Intent take_advance_test = new Intent(this, TakeTestActivity.class);
+        startActivity(take_advance_test);
     }
 
     private void openCreateTest() {

@@ -19,5 +19,6 @@
         <item>Spiegel</item>
         <item>Jacke</item>
     </string-array>
+    <string name="title_activity_take_test">TakeTestActivity</string>
 
 </resources>

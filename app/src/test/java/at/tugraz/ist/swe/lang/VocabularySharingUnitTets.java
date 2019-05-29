@@ -54,14 +54,14 @@ public class VocabularySharingUnitTets {
         fileInputStream = new FileInputStream(file);
 
 
-        when(mockContext.openFileOutput("VocabularySharing_test.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
-        when(mockContext.openFileInput("Vocabulary.json")).thenReturn(fileInputStream);
+        when(mockContext.openFileOutput("vocabulary.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
+        when(mockContext.openFileInput("vocabulary.json")).thenReturn(fileInputStream);
 
-        CreateTestFiles("VocabularySharing_test.json");
-        CreateTestFiles("Vocabulary.json");
+        CreateTestFiles("vocabularySharing_test.json");
 
-        when(mockContext.openFileOutput("VocabularySharing_test.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
-        when(mockContext.openFileInput("Vocabulary.json")).thenReturn(fileInputStream);
+
+        when(mockContext.openFileOutput("vocabularySharing_test.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
+        when(mockContext.openFileInput("vocabularySharing_test.json")).thenReturn(fileInputStream);
     }
 
     public void CreateTestFiles(String filename) {
@@ -80,7 +80,7 @@ public class VocabularySharingUnitTets {
     public void VocabularyStoreTest() {
         vocabulary.init();
         vocabulary.storeFile();
-        File file = new File(mockContext.getFilesDir(), "VocabularySharing_test.json");
+        File file = new File(mockContext.getFilesDir(), "vocabulary.json");
         assert (file.exists());
     }
 
@@ -100,7 +100,7 @@ public class VocabularySharingUnitTets {
         JSONObject myVoc  = vocabulary.getByName("Haus_geteilt");
 
         //File export_file = new File(mockContext.getFilesDir(), "VocabularySharing_test.json");
-        vocabulary.storeFileByName("VocabularySharing_test.json");
+        vocabulary.storeFileByName("vocabularySharing_test.json");
         vocabulary.exportVocabularyToFile(myVoc,"VocabularySharing_test.json");
         assert (file.exists());
 
@@ -114,7 +114,7 @@ public class VocabularySharingUnitTets {
     public void VocabularySharingImportTest() {
         // ToDO: Clear the List before and then Import the entered Vocabulary here
         vocabulary.init();
-        String filename = "VocabularySharing_test.json";
+        String filename = "vocabularySharing_test.json";
         vocabulary.importVocabularyTFromFile(filename);
         assert (file.exists());
 
@@ -125,7 +125,7 @@ public class VocabularySharingUnitTets {
 
     @Test
     public void VocabularyLoadByName() {
-        String filename = "VocabularySharing_test.json";
+        String filename = "vocabularySharing_test.json";
         assert(vocabulary.loadFileByName(filename));
         assert(vocabulary.file_.getName().equals(filename));
     }

@@ -32,10 +32,36 @@ public class AddTagsEspressoTest {
     public void testElementsVisible() {
 
         // Just basic implementation
+
+        onView(withId(R.id.textViewDe)).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewEn)).check(matches(isDisplayed()));
+        onView(withId(R.id.ratingBar)).check(matches(isDisplayed()));
+
         onView(withId(R.id.lvTags)).check(matches(isDisplayed()));
         onView(withId(R.id.ptNewTag)).check(matches(isDisplayed()));
         onView(withId(R.id.btnAddTag)).check(matches(isDisplayed()));
         onView(withId(R.id.btnAddTag)).check(matches(withText("ADD")));
+
+    }
+
+    @Test
+    public void testSampleInput() {
+
+        String inputTag = "difficult";
+
+        onView(withId(R.id.ptNewTag)).perform(typeText(inputTag));
+
+        closeSoftKeyboard();
+
+        onView(withId(R.id.btnAddTag)).perform(click());
+
+        ListView lvTags = (ListView)addTagsTestRule.getActivity().findViewById(R.id.lvTags);
+        int lvItemsCount = lvTags.getAdapter().getCount();
+
+        onData(anything())
+                .inAdapterView(withId(R.id.lvWordList))
+                .atPosition(lvItemsCount-1)
+                .check(matches(withText(inputTag)));
 
     }
 

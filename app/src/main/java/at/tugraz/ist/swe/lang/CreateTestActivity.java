@@ -11,7 +11,9 @@ import java.util.ArrayList;
 
 
 public class CreateTestActivity extends AppCompatActivity {
-    ListView vocabList;
+
+    private Button saveTest;
+    private ListView vocabList;
     Vocabulary vocabulary;
     JSONArray vocabArray = new JSONArray();
     @Override
@@ -19,6 +21,7 @@ public class CreateTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_create);
 
+        saveTest = findViewById(R.id.saveTest_btn);
         vocabList = (ListView)findViewById(R.id.vocabList);
         vocabulary = new Vocabulary(getApplicationContext());
         vocabulary.init();

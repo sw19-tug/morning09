@@ -3,6 +3,7 @@ package at.tugraz.ist.swe.lang;
 import static org.hamcrest.Matchers.anything;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,27 +46,43 @@ public class SimpleTestActivityEspressoTest {
         TextView questionTxt = mActivityTestRule.getActivity().findViewById(id.tvQuestion);
 
         String translateWord = questionTxt.getText().toString();
-        System.out.println(translateWord);
         String answer = vocab.getTranslation("german", translateWord);
 
-        onData(anything())
-                .inAdapterView(withText(answer))
+        onView(withText(answer))
                 .perform(click());
 
-        onView(withId(id.score)).check(matches(not(withText("Score: "+score))));
+        onView(withId(id.score)).check(matches(withText("Score: "+ ++score)));
     }
 
     @Test
-    public void checkInvalidAnswer(){
+    public void checkInvalidAnswer() {
 
-        onData(anything())
-                .inAdapterView(withId(id.multiple))
-                .atPosition(0)
-                .perform(click());
-        onView(withId(id.score)).check(matches(withText("Score: 0")));
+        Vocabulary vocab = (Vocabulary) mActivityTestRule.getActivity().vocabulary;
+        int score = (int) mActivityTestRule.getActivity().myScore;
 
+        TextView questionTxt = mActivityTestRule.getActivity().findViewById(id.tvQuestion);
 
+        String translateWord = questionTxt.getText().toString();
+        System.out.println(translateWord);
+        String answer = vocab.getTranslation("german", translateWord);
+        System.out.println(answer);
 
+        ArrayAdapter adapter = (ArrayAdapter) mActivityTestRule.getActivity().multiple.getAdapter();
+
+        if (adapter.getItem(0).toString() == answer)
+        {
+            onData(anything())
+                    .inAdapterView(withId(R.id.multiple))
+                    .atPosition(1)
+                    .perform(click());
+        }
+        else
+        {
+            onData(anything())
+                    .inAdapterView(withId(R.id.multiple))
+                    .atPosition(0)
+                    .perform(click());
+        }
     }
 
 

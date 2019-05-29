@@ -338,6 +338,21 @@ public class Vocabulary {
         return true;
     }
 
+    public File getFileByName(String filename) {
+
+        filename_ = filename;
+
+        //check if file exists
+        file_ = new File(context_.getFilesDir(), filename_);
+        if (!file_.exists()) {
+            return null;
+        }
+
+        //init();
+        return file_;
+    }
+
+
     public void deleteVocab() {
         File deleteFile = new File(context_.getFilesDir(), filename_);
         deleteFile.delete();

@@ -99,23 +99,25 @@ public class VocabularySharingUnitTets {
         vocabulary.add("Haus_geteilt", "House_Shared");
         JSONObject myVoc  = vocabulary.getByName("Haus_geteilt");
 
-        //File export_file = new File(mockContext.getFilesDir(), "VocabularySharing_test.json");
+        File export_file = vocabulary.getFileByName("vocabularySharing_test.json");
         //vocabulary.storeFileByName("vocabularySharing_test.json");
-        vocabulary.exportVocabularyToFile(myVoc,testExportFile);
+        vocabulary.exportVocabularyToFile(myVoc,export_file);
         assert (testExportFile.exists());
 
 
         assertNotEquals(false, vocabulary.removeByName("Haus_geteilt"));
         vocabulary.removeByName("Haus_geteilt");
-
+        // Test Import Here
+        VocabularySharingImportTest(export_file);
     }
 
-    @Test
-    public void VocabularySharingImportTest() {
+
+    public void VocabularySharingImportTest(File FileNameToImport) {
         // ToDO: Clear the List before and then Import the entered Vocabulary here
-        vocabulary.init();
-        //String filename = "vocabularySharing_test.json";
-        vocabulary.importVocabularyTFromFile(testExportFile);
+        //vocabulary.init();
+        //String filename_ = "vocabularySharing_test.json";
+        //File export_file = vocabulary.getFileByName(filename_);
+        vocabulary.importVocabularyTFromFile(FileNameToImport);
         assert (file.exists());
 
         assertNotEquals(-1, vocabulary.findByName("Haus_geteilt"));

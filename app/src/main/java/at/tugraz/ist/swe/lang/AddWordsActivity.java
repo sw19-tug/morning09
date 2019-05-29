@@ -39,7 +39,6 @@ public class AddWordsActivity extends AppCompatActivity {
         vocabulary.init();
 
         updateListView();
-
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

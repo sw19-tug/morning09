@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,20 @@ public class TestsActivity extends AppCompatActivity {
         vocabulary = new Vocabulary(getApplicationContext());
         vocabulary.init();
         vocabArray = vocabulary.getVocabArray();
+    try {
+        JSONArray jsonArray = vocabulary.getVocabArray();
+        ArrayList<String> wordArray = new ArrayList<String>();
 
+        for (int i = 0; i < jsonArray.length(); i++) {
+            String entry = jsonArray.getJSONObject(i).getString("english") + " : " + jsonArray.getJSONObject(i).getString("german");
+            wordArray.add(entry);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(TestsActivity.this, android.R.layout.simple_list_item_1, wordArray);
+        vocabList.setAdapter(adapter);
+        }
+        catch (JSONException e) {
+        e.printStackTrace();
+        }
     }
 }
 

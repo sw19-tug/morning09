@@ -12,8 +12,8 @@ public class MainActivity extends AppCompatActivity {
     private Button translation;
     private Button simpleTest;
     private Button btnCategory;
-    private Button btnTests;
-
+    private Button btnSettings;
+    private Button btnAdvanceTest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,13 +51,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnTests = findViewById(R.id.btnTests);
-        btnTests.setOnClickListener(new View.OnClickListener() {
+        btnSettings = findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openTestActivity();
+                openSettings();
             }
         });
+
+        btnAdvanceTest = findViewById(R.id.test_btn);
+        btnAdvanceTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAdvanceTesting();
+            }
+        });
+
+
+    }
+
+    private void openAdvanceTesting() {
+        Intent advance_testing = new Intent(this, TestsActivity.class);
+        startActivity(advance_testing);
     }
 
     public void openAddWordsActivity() {
@@ -83,9 +98,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openTestActivity() {
-        Intent intent = new Intent(this, TestsActivity.class);
-        startActivity(intent);
+    public void openSettings() {
+        Intent intent_settings = new Intent(this, SettingsActivity.class);
+        startActivity(intent_settings);
+
     }
 }
 

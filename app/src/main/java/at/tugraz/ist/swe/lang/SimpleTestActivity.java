@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class SimpleTestActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private String myAnswer;
-    private int myScore = 0;
+    public int myScore = 0;
     private int myAttemps = 0;
     private ArrayAdapter answers;
     String[] random_question;

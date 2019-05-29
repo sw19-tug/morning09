@@ -3,6 +3,7 @@ package at.tugraz.ist.swe.lang;
 import static org.hamcrest.Matchers.anything;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.junit.Rule;
@@ -19,6 +20,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static at.tugraz.ist.swe.lang.R.*;
 
 import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.core.IsNot.not;
 
 @RunWith(AndroidJUnit4.class)
 public class SimpleTestActivityEspressoTest {
@@ -35,16 +37,22 @@ public class SimpleTestActivityEspressoTest {
     }
 
     @Test
-    public void checkFirstAnswer(){
+    public void checkRightAnswer(){
+
+        Vocabulary vocab = (Vocabulary)mActivityTestRule.getActivity().vocabulary;
+        int score = (int)mActivityTestRule.getActivity().myScore;
+
+        TextView questionTxt = mActivityTestRule.getActivity().findViewById(R.id.question);
+
+        String translateWord = questionTxt.getText().toString();
+
+        String answer = vocab.getTranslation("english", translateWord);
 
         onData(anything())
-                .inAdapterView(withId(id.multiple))
-                .atPosition(1)
+                .inAdapterView(withText(answer))
                 .perform(click());
-        onView(withId(id.score)).check(matches(withText("Score: 1")));
 
-
-
+        onView(withId(id.score)).check(matches(not(withText("Score: "+score))));
     }
 
     @Test

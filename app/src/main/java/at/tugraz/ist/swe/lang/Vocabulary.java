@@ -114,6 +114,42 @@ public class Vocabulary {
     }
 
     /**
+     * get translation of a word, lang specifies return language
+     * @param lang
+     * @param word
+     * @return
+     */
+    public String getTranslation(String lang, String word)
+    {
+
+        try {
+            for(int i=0; i < vocabArray_.length();i++){
+                JSONObject entry = vocabArray_.getJSONObject(i);
+
+                if(lang.compareTo("english") == 0)
+                {
+                    if(entry.getString("german").equals(word))
+                    {
+                        return entry.getString("english");
+                    }
+                }
+
+                if(lang.compareTo("german") == 0)
+                {
+                    if(entry.getString("english").equals(word))
+                    {
+                        return entry.getString("german");
+                    }
+                }
+            }
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * removes Entry from Vocabulary
      * @param vocabularyName
      * @return true if removed, false if not

@@ -101,7 +101,7 @@ public class VocabularySharingUnitTets {
 
         //File export_file = new File(mockContext.getFilesDir(), "VocabularySharing_test.json");
         vocabulary.storeFileByName("vocabularySharing_test.json");
-        vocabulary.exportVocabularyToFile(myVoc,"VocabularySharing_test.json");
+        vocabulary.exportVocabularyToFile(myVoc,"vocabularySharing_test.json");
         assert (file.exists());
 
 

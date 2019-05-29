@@ -1,6 +1,7 @@
 package at.tugraz.ist.swe.lang;
 
 import android.content.Intent;
+import android.media.Rating;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -107,13 +109,66 @@ public class AddWordsActivity extends AppCompatActivity {
 
             String vocItem = (String) lvWordList.getItemAtPosition(position);
             String[] vocArray = vocItem.split(":");
-            String vocToFind = vocArray[1].trim();
+            final String vocToFind = vocArray[1].trim();
 
-            JSONArray myJson = vocabulary.getVocabArray();
-            JSONObject myVocabulary = myJson.getJSONObject(vocabulary.findByName(vocToFind));
+            final JSONArray myJson = vocabulary.getVocabArray();
+            final int objectId = vocabulary.findByName(vocToFind);
+            JSONObject currWord= myJson.getJSONObject(objectId);
 
-            textViewEn.setText(myVocabulary.getString("english"));
-            textViewDe.setText(myVocabulary.getString("german"));
+            textViewEn.setText(currWord.getString("english"));
+            textViewDe.setText(currWord.getString("german"));
+
+            final RatingBar ratingBar = (RatingBar)findViewById(R.id.ratingBar);
+            if (!currWord.has("rating")) {
+                currWord.put("rating", 2);
+            } else {
+                ratingBar.setRating((float)currWord.getDouble("rating"));
+            }
+
+            final ArrayList<String> tagsArray = new ArrayList<String>();
+            if (!currWord.has("tags")) {
+                JSONArray tmpArray = new JSONArray();
+                currWord.put("tags", tmpArray);
+            } else {
+                System.out.println(currWord.getString("tags"));
+                JSONArray tagsFromFile = currWord.getJSONArray("tags");
+
+                for(int i=0; i < tagsFromFile.length();i++){
+                    tagsArray.add(tagsFromFile.getString(i));
+                }
+            }
+
+            final ListView lvTags = (ListView)findViewById(R.id.lvTags);
+            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddWordsActivity.this, android.R.layout.simple_list_item_1, tagsArray);
+            lvTags.setAdapter(adapter);
+
+            Button addTagsButton = (Button)findViewById(R.id.btnAddTag);
+            addTagsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditText tagsText = findViewById(R.id.ptNewTag);
+                    String toAddTag = tagsText.getText().toString();
+                    tagsArray.add(toAddTag);
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddWordsActivity.this, android.R.layout.simple_list_item_1, tagsArray);
+                    lvTags.setAdapter(adapter);
+
+                    tagsText.setText("");
+                }
+            });
+
+            Button submitButton = (Button)findViewById(R.id.btnRatingSubmit);
+            submitButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    float rating = ratingBar.getRating();
+
+                    vocabulary.addRating(objectId, rating);
+                    vocabulary.addTags(objectId, tagsArray);
+
+                    //TODO go back to overview.
+                }
+            });
 
         }
         catch(JSONException e) {

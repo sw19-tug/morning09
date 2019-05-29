@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class Vocabulary {
@@ -250,4 +251,28 @@ public class Vocabulary {
         deleteFile.delete();
     }
 
+    public void addRating(int id, float rating) {
+        try {
+            JSONObject entry = vocabArray_.getJSONObject(id);
+            entry.put("rating", rating);
+            storeFile();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addTags(int objectId, ArrayList<String> tagsArray) {
+
+        try {
+            JSONArray array = new JSONArray();
+            for (int i=0; i<tagsArray.size(); i++) {
+                array.put(tagsArray.get(i));
+            }
+            JSONObject entry = vocabArray_.getJSONObject(objectId);
+            entry.put("tags", array);
+            storeFile();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

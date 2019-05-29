@@ -60,7 +60,7 @@ public class VocabularySharingUnitTets {
         CreateTestFiles("vocabularySharing_test.json");
 
 
-        when(mockContext.openFileOutput("vocabularySharing_test.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
+//        when(mockContext.openFileOutput("vocabularySharing_test.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
         when(mockContext.openFileInput("vocabularySharing_test.json")).thenReturn(fileInputStream);
     }
 

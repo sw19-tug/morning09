@@ -200,11 +200,11 @@ public class Vocabulary {
         }
     }
 
-    public void exportVocabularyToFile(JSONObject vocToExport, String FileName)
+    public void exportVocabularyToFile(JSONObject vocToExport, File FileName)
     {
         String output = vocToExport.toString();
         System.out.println(output);
-        file_ = new File(context_.getFilesDir(), FileName);
+        file_ = FileName;
         if (!file_.exists()) {
             try {
                 file_.createNewFile();
@@ -213,9 +213,10 @@ public class Vocabulary {
             }
         }
         try{
-            FileOutputStream fos = context_.openFileOutput(FileName, Context.MODE_PRIVATE);
-            fos.write(output.getBytes());
-            fos.close();
+            //FileOutputStream fos = context_.openFileOutput(FileName.getPath(), Context.MODE_PRIVATE);
+            FileOutputStream fos1 = new FileOutputStream(file_);
+            fos1.write(output.getBytes());
+            fos1.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -224,11 +225,11 @@ public class Vocabulary {
 
     }
 
-    public void importVocabularyTFromFile(String FileName)
+    public void importVocabularyTFromFile(File FileName)
     {
          String readString = null;
         try {
-            FileInputStream is = context_.openFileInput(FileName);
+            FileInputStream is = new FileInputStream(FileName);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -308,7 +309,7 @@ public class Vocabulary {
             }
         }
         try{
-            FileOutputStream fos = context_.openFileOutput(filename, Context.MODE_PRIVATE);
+            FileOutputStream fos = context_.openFileOutput(file_.getAbsolutePath(), Context.MODE_PRIVATE);
             fos.write(output.getBytes());
             fos.close();
         } catch (FileNotFoundException e) {

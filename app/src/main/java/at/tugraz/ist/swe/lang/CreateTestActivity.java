@@ -58,17 +58,29 @@ public class CreateTestActivity extends AppCompatActivity {
 
                 String selected = "";
                 int cntChoice = vocabList.getCount();
-                SparseBooleanArray sparseBooleanArray = vocabList.getCheckedItemPositions();
 
-                for (int i = 0; i < cntChoice; i++) {
-
-                    if (sparseBooleanArray.get(i)) {
-
-                        selected += vocabList.getItemAtPosition(i).toString() + "\n";
-                    }
+                if (name_of_test.getText().length() == 0)
+                {
+                    Toast.makeText(getBaseContext(), "Empty name!", Toast.LENGTH_LONG).show();
                 }
-                Toast.makeText(CreateTestActivity.this, name_of_test.getText() +
-                        " saved!", Toast.LENGTH_LONG).show();
+                else if (cntChoice == 1)
+                {
+                    Toast.makeText(getBaseContext(), "Choose at least one word!", Toast.LENGTH_LONG).show();
+                }
+                else {
+
+                    SparseBooleanArray sparseBooleanArray = vocabList.getCheckedItemPositions();
+
+                    for (int i = 0; i < cntChoice; i++) {
+
+                        if (sparseBooleanArray.get(i)) {
+
+                            selected += vocabList.getItemAtPosition(i).toString() + "\n";
+                        }
+                    }
+                    Toast.makeText(CreateTestActivity.this, name_of_test.getText() +
+                            " saved!", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

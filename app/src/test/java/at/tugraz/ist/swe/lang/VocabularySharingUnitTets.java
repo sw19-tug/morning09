@@ -55,17 +55,18 @@ public class VocabularySharingUnitTets {
 
 
         when(mockContext.openFileOutput("VocabularySharing_test.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
-        when(mockContext.openFileInput("VocabularySharing_test.json")).thenReturn(fileInputStream);
+        when(mockContext.openFileInput("Vocabulary.json")).thenReturn(fileInputStream);
 
-        CreateTestFile();
+        CreateTestFiles("VocabularySharing_test.json");
+        CreateTestFiles("Vocabulary.json");
 
         when(mockContext.openFileOutput("VocabularySharing_test.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
-        when(mockContext.openFileInput("VocabularySharing_test.json")).thenReturn(fileInputStream);
+        when(mockContext.openFileInput("Vocabulary.json")).thenReturn(fileInputStream);
     }
 
-    public void CreateTestFile() {
-        String filename = "VocabularySharing_test.json";
-        testfile = new File(mockContext.getFilesDir(), filename);
+    public void CreateTestFiles(String filename) {
+        String filename_ = filename;
+        testfile = new File(mockContext.getFilesDir(), filename_);
         if (!testfile.exists()) {
             try {
                 testfile.createNewFile();

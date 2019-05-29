@@ -2,9 +2,13 @@ package at.tugraz.ist.swe.lang;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseBooleanArray;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.ArrayList;
@@ -35,11 +39,35 @@ public class CreateTestActivity extends AppCompatActivity {
                 String entry = jsonArray.getJSONObject(i).getString("english") + " : " + jsonArray.getJSONObject(i).getString("german");
                 wordArray.add(entry);
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(CreateTestActivity.this, android.R.layout.simple_list_item_1, wordArray);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(CreateTestActivity.this, android.R.layout.simple_list_item_multiple_choice, wordArray);
+            vocabList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             vocabList.setAdapter(adapter);
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
+
+        saveTest.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                String selected = "";
+                int cntChoice = vocabList.getCount();
+                SparseBooleanArray sparseBooleanArray = vocabList.getCheckedItemPositions();
+
+                for(int i = 0; i < cntChoice; i++){
+
+                    if(sparseBooleanArray.get(i)) {
+
+                        selected += vocabList.getItemAtPosition(i).toString() + "\n";
+                    }
+                }
+                Toast.makeText(CreateTestActivity.this,
+
+                        selected,
+
+                        Toast.LENGTH_LONG).show();
+
+            }});
     }
 }

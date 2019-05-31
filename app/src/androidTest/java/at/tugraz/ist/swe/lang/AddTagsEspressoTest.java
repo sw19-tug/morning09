@@ -2,6 +2,7 @@ package at.tugraz.ist.swe.lang;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import org.junit.Rule;
@@ -43,31 +44,6 @@ public class AddTagsEspressoTest {
         onView(withId(R.id.btnAddTag)).check(matches(withText("ADD")));
 
     }
-
-    @Test
-    public void testSampleInput() {
-
-        String inputTag = "difficult";
-
-        onView(withId(R.id.ptNewTag)).perform(typeText(inputTag));
-
-        closeSoftKeyboard();
-
-        onView(withId(R.id.btnAddTag)).perform(click());
-
-        ListView lvTags = (ListView)addTagsTestRule.getActivity().findViewById(R.id.lvTags);
-        int lvItemsCount = lvTags.getAdapter().getCount();
-
-        onData(anything())
-                .inAdapterView(withId(R.id.lvWordList))
-                .atPosition(lvItemsCount-1)
-                .check(matches(withText(inputTag)));
-
-    }
-
-
-
-
 
 
 }

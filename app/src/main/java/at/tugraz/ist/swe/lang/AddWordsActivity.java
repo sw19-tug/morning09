@@ -165,7 +165,9 @@ public class AddWordsActivity extends AppCompatActivity {
 
                     vocabulary.addRating(objectId, rating);
                     vocabulary.addTags(objectId, tagsArray);
-
+                    
+                    finish();
+                    startActivity(new Intent(AddWordsActivity.this, AddWordsActivity.class));
                     //TODO go back to overview.
                 }
             });

@@ -22,7 +22,8 @@ public class CreateTestActivity extends AppCompatActivity {
     private TextView name_of_test;
     private Button saveTest;
     private ListView vocabList;
-    Vocabulary test;
+    Vocabulary vocabulary;
+    Test test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +33,12 @@ public class CreateTestActivity extends AppCompatActivity {
         name_of_test = (EditText)findViewById(R.id.test_name);
         saveTest = findViewById(R.id.saveTest_btn);
         vocabList = (ListView)findViewById(R.id.vocabList);
-        test = new Vocabulary(getApplicationContext());
-        test.init();
+        vocabulary = new Vocabulary(getApplicationContext());
+        vocabulary.init();
+
 
         try {
-            JSONArray jsonArray = test.getVocabArray();
+            JSONArray jsonArray = vocabulary.getVocabArray();
             ArrayList<String> wordArray = new ArrayList<String>();
 
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -87,11 +89,14 @@ public class CreateTestActivity extends AppCompatActivity {
 
     private void saveTest(String[] selected) {
 
-        test.add(name_of_test.toString(), "");
+        test = new Test(getApplicationContext());
+        test.init();
+        test.add("TITLE:", name_of_test.toString());
         for (int i =0; i < selected.length; i++)
         {
             String[] words = selected[i].split("::");
             test.add(words[0], words[1]);
+            test.storeFile();
         }
     }
 }

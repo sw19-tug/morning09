@@ -37,7 +37,8 @@ public class AddTagsEspressoTest {
         onView(withId(R.id.textViewDe)).check(matches(isDisplayed()));
         onView(withId(R.id.textViewEn)).check(matches(isDisplayed()));
         onView(withId(R.id.ratingBar)).check(matches(isDisplayed()));
-
+        
+        onView(withId(R.id.btnDeleteTag)).check(matches(isDisplayed()));
         onView(withId(R.id.lvTags)).check(matches(isDisplayed()));
         onView(withId(R.id.ptNewTag)).check(matches(isDisplayed()));
         onView(withId(R.id.btnAddTag)).check(matches(isDisplayed()));

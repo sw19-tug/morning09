@@ -13,7 +13,8 @@ public class MainActivity extends AppCompatActivity {
     private Button simpleTest;
     private Button btnCategory;
     private Button btnSettings;
-
+    private Button btnAdvanceTest;
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +59,21 @@ public class MainActivity extends AppCompatActivity {
                 openSettings();
             }
         });
+
+        btnAdvanceTest = findViewById(R.id.test_btn);
+        btnAdvanceTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAdvanceTesting();
+            }
+        });
+
+
+    }
+
+    private void openAdvanceTesting() {
+        Intent advance_testing = new Intent(this, TestsActivity.class);
+        startActivity(advance_testing);
     }
 
     public void openAddWordsActivity() {

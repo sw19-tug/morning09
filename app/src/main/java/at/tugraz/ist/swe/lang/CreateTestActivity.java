@@ -55,7 +55,7 @@ public class CreateTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String selected = "";
+                String[] selected = null;
                 int cntChoice = vocabList.getCount();
 
                 if (name_of_test.getText().length() == 0)
@@ -74,7 +74,7 @@ public class CreateTestActivity extends AppCompatActivity {
 
                         if (sparseBooleanArray.get(i)) {
 
-                            selected += vocabList.getItemAtPosition(i).toString() + "\n";
+                            selected[i] += vocabList.getItemAtPosition(i).toString() + "\n";
                         }
                     }
                     saveTest(selected);
@@ -85,20 +85,13 @@ public class CreateTestActivity extends AppCompatActivity {
         });
     }
 
-    private void saveTest(String selected) {
-        
+    private void saveTest(String[] selected) {
+
         test.add(name_of_test.toString(), "");
-        for (int i =0; i < selected.length(); i++)
+        for (int i =0; i < selected.length; i++)
         {
-            String words = selected[i];
-        }
-
-
-        if (englishWord.length() == 0 || germanWord.length() == 0) {
-            Toast.makeText(getBaseContext(), "Empty input!", Toast.LENGTH_LONG).show();
-        } else {
-            vocabulary.add(germanWord, englishWord);
-            vocabulary.storeFile();
+            String[] words = selected[i].split("::");
+            test.add(words[0], words[1]);
         }
     }
 }

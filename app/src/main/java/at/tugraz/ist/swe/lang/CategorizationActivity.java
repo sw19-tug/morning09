@@ -181,12 +181,6 @@ public class CategorizationActivity extends AppCompatActivity {
                     System.out.println(position);
                     System.out.println(Value);
 
-
-
-
-
-
-
                     try {
 
                         final JSONArray jsonArray1 = jsonArray;
@@ -200,11 +194,12 @@ public class CategorizationActivity extends AppCompatActivity {
                             writeToFile(exportString);
                         }
 
-                        //File file = vocabulary.exportVocabularyToFile(export, vocabulary.file_);
+                        File file = vocabulary.exportVocabularyToFile(export, vocabulary.file_);
                         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                         sharingIntent.setType("text/*");
                         sharingIntent.putExtra(Intent.EXTRA_TEXT, exportString);
-                        sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///storage/emulated/0/Download/export.json"));
+                        sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + file.getAbsolutePath()));
+                        //sharingIntent.setType()
                         startActivity(Intent.createChooser(sharingIntent, "share file with"));
 
 

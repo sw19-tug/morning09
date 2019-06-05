@@ -91,6 +91,8 @@ public class ImportActivity extends AppCompatActivity {
             Log.e(TAG, " choose file error "+e.toString());
         }
     }
+
+    // TODO: 2019-06-05 clean up this section and Get source
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -137,7 +139,7 @@ public class ImportActivity extends AppCompatActivity {
                         String[] split = tempID.split(":");
                         String type = split[0];
                         id = split[1];
-                        Uri contenturi = null;
+                        //Uri contenturi = null;
                         if (type.equals("primary")){
                             actualfilepath=  Environment.getExternalStorageDirectory()+"/"+id;
                         }
@@ -165,6 +167,9 @@ public class ImportActivity extends AppCompatActivity {
             }
         }
     }
+
+    // TODO: 2019-06-05 Get source
+
     public String getFileData( Uri uri, String selection, String[] selectarg){
         String filepath ="";
         Cursor cursor = null;

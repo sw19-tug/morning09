@@ -201,7 +201,7 @@ public class Vocabulary {
         }
     }
 
-    public File exportVocabularyToFile(JSONObject vocToExport, File FileName)
+    public void exportVocabularyToFile(JSONObject vocToExport, File FileName)
     {
         String output = vocToExport.toString();
         System.out.println(output);
@@ -225,7 +225,7 @@ public class Vocabulary {
         }
 
 
-        return FileName;
+        //return 0;
     }
 
     public void importVocabularyTFromFile(File FileName)

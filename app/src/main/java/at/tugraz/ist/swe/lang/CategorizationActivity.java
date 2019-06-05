@@ -193,12 +193,12 @@ public class CategorizationActivity extends AppCompatActivity {
                         }else {
                             writeToFile(exportString);
                         }
-
-                        File file = vocabulary.exportVocabularyToFile(export, vocabulary.file_);
+                        File exportFile = new File("export_vocabulary.json");
+                        vocabulary.exportVocabularyToFile(export, exportFile);
                         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                         sharingIntent.setType("text/*");
-                        sharingIntent.putExtra(Intent.EXTRA_TEXT, exportString);
-                        sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + file.getAbsolutePath()));
+                        //sharingIntent.putExtra(Intent.EXTRA_TEXT, exportString);
+                        sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + exportFile.getAbsolutePath()));
                         //sharingIntent.setType()
                         startActivity(Intent.createChooser(sharingIntent, "share file with"));
 

@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 
 
 public class Vocabulary {
@@ -200,7 +201,7 @@ public class Vocabulary {
         }
     }
 
-    public void exportVocabularyToFile(JSONObject vocToExport, File FileName)
+    public File exportVocabularyToFile(JSONObject vocToExport, File FileName)
     {
         String output = vocToExport.toString();
         System.out.println(output);
@@ -223,6 +224,8 @@ public class Vocabulary {
             e.printStackTrace();
         }
 
+
+        return FileName;
     }
 
     public void importVocabularyTFromFile(File FileName)

@@ -37,6 +37,16 @@
         android:layout_marginBottom="8dp"
         android:text="Add" />
 
+    <Button
+        android:id="@+id/btnImport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Import word from file" />
+
     <ListView
         android:id="@+id/lvWordList"
         android:layout_width="379dp"

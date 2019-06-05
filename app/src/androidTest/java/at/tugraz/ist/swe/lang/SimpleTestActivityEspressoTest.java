@@ -5,7 +5,6 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,7 +19,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 import static at.tugraz.ist.swe.lang.R.*;
 
-import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.IsNot.not;
 
 @RunWith(AndroidJUnit4.class)
@@ -41,7 +39,7 @@ public class SimpleTestActivityEspressoTest {
     public void checkRightAnswer(){
 
         Vocabulary vocab = (Vocabulary)mActivityTestRule.getActivity().vocabulary;
-        int score = (int)mActivityTestRule.getActivity().myScore;
+        int score = (int)mActivityTestRule.getActivity().score;
 
         TextView questionTxt = mActivityTestRule.getActivity().findViewById(id.tvQuestion);
 
@@ -58,7 +56,8 @@ public class SimpleTestActivityEspressoTest {
     public void checkInvalidAnswer() {
 
         Vocabulary vocab = (Vocabulary) mActivityTestRule.getActivity().vocabulary;
-        int score = (int) mActivityTestRule.getActivity().myScore;
+
+        int score = (int) mActivityTestRule.getActivity().score;
 
         TextView questionTxt = mActivityTestRule.getActivity().findViewById(id.tvQuestion);
 
@@ -67,7 +66,7 @@ public class SimpleTestActivityEspressoTest {
         String answer = vocab.getTranslation("german", translateWord);
         System.out.println(answer);
 
-        ArrayAdapter adapter = (ArrayAdapter) mActivityTestRule.getActivity().multiple.getAdapter();
+        ArrayAdapter adapter = (ArrayAdapter) mActivityTestRule.getActivity().tvAnswers.getAdapter();
 
         if (adapter.getItem(0).toString() == answer)
         {
@@ -83,21 +82,8 @@ public class SimpleTestActivityEspressoTest {
                     .atPosition(0)
                     .perform(click());
         }
+
+        onView(withId(id.score)).check(matches(withText("Score: "+ score)));
+
     }
-
-
-    /*@Test
-    public void checkMessage(){
-
-        onData(anything())
-                .inAdapterView(withId(id.multiple))
-                .atPosition(0)
-                .perform(click());
-        onView(withId(R.id.myAttemps)).check(matches(withText("2")));
-
-
-
-    }*/
-
-
 }

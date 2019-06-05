@@ -1,6 +1,5 @@
 package at.tugraz.ist.swe.lang;
 
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -9,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,21 +15,21 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.text.BreakIterator;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
 public class SimpleTestActivity extends AppCompatActivity {
     private String correctAnswer;
-    public int myScore = 0;
-    public int myAttemps = 0;
-    private ArrayAdapter answers;
-    ArrayList<String> quiz = new ArrayList<String>();
-    TextView score, question;
-    ListView multiple;
+    public int score = 0;
+    public int attemps = 0;
+    private ArrayAdapter answersAdapter;
+    ArrayList<String> quizQuestions = new ArrayList<String>();
+    TextView tvScore, tvQuestion;
+    ListView tvAnswers;
     Vocabulary vocabulary;
+    int quizLength = 6;
+
 
 
     @Override
@@ -42,24 +40,40 @@ public class SimpleTestActivity extends AppCompatActivity {
         vocabulary = new Vocabulary(getApplicationContext());
         vocabulary.init();
 
-        score = findViewById(R.id.score);
-        question = findViewById(R.id.tvQuestion);
-        multiple = findViewById(R.id.multiple);
-        generateQuiz("english", 6);
+        if(vocabulary.getVocabArray().length() < quizLength)
+        {
+            quizLength = vocabulary.getVocabArray().length();
+
+        }
+
+        if(quizLength < 1)
+        {
+            Toast.makeText(getApplicationContext(),"Too few words for quiz",Toast.LENGTH_SHORT).show();
+
+            finish();
+            return;
+        }
+
+
+        tvScore = findViewById(R.id.score);
+        tvQuestion = findViewById(R.id.tvQuestion);
+        tvAnswers = findViewById(R.id.multiple);
+        generateQuiz("english", quizLength);
+
         updateTest();
 
-        multiple.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        tvAnswers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                myAttemps++;
-                correctAnswer = vocabulary.getTranslation("german", question.getText().toString());
-                String choice =  (String) multiple.getItemAtPosition(position);
+                attemps++;
+                correctAnswer = vocabulary.getTranslation("german", tvQuestion.getText().toString());
+                String choice =  (String) tvAnswers.getItemAtPosition(position);
                 if (correctAnswer.equals(choice)) {
-                    myScore++;
-                    if (myScore == 6) {
-                        score.setText("Score: " + myScore);
+                    score++;
+                    if (score == quizLength) {
+                        tvScore.setText("Score: " + score);
                         youWin();
-                        myScore = 0;
+                        score = 0;
                     }
                     else {
                         updateTest();
@@ -75,19 +89,44 @@ public class SimpleTestActivity extends AppCompatActivity {
 
 
     public void updateTest () {
-        question.setText(quiz.get(myScore));
-        correctAnswer = vocabulary.getTranslation("german", question.getText().toString());
-        ArrayList<String> words = generateWords("german", 5, quiz.get(myScore));
 
-        answers = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, words);
-        multiple.setAdapter(answers);
-        score.setText("Score: " + myScore);
+        tvQuestion.setText(quizQuestions.get(score));
+
+        correctAnswer = vocabulary.getTranslation("german", quizQuestions.get(score));
+        ArrayList<String> words = new ArrayList<String>();
+
+
+        JSONArray jsonArray = vocabulary.getVocabArray();
+        Random rand = new Random();
+        ArrayList<Integer> words_index = new ArrayList<Integer>();
+
+        for (int i=0; i<quizLength-1; i++) {
+            int random;
+
+            try {
+                do {
+                    random = rand.nextInt(jsonArray.length());
+                } while (words_index.contains(random) || jsonArray.getJSONObject(random).getString("german") == correctAnswer);
+                words_index.add(random);
+                words.add(jsonArray.getJSONObject(random).getString("german"));
+            }
+            catch(JSONException e){
+                e.printStackTrace();
+            }
+        }
+        words.add(correctAnswer);
+
+        Collections.shuffle(words);
+
+        answersAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, words);
+        tvAnswers.setAdapter(answersAdapter);
+        tvScore.setText("Score: " + score);
     }
 
     public void youWin() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SimpleTestActivity.this);
         alertDialogBuilder
-                .setMessage("Well done!!! You passed your exam with: " +myScore + " Correct Answers in " +myAttemps + " Attemps")
+                .setMessage("Well done!!! You passed your exam with: " + score + " Correct Answers in " + attemps + " Attemps")
                 .setCancelable(false)
                 .setPositiveButton("Retry?",
                         new DialogInterface.OnClickListener() {
@@ -127,43 +166,14 @@ public class SimpleTestActivity extends AppCompatActivity {
             quiz_words.add(random);
 
             try {
-                quiz.add(jsonArray.getJSONObject(random).getString(lang));
+                quizQuestions.add(jsonArray.getJSONObject(random).getString(lang));
             }
             catch(JSONException e){
             e.printStackTrace();
             }
         }
-    }
 
-    public ArrayList<String> generateWords(String lang, int quantity, String dupe) {
-        JSONArray jsonArray = vocabulary.getVocabArray();
-        Random rand = new Random();
-        ArrayList<Integer> words_index = new ArrayList<Integer>();
-        ArrayList<String> words = new ArrayList<String>();
-        quantity = (quantity >= jsonArray.length()) ? jsonArray.length() : quantity;
-        String con_lang = (lang.equals("english")) ? "german" : "english";
-        String correct = vocabulary.getTranslation(con_lang, dupe);
-        for (int i=0; i<quantity-1; i++) {
-            int random;
-
-            try {
-                do {
-                    random = rand.nextInt(jsonArray.length());
-                } while (words_index.contains(random));
-                words_index.add(random);
-                if (words.contains(correct)) {
-                    i--;
-                    words.remove(correct);
-                }
-                words.add(jsonArray.getJSONObject(random).getString(lang));
-            }
-            catch(JSONException e){
-                e.printStackTrace();
-            }
-        }
-        words.add(correct);
-        Collections.shuffle(words);
-        return words;
+        System.out.println(quizQuestions);
     }
 }
 

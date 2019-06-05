@@ -13,6 +13,8 @@ public class TakeTestActivity extends AppCompatActivity {
     private TextView wordToTest;
     private EditText testedWord;
     private Button tryTest;
+    private int myScore = 0;
+    private int myAttemps = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +29,14 @@ public class TakeTestActivity extends AppCompatActivity {
         tryTest.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                myAttemps++;
                 String word1 = wordToTest.getText().toString();
                 String word2 = testedWord.getText().toString();
                 if (word1.equals(word2))
                 {
-                    Toast.makeText(TakeTestActivity.this,"Success", Toast.LENGTH_LONG).show();
+                    myScore++;
+                    Toast.makeText(TakeTestActivity.this,"Well done!!! You passed your " +
+                            "exam with: " +myScore + " Correct Answers in " +myAttemps + " Attemps", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

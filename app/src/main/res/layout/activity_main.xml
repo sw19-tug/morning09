@@ -81,6 +81,7 @@
         app:layout_constraintTop_toBottomOf="@+id/simpleTest_btn"
         app:layout_constraintVertical_bias="0.017" />
 
+
     <Button
         android:id="@+id/test_btn"
         android:layout_width="357dp"
@@ -92,6 +93,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSettings" />
-
 
 </android.support.constraint.ConstraintLayout>

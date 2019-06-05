@@ -22,8 +22,8 @@ public class CreateTestActivity extends AppCompatActivity {
     private TextView name_of_test;
     private Button saveTest;
     private ListView vocabList;
-    Vocabulary vocabulary;
-    JSONArray vocabArray = new JSONArray();
+    Vocabulary test;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +32,11 @@ public class CreateTestActivity extends AppCompatActivity {
         name_of_test = (EditText)findViewById(R.id.test_name);
         saveTest = findViewById(R.id.saveTest_btn);
         vocabList = (ListView)findViewById(R.id.vocabList);
-        vocabulary = new Vocabulary(getApplicationContext());
-        vocabulary.init();
-        vocabArray = vocabulary.getVocabArray();
+        test = new Vocabulary(getApplicationContext());
+        test.init();
 
         try {
-            JSONArray jsonArray = vocabulary.getVocabArray();
+            JSONArray jsonArray = test.getVocabArray();
             ArrayList<String> wordArray = new ArrayList<String>();
 
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -78,10 +77,28 @@ public class CreateTestActivity extends AppCompatActivity {
                             selected += vocabList.getItemAtPosition(i).toString() + "\n";
                         }
                     }
+                    saveTest(selected);
                     Toast.makeText(CreateTestActivity.this, name_of_test.getText() +
                             " saved!", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    private void saveTest(String selected) {
+        
+        test.add(name_of_test.toString(), "");
+        for (int i =0; i < selected.length(); i++)
+        {
+            String words = selected[i];
+        }
+
+
+        if (englishWord.length() == 0 || germanWord.length() == 0) {
+            Toast.makeText(getBaseContext(), "Empty input!", Toast.LENGTH_LONG).show();
+        } else {
+            vocabulary.add(germanWord, englishWord);
+            vocabulary.storeFile();
+        }
     }
 }

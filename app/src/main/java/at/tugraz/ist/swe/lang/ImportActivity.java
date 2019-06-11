@@ -153,13 +153,13 @@ public class ImportActivity extends AppCompatActivity {
                     if ( actualfilepath.equals("") || actualfilepath.equals(" ")) {
                         fileToImport = new File(tempPath);
                     }else {
-                        fileToImport = new File("file://"+actualfilepath);
+                       // fileToImport = new File("file://"+actualfilepath);
                     }
 
 
                     // TODO: 2019-06-04
                     vocabulary.importVocabularyTFromFile(fileToImport);
-                    filePath.setText(actualfilepath);
+                    filePath.setText("File successfully Importet");
 
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -24,6 +24,8 @@ public class CreateTestActivity extends AppCompatActivity {
     private ListView vocabList;
     Vocabulary vocabulary;
     Test test;
+    int total_items;
+    private static String title_ = "TITLE:";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +35,11 @@ public class CreateTestActivity extends AppCompatActivity {
         name_of_test = (EditText)findViewById(R.id.test_name);
         saveTest = findViewById(R.id.saveTest_btn);
         vocabList = (ListView)findViewById(R.id.vocabList);
+
         vocabulary = new Vocabulary(getApplicationContext());
         vocabulary.init();
-
+        test = new Test(getApplicationContext());
+        test.init();
 
         try {
             JSONArray jsonArray = vocabulary.getVocabArray();
@@ -48,6 +52,7 @@ public class CreateTestActivity extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(CreateTestActivity.this, android.R.layout.simple_list_item_multiple_choice, wordArray);
             vocabList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             vocabList.setAdapter(adapter);
+            total_items = vocabList.getAdapter().getCount();
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -56,47 +61,48 @@ public class CreateTestActivity extends AppCompatActivity {
         saveTest.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String[] selected = null;
-                int cntChoice = vocabList.getCount();
-
+                int j = 0;
                 if (name_of_test.getText().length() == 0)
                 {
                     Toast.makeText(getBaseContext(), "Empty name!", Toast.LENGTH_LONG).show();
-                }
-                else if (cntChoice == 1)
-                {
-                    Toast.makeText(getBaseContext(), "Choose at least one word!", Toast.LENGTH_LONG).show();
                 }
                 else {
 
                     SparseBooleanArray sparseBooleanArray = vocabList.getCheckedItemPositions();
 
-                    for (int i = 0; i < cntChoice; i++) {
+                    for (int i = 0; i < total_items; i++) {
 
                         if (sparseBooleanArray.get(i)) {
 
-                            selected[i] += vocabList.getItemAtPosition(i).toString() + "\n";
+                            selected[j] += vocabList.getItemAtPosition(i).toString() + "\n";
+                            j++;
                         }
                     }
-                    saveTest(selected);
-                    Toast.makeText(CreateTestActivity.this, name_of_test.getText() +
-                            " saved!", Toast.LENGTH_LONG).show();
+                    if (j != 0) {
+                        saveTest(selected);
+                        Toast.makeText(CreateTestActivity.this, name_of_test.getText() +
+                                " saved!", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(CreateTestActivity.this, "Choose at least one word!", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
     }
 
     private void saveTest(String[] selected) {
+        String title = name_of_test.getText().toString();
+        test.add(title_, title);
+        //String[] words;// = selected[0].split("::");
+        //test.add("TITLE:","diocaz"); //name_of_test.toString()
+        //for (int i =0; i < selected.length; i++)
+        //{
 
-        test = new Test(getApplicationContext());
-        test.init();
-        test.add("TITLE:", name_of_test.toString());
-        for (int i =0; i < selected.length; i++)
-        {
-            String[] words = selected[i].split("::");
-            test.add(words[0], words[1]);
-            test.storeFile();
-        }
+            //words = selected[i].split(("::"));
+            //test.add(words[0], words[1]);
+        test.storeFile();
+        //}
     }
 }

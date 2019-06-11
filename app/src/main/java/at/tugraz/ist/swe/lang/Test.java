@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Test {
+
     private Context context_;
     public File file_;
     private JSONArray testArray_;
@@ -90,7 +91,7 @@ public class Test {
      * @param vocabularyName
      * @return i
      */
-    public int findByName(String vocabularyName)
+    /*public int findByName(String vocabularyName)
     {
         try {
             for(int i=0; i < testArray_.length();i++){
@@ -106,9 +107,9 @@ public class Test {
         }
 
         return -1;
-    }
+    } */
 
-    public String[] findTitles() //TODO title
+    /*public String[] findTitles() //TODO title
     {
         String[] names = null;
         int name_counter = 0;
@@ -127,13 +128,8 @@ public class Test {
         }
 
         return names;
-    }
+    } */
 
-    /**
-     * removes Entry from Vocabulary
-     * @param vocabularyName
-     * @return true if removed, false if not
-     */
 
     /**
      * Stores Json into File

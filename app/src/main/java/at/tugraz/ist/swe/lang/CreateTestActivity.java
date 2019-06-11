@@ -26,6 +26,7 @@ public class CreateTestActivity extends AppCompatActivity {
     Test test;
     int total_items;
     private static String title_ = "TITLE:";
+    private String[] words;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +62,15 @@ public class CreateTestActivity extends AppCompatActivity {
         saveTest.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] selected = null;
+                String selected = null;
                 int j = 0;
                 if (name_of_test.getText().length() == 0)
                 {
                     Toast.makeText(getBaseContext(), "Empty name!", Toast.LENGTH_LONG).show();
                 }
                 else {
+                    String title = name_of_test.getText().toString();
+                    test.add(title_, title);
 
                     SparseBooleanArray sparseBooleanArray = vocabList.getCheckedItemPositions();
 
@@ -75,14 +78,16 @@ public class CreateTestActivity extends AppCompatActivity {
 
                         if (sparseBooleanArray.get(i)) {
 
-                            selected[j] += vocabList.getItemAtPosition(i).toString() + "\n";
+                            //selected = vocabList.getItemAtPosition(i).toString();
+                            words = vocabList.getItemAtPosition(i).toString().split(" : ");
+                            test.add(words[0], words[1]);
                             j++;
+
                         }
                     }
                     if (j != 0) {
-                        saveTest(selected);
-                        Toast.makeText(CreateTestActivity.this, name_of_test.getText() +
-                                " saved!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CreateTestActivity.this, name_of_test.getText().toString() + " saved!", Toast.LENGTH_LONG).show();
+                        test.storeFile();
                     }
                     else {
                         Toast.makeText(CreateTestActivity.this, "Choose at least one word!", Toast.LENGTH_LONG).show();
@@ -91,18 +96,5 @@ public class CreateTestActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void saveTest(String[] selected) {
-        String title = name_of_test.getText().toString();
-        test.add(title_, title);
-        //String[] words;// = selected[0].split("::");
-        //test.add("TITLE:","diocaz"); //name_of_test.toString()
-        //for (int i =0; i < selected.length; i++)
-        //{
-
-            //words = selected[i].split(("::"));
-            //test.add(words[0], words[1]);
-        test.storeFile();
-        //}
-    }
+    
 }

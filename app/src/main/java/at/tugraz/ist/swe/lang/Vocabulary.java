@@ -275,4 +275,27 @@ public class Vocabulary {
             e.printStackTrace();
         }
     }
+    public void removeTag(int objectId, String tagName) {
+
+        int i = -1;
+
+        try {
+
+            JSONObject entry = vocabArray_.getJSONObject(objectId);
+            JSONArray tagsArray = entry.getJSONArray("tags");
+            entry.remove("tags");
+            for(i=0; i < tagsArray.length();i++){
+                String actualTag = tagsArray.getString(i);
+
+                if(actualTag == tagName)
+                {
+                    tagsArray.remove(i);
+                    entry.put("tags", tagsArray);
+                }
+            }
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+
+    }
 }

@@ -1,7 +1,6 @@
 package at.tugraz.ist.swe.lang;
 
 import android.content.Intent;
-import android.media.Rating;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -139,7 +138,7 @@ public class AddWordsActivity extends AppCompatActivity {
             }
 
             final ListView lvTags = (ListView)findViewById(R.id.lvTags);
-            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddWordsActivity.this, android.R.layout.simple_list_item_1, tagsArray);
+            final ArrayAdapter<String> adapter = new CustomListviewTagAdapter<String>(AddWordsActivity.this, tagsArray, objectId);
             lvTags.setAdapter(adapter);
 
             Button addTagsButton = (Button)findViewById(R.id.btnAddTag);
@@ -150,7 +149,7 @@ public class AddWordsActivity extends AppCompatActivity {
                     String toAddTag = tagsText.getText().toString();
                     tagsArray.add(toAddTag);
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddWordsActivity.this, android.R.layout.simple_list_item_1, tagsArray);
+                    ArrayAdapter<String> adapter = new CustomListviewTagAdapter<String>(AddWordsActivity.this, tagsArray, objectId);
                     lvTags.setAdapter(adapter);
 
                     tagsText.setText("");

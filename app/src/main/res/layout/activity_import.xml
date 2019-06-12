@@ -37,7 +37,7 @@
         android:layout_marginStart="144dp"
         android:layout_marginTop="444dp"
         android:layout_centerHorizontal="true"
-        android:text="Go home"
+        android:text="Go Back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

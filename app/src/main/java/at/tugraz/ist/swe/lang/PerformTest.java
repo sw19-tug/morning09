@@ -46,10 +46,15 @@ public class PerformTest extends AppCompatActivity {
                     Toast.makeText(PerformTest.this, "You are a boss!", Toast.LENGTH_LONG).show();
                     counter++;
                     myScore++;
-                    words = wordArray.get(counter).split(" : ");
-                    wordToTest.setText(words[0]);
-                    if (counter == wordArray.size())
+
+                    if (counter == wordArray.size()) {
                         youWin();
+                        //finish();
+                    }
+                    else {
+                        words = wordArray.get(counter).split(" : ");
+                        wordToTest.setText(words[0]);
+                    }
 
                 }
                 else {
@@ -57,16 +62,6 @@ public class PerformTest extends AppCompatActivity {
                 }
             }
         });
-
-
-        /*while (counter < wordArray.size()) {
-            words = wordArray.get(counter).split(" : ");
-            System.out.println(words);
-            wordToTest.setText(words[0]);
-
-
-        } */
-        //youWin();
     }
 
     private void youWin() {

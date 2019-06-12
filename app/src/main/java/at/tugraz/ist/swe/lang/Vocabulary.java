@@ -214,7 +214,7 @@ public class Vocabulary {
             }
         }
         try{
-          //  FileOutputStream fos = context_.openFileOutput(FileName.getPath(), Context.MODE_PRIVATE);
+
             FileOutputStream fos1 = new FileOutputStream(file_);
             fos1.write(output.getBytes());
             fos1.close();

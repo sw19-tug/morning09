@@ -159,6 +159,8 @@ public class ImportActivity extends AppCompatActivity {
 
                     // TODO: 2019-06-04
                     vocabulary.importVocabularyTFromFile(fileToImport);
+                    vocabulary.storeFile();
+
                     filePath.setText("File successfully Importet");
 
                 } catch (Exception e) {

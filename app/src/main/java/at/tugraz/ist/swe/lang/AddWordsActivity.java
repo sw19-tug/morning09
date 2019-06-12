@@ -37,7 +37,7 @@ public class AddWordsActivity extends AppCompatActivity {
         ptAddGerman = (EditText)findViewById(R.id.ptAddGerman);
         lvWordList = (ListView)findViewById(R.id.lvWordList);
         btnAdd = (Button)findViewById(R.id.btnAdd);
-        btnImport = (Button)findViewById(R.id.btnImport);
+       // btnImport = (Button)findViewById(R.id.btnImport);
 
 
 
@@ -64,14 +64,14 @@ public class AddWordsActivity extends AppCompatActivity {
             }
         });
 
-        btnImport.setOnClickListener(new View.OnClickListener() {
+        /*btnImport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 openImportActivity();
 
             }
-        });
+        });*/
     }
 
     public void updateListView() {
@@ -211,8 +211,8 @@ public class AddWordsActivity extends AppCompatActivity {
         }
     }
 
-    public void openImportActivity() {
+   /* public void openImportActivity() {
         Intent intent = new Intent(this, ImportActivity.class);
         startActivity(intent);
-    }
+    }*/
 }

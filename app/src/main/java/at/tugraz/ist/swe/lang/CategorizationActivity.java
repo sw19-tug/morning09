@@ -3,6 +3,7 @@ package at.tugraz.ist.swe.lang;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -54,9 +55,13 @@ public class CategorizationActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(), "No language selected!", Toast.LENGTH_LONG).show();
+                    if ("Select Tag".compareTo(spTagSort.getSelectedItem().toString()) !=0) {
+                        // TODO implement sorting!
+                        filterTags(spTagSort.getSelectedItem().toString());
+                    } else {
+                        Toast.makeText(getBaseContext(), "No language or tag selected!", Toast.LENGTH_LONG).show();
+                    }
                 }
-
             }
         });
     }
@@ -105,8 +110,43 @@ public class CategorizationActivity extends AppCompatActivity {
 
     }
 
-    public void filterTags() {
-        // needs tag implementation first, shifting to new issue 
+    public void filterTags(String choice) {
+        System.out.println("TODO TODO TODO sort by tag: " + choice);
+        System.out.println("TODO TODO TODO sort by tag: " + choice);
+        System.out.println("TODO TODO TODO sort by tag: " + choice);
+        // needs tag implementation first, shifting to new issue
+        JSONArray jsonArray = vocabulary.getVocabArray();
+        for (int i = 0; i < jsonArray.length(); i++) {
+
+            try {
+                JSONObject currWord = jsonArray.getJSONObject(i);
+
+                if (!currWord.has("tags")) {
+                    JSONArray tmpArray = new JSONArray();
+                    currWord.put("tags", tmpArray);
+                } else {
+                    System.out.println("iterate tags for this word.");
+                    JSONArray tagsFromFile = currWord.getJSONArray("tags");
+
+                    // TODO Iterate the tags in current word.
+                    for(int j=0; j < tagsFromFile.length();j++){
+                        System.out.println(tagsFromFile.getString(j));
+
+                        if (choice.equals(tagsFromFile.getString(j))) {
+                            System.out.println("currWord contains this Tag");
+                            System.out.println("currWord = " + currWord.get("german"));
+
+                            // TODO update list view...
+                            //ArrayList<String> wordArray = new ArrayList<String>();
+                            //wordArray.add(entry);
+                            //lvVocabulary.setAdapter(adapter);
+                        }
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void updateLanguages() {
@@ -121,12 +161,50 @@ public class CategorizationActivity extends AppCompatActivity {
 
     public void updateTags() {
 
-        tagList.add("Select Tag");
-        tagList.add("Fruit");
-        tagList.add("Hardcore");
+
+        JSONArray jsonArray = vocabulary.getVocabArray();
+
+        // TODO Iterate the words in vocabulary.
+        ArrayList<String> tagsArray = new ArrayList<String>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+
+            try {
+                JSONObject currWord = jsonArray.getJSONObject(i);
+
+                if (!currWord.has("tags")) {
+                    JSONArray tmpArray = new JSONArray();
+                    currWord.put("tags", tmpArray);
+                } else {
+                    System.out.println("iterate tags for this word.");
+                    JSONArray tagsFromFile = currWord.getJSONArray("tags");
+
+                    // TODO Iterate the tags in current word.
+                    for(int j=0; j < tagsFromFile.length();j++){
+                        System.out.println(tagsFromFile.getString(j));
+                        if (!tagsArray.contains(tagsFromFile.getString(j))) {
+                            tagsArray.add(tagsFromFile.getString(j));
+                        }
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // TODO Iterte over tagsArray and fill the dropdwon.
+        if (tagsArray.isEmpty()) {
+            tagList.add("Select Tag");
+            // TODO show popup?
+        } else {
+            tagList.add("Select Tag");
+            for (int i=0; i < tagsArray.size(); i++) {
+                System.out.println("Add " + tagsArray.get(i) + " tag to dropdown list.");
+                tagList.add(tagsArray.get(i));
+            }
+        }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(CategorizationActivity.this, android.R.layout.simple_dropdown_item_1line, tagList);
         spTagSort.setAdapter(adapter);
-
     }
 
     public void updateVocabulary() {

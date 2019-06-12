@@ -35,6 +35,28 @@ public class PerformTest extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         wordArray = b.getStringArrayList("wordArray");
+        words = wordArray.get(counter).split(" : ");
+        wordToTest.setText(words[0]);
+
+        tryTest.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myAttemps++;
+                if (testedWord.getText().toString().equals(words[1])) {
+                    Toast.makeText(PerformTest.this, "You are a boss!", Toast.LENGTH_LONG).show();
+                    counter++;
+                    myScore++;
+                    words = wordArray.get(counter).split(" : ");
+                    wordToTest.setText(words[0]);
+                    if (counter == wordArray.size())
+                        youWin();
+
+                }
+                else {
+                    Toast.makeText(PerformTest.this, "Error!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
 
         /*while (counter < wordArray.size()) {
@@ -42,28 +64,15 @@ public class PerformTest extends AppCompatActivity {
             System.out.println(words);
             wordToTest.setText(words[0]);
 
-            tryTest.setOnClickListener(new Button.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (testedWord.getText().toString().equals(words[1])) {
-                        counter++;
-                        myScore++;
-                    }
-                    else
-                    {
-                        Toast.makeText(PerformTest.this, "Error!", Toast.LENGTH_LONG).show();
-                    }
-                    myAttemps++;
-                }
-            });
-        }/*/
-        youWin();
+
+        } */
+        //youWin();
     }
 
     private void youWin() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PerformTest.this);
         alertDialogBuilder
-                .setMessage("Well done!!! You passed your exam with: " +myScore + " Correct Answers in " +myAttemps + " Attemps")
+                .setMessage("Well done!!! You passed your exam with: " + myScore + " Correct Answers in " +myAttemps + " Attemps")
                 .setCancelable(false)
                 .setPositiveButton("Retry?",
                         new DialogInterface.OnClickListener() {

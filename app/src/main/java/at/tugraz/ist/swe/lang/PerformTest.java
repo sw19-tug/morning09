@@ -27,10 +27,12 @@ public class PerformTest extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_test);
+
         wordToTest = findViewById(R.id.word_to_test);
-        testedWord = (EditText)findViewById((R.id.tested_word));
+        testedWord = findViewById((R.id.tested_word));
         tryTest = findViewById(R.id.try_test);
 
         Bundle b = getIntent().getExtras();
@@ -41,15 +43,17 @@ public class PerformTest extends AppCompatActivity {
         tryTest.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 myAttemps++;
+
                 if (testedWord.getText().toString().equals(words[1])) {
+
                     Toast.makeText(PerformTest.this, "You are a boss!", Toast.LENGTH_LONG).show();
                     counter++;
                     myScore++;
 
                     if (counter == wordArray.size()) {
                         youWin();
-                        //finish();
                     }
                     else {
                         words = wordArray.get(counter).split(" : ");
@@ -67,7 +71,8 @@ public class PerformTest extends AppCompatActivity {
     private void youWin() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PerformTest.this);
         alertDialogBuilder
-                .setMessage("Well done!!! You passed your exam with: " + myScore + " Correct Answers in " +myAttemps + " Attemps")
+                .setMessage("Well done!!! You passed your exam with: " + myScore + " Correct Answers " +
+                                                                    "in " +myAttemps + " Attemps")
                 .setCancelable(false)
                 .setPositiveButton("Retry?",
                         new DialogInterface.OnClickListener() {

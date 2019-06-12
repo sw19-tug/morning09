@@ -19,9 +19,9 @@ import java.util.ArrayList;
 
 public class CreateTestActivity extends AppCompatActivity {
 
+    private ListView vocabList;
     private TextView name_of_test;
     private Button saveTest;
-    private ListView vocabList;
     Vocabulary vocabulary;
     Test test;
     int total_items;
@@ -30,6 +30,7 @@ public class CreateTestActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_create);
 
@@ -47,10 +48,13 @@ public class CreateTestActivity extends AppCompatActivity {
             ArrayList<String> wordArray = new ArrayList<String>();
 
             for (int i = 0; i < jsonArray.length(); i++) {
-                String entry = jsonArray.getJSONObject(i).getString("english") + " : " + jsonArray.getJSONObject(i).getString("german");
+                String entry = jsonArray.getJSONObject(i).getString("english") + " : " +
+                                            jsonArray.getJSONObject(i).getString("german");
                 wordArray.add(entry);
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(CreateTestActivity.this, android.R.layout.simple_list_item_multiple_choice, wordArray);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(CreateTestActivity.this,
+                                android.R.layout.simple_list_item_multiple_choice, wordArray);
+
             vocabList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             vocabList.setAdapter(adapter);
             total_items = vocabList.getAdapter().getCount();
@@ -62,8 +66,9 @@ public class CreateTestActivity extends AppCompatActivity {
         saveTest.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String selected = null;
+
                 int j = 0;
+
                 if (name_of_test.getText().length() == 0)
                 {
                     Toast.makeText(getBaseContext(), "Empty name!", Toast.LENGTH_LONG).show();
@@ -78,7 +83,6 @@ public class CreateTestActivity extends AppCompatActivity {
 
                         if (sparseBooleanArray.get(i)) {
 
-                            //selected = vocabList.getItemAtPosition(i).toString();
                             words = vocabList.getItemAtPosition(i).toString().split(" : ");
                             test.add(words[0], words[1]);
                             j++;
@@ -86,11 +90,13 @@ public class CreateTestActivity extends AppCompatActivity {
                         }
                     }
                     if (j != 0) {
-                        Toast.makeText(CreateTestActivity.this, name_of_test.getText().toString() + " saved!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CreateTestActivity.this, name_of_test.getText().
+                                            toString() + " saved!", Toast.LENGTH_LONG).show();
                         test.storeFile();
                     }
                     else {
-                        Toast.makeText(CreateTestActivity.this, "Choose at least one word!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CreateTestActivity.this, "Choose at least one " +
+                                "word!", Toast.LENGTH_LONG).show();
                     }
                 }
             }

@@ -21,21 +21,17 @@ import java.util.ArrayList;
 
 public class TakeTestActivity extends AppCompatActivity {
 
-    private TextView wordToTest;
     private ArrayList<String> wordArray = new ArrayList<String>();
     private TextView title_of_page;
-    private EditText testedWord;
-    private Button tryTest;
     private Button takeTest;
-    private int myScore = 0;
-    private int myAttemps = 0;
     ListView tests_list;
     Test test;
-    int counter = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_test);
+
         takeTest = findViewById(R.id.btnTakeTest);
         tests_list = findViewById(R.id.testList);
         title_of_page = findViewById(R.id.titleView);
@@ -48,13 +44,17 @@ public class TakeTestActivity extends AppCompatActivity {
             ArrayList<String> testArray = new ArrayList<String>();
 
             for (int i = 0; i < jsonArray.length(); i++) {
+
                 String title = jsonArray.getJSONObject(i).getString("german");
+
                 if (title.equals("TITLE:")) {
                     String entry = jsonArray.getJSONObject(i).getString("english");
                     testArray.add(entry);
                 }
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(TakeTestActivity.this, android.R.layout.simple_list_item_single_choice, testArray);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(TakeTestActivity.this,
+                                    android.R.layout.simple_list_item_single_choice, testArray);
+
             tests_list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             tests_list.setAdapter(adapter);
         }
@@ -63,15 +63,18 @@ public class TakeTestActivity extends AppCompatActivity {
         }
 
         takeTest.setOnClickListener(new Button.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 String title_ot_test = (String) tests_list.getAdapter().getItem(tests_list.getCheckedItemPosition());
                 int i = 0;
+
                 try {
+
                     JSONArray jsonArray = test.getVocabArray();
-                    //ArrayList<String> wordArray = new ArrayList<String>();
 
                     for (; i < jsonArray.length(); i++) {
+
                         String title = jsonArray.getJSONObject(i).getString("german");
                         if (title.equals("TITLE:")) {
                             String entry = jsonArray.getJSONObject(i).getString("english");
@@ -80,28 +83,34 @@ public class TakeTestActivity extends AppCompatActivity {
                             }
                         }
                     }
+
                     i++;
+
                     for (; i < jsonArray.length(); i++) {
-                        String rrr = jsonArray.getJSONObject(i).getString("english") + " : " + jsonArray.getJSONObject(i).getString("german");
-                        if (rrr.contains(("TITLE:")))
+                        String new_words = jsonArray.getJSONObject(i).getString("english") + " : "
+                                            + jsonArray.getJSONObject(i).getString("german");
+
+                        if (new_words.contains(("TITLE:")))
                             break;
                         else
-                            wordArray.add(rrr);
+                            wordArray.add(new_words);
                     }
-                    //performTest();
-
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Toast.makeText(TakeTestActivity.this, "Start test " + title_ot_test + " with " + wordArray.size() + " questions.", Toast.LENGTH_LONG).show();
+                Toast.makeText(TakeTestActivity.this, "Start test " + title_ot_test +
+                        " with " + wordArray.size() + " questions.", Toast.LENGTH_LONG).show();
+
+
                 openPerformTest();
-                //performTest(wordArray);
+
             }
         });
     }
 
     public void openPerformTest() {
+
         Intent intent_add = new Intent(this, PerformTest.class);
         Bundle b = new Bundle();
         b.putStringArrayList("wordArray", wordArray);
@@ -110,12 +119,6 @@ public class TakeTestActivity extends AppCompatActivity {
 
     }
 
-    public ArrayList<String> getArray() {
-        return wordArray;
-    }
-
-    //private void performTest() {
-    //    final View vv = getLayoutInflater().inflate(R.layout.activity_take_test, null );
 
 
 

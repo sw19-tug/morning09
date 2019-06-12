@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class TakeTestActivity extends AppCompatActivity {
 
     private TextView wordToTest;
+    private ArrayList<String> wordArray = new ArrayList<String>();
     private TextView title_of_page;
     private EditText testedWord;
     private Button tryTest;
@@ -65,54 +66,56 @@ public class TakeTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String title_ot_test = (String) tests_list.getAdapter().getItem(tests_list.getCheckedItemPosition());
-
+                int i = 0;
                 try {
                     JSONArray jsonArray = test.getVocabArray();
-                    ArrayList<String> wordArray = new ArrayList<String>();
+                    //ArrayList<String> wordArray = new ArrayList<String>();
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    for (; i < jsonArray.length(); i++) {
                         String title = jsonArray.getJSONObject(i).getString("german");
                         if (title.equals("TITLE:")) {
                             String entry = jsonArray.getJSONObject(i).getString("english");
                             if (entry.equals(title_ot_test)) {
-                                String rrr;
-                                i++;
-                                while (jsonArray.getJSONObject(i).getString("german").equals("TITLE:")) {
-
-                                    rrr = jsonArray.getJSONObject(i).getString("english") + " : " + jsonArray.getJSONObject(i).getString("german");
-                                    wordArray.add(rrr);
-                                    i++;
-                                    }
                                 break;
                             }
-
-
-                            }
-
                         }
-                    Toast.makeText(TakeTestActivity.this, "Start test " + title_ot_test + " with " + wordArray.size() + " questions.", Toast.LENGTH_LONG).show();
-                    performTest(wordArray);
                     }
+                    i++;
+                    for (; i < jsonArray.length(); i++) {
+                        String rrr = jsonArray.getJSONObject(i).getString("english") + " : " + jsonArray.getJSONObject(i).getString("german");
+                        if (rrr.contains(("TITLE:")))
+                            break;
+                        else
+                            wordArray.add(rrr);
+                    }
+                    performTest();
+
+                }
                 catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Toast.makeText(TakeTestActivity.this, "Start test " + title_ot_test + " with " + wordArray.size() + " questions.", Toast.LENGTH_LONG).show();
+                //performTest(wordArray);
             }
         });
     }
 
-    private void performTest(ArrayList<String> wordArray) {
+    private void performTest() {
+        final View vv = getLayoutInflater().inflate(R.layout.activity_take_test, null);
+        setContentView(vv);
+        //setContentView(R.layout.activity_take_test);
+        wordToTest = vv.findViewById(R.id.word_to_test);
+        testedWord = (EditText)vv.findViewById((R.id.tested_word));
+        tryTest = vv.findViewById(R.id.try_test);
 
-        setContentView(R.layout.activity_take_test);
-        wordToTest = findViewById(R.id.word_to_test);
-        testedWord = (EditText)findViewById((R.id.tested_word));
-        tryTest = findViewById(R.id.try_test);
 
         while (wordArray.size() > counter) {
             final String[] words = wordArray.get(counter).split(" : ");
             wordToTest.setText(words[0]);
+
             tryTest.setOnClickListener(new Button.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View vv) {
                     if (testedWord.getText().toString().equals(words[1])) {
                         counter++;
                         myScore++;

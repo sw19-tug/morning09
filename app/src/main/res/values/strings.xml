@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Lang</string>
+    <string name="save_test">Save Test</string>
     <string-array name="dewords" id="dewords">
         <item>Fuß</item>
         <item>Raum</item>
@@ -18,5 +19,6 @@
         <item>Spiegel</item>
         <item>Jacke</item>
     </string-array>
+    <string name="title_activity_take_test">TakeTestActivity</string>
 
 </resources>

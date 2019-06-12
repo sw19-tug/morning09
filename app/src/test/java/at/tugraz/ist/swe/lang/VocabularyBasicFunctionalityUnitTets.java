@@ -48,12 +48,12 @@ public class VocabularyBasicFunctionalityUnitTets {
 
         when(mockContext.getFilesDir()).thenReturn(mTempFolder.newFolder());
 
+        Vocabulary.filename_ = "vocabulary.json";
         vocabulary = new Vocabulary(mockContext);
         file = vocabulary.file_;
 
         fileOutputStream = new FileOutputStream(file);
         fileInputStream = new FileInputStream(file);
-
 
         when(mockContext.openFileOutput("vocabulary.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
         when(mockContext.openFileInput("vocabulary.json")).thenReturn(fileInputStream);
@@ -79,6 +79,7 @@ public class VocabularyBasicFunctionalityUnitTets {
     public void VocabularyStoreTest() {
         vocabulary.init();
         vocabulary.storeFile();
+
         File file = new File(mockContext.getFilesDir(), "vocabulary.json");
         assert (file.exists());
     }

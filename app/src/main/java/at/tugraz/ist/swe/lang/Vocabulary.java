@@ -13,6 +13,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import java.util.ArrayList;
+
 
 public class Vocabulary {
 
@@ -21,9 +23,9 @@ public class Vocabulary {
     public File file_;
     private JSONArray vocabArray_;
     JSONObject vocabulary_;
-    private String filename_ = "vocabulary.json";
-    public File FileName;
 
+    static String filename_ = "vocabulary.json";
+    public File FileName;
 
     public Vocabulary(Context context) {
         context_ = context;
@@ -71,12 +73,6 @@ public class Vocabulary {
      */
     public int add(String german, String english)
     {
-
-        if(findByName(german) != -1)
-        {
-            return 0;
-        }
-
         try{
             JSONObject newJsonObj = new JSONObject();
 
@@ -148,6 +144,42 @@ public class Vocabulary {
         getByName(FileName);
 
 
+    }
+
+    /**
+     * get translation of a word, lang specifies return language
+     * @param lang
+     * @param word
+     * @return
+     */
+    public String getTranslation(String lang, String word)
+    {
+
+        try {
+            for(int i=0; i < vocabArray_.length();i++){
+                JSONObject entry = vocabArray_.getJSONObject(i);
+
+                if(lang.compareTo("english") == 0)
+                {
+                    if(entry.getString("german").equals(word))
+                    {
+                        return entry.getString("english");
+                    }
+                }
+
+                if(lang.compareTo("german") == 0)
+                {
+                    if(entry.getString("english").equals(word))
+                    {
+                        return entry.getString("german");
+                    }
+                }
+            }
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
@@ -365,4 +397,52 @@ public class Vocabulary {
         deleteFile.delete();
     }
 
+    public void addRating(int id, float rating) {
+        try {
+            JSONObject entry = vocabArray_.getJSONObject(id);
+            entry.put("rating", rating);
+            storeFile();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addTags(int objectId, ArrayList<String> tagsArray) {
+
+        try {
+            JSONArray array = new JSONArray();
+            for (int i=0; i<tagsArray.size(); i++) {
+                array.put(tagsArray.get(i));
+            }
+            JSONObject entry = vocabArray_.getJSONObject(objectId);
+            entry.put("tags", array);
+            storeFile();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    public void removeTag(int objectId, String tagName) {
+
+        int i = -1;
+
+        try {
+
+            JSONObject entry = vocabArray_.getJSONObject(objectId);
+            JSONArray tagsArray = entry.getJSONArray("tags");
+            entry.remove("tags");
+            for(i=0; i < tagsArray.length();i++){
+                String actualTag = tagsArray.getString(i);
+
+                if(actualTag.equals(tagName))
+                {
+                    tagsArray.remove(i);
+                    entry.put("tags", tagsArray);
+                }
+            }
+            storeFile();
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+
+    }
 }

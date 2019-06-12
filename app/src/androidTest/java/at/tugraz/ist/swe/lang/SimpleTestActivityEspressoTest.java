@@ -3,7 +3,8 @@ package at.tugraz.ist.swe.lang;
 import static org.hamcrest.Matchers.anything;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,7 +19,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 import static at.tugraz.ist.swe.lang.R.*;
 
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.core.IsNot.not;
 
 @RunWith(AndroidJUnit4.class)
 public class SimpleTestActivityEspressoTest {
@@ -35,44 +36,54 @@ public class SimpleTestActivityEspressoTest {
     }
 
     @Test
-    public void checkFirstAnswer(){
+    public void checkRightAnswer(){
 
-        onData(anything())
-                .inAdapterView(withId(id.multiple))
-                .atPosition(1)
+        Vocabulary vocab = (Vocabulary)mActivityTestRule.getActivity().vocabulary;
+        int score = (int)mActivityTestRule.getActivity().score;
+
+        TextView questionTxt = mActivityTestRule.getActivity().findViewById(id.tvQuestion);
+
+        String translateWord = questionTxt.getText().toString();
+        String answer = vocab.getTranslation("german", translateWord);
+
+        onView(withText(answer))
                 .perform(click());
-        onView(withId(id.score)).check(matches(withText("Score: 1")));
 
-
-
+        onView(withId(id.score)).check(matches(withText("Score: "+ ++score)));
     }
 
     @Test
-    public void checkInvalidAnswer(){
+    public void checkInvalidAnswer() {
 
-        onData(anything())
-                .inAdapterView(withId(id.multiple))
-                .atPosition(0)
-                .perform(click());
-        onView(withId(id.score)).check(matches(withText("Score: 0")));
+        Vocabulary vocab = (Vocabulary) mActivityTestRule.getActivity().vocabulary;
 
+        int score = (int) mActivityTestRule.getActivity().score;
 
+        TextView questionTxt = mActivityTestRule.getActivity().findViewById(id.tvQuestion);
+
+        String translateWord = questionTxt.getText().toString();
+        System.out.println(translateWord);
+        String answer = vocab.getTranslation("german", translateWord);
+        System.out.println(answer);
+
+        ArrayAdapter adapter = (ArrayAdapter) mActivityTestRule.getActivity().tvAnswers.getAdapter();
+
+        if (adapter.getItem(0).toString() == answer)
+        {
+            onData(anything())
+                    .inAdapterView(withId(R.id.multiple))
+                    .atPosition(1)
+                    .perform(click());
+        }
+        else
+        {
+            onData(anything())
+                    .inAdapterView(withId(R.id.multiple))
+                    .atPosition(0)
+                    .perform(click());
+        }
+
+        onView(withId(id.score)).check(matches(withText("Score: "+ score)));
 
     }
-
-
-    /*@Test
-    public void checkMessage(){
-
-        onData(anything())
-                .inAdapterView(withId(id.multiple))
-                .atPosition(0)
-                .perform(click());
-        onView(withId(R.id.myAttemps)).check(matches(withText("2")));
-
-
-
-    }*/
-
-
 }

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +45,6 @@ public class AddWordsActivity extends AppCompatActivity {
         vocabulary.init();
 
         updateListView();
-
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,45 +109,106 @@ public class AddWordsActivity extends AppCompatActivity {
     }
 
     public void openRatingActivity(int position) {
-        Intent intent = new Intent(this, RatingActivity.class);
-        startActivity(intent);
+        setContentView(R.layout.activity_rating);
+
+        TextView textViewEn = (TextView)findViewById(R.id.textViewEn);
+        TextView textViewDe = (TextView)findViewById(R.id.textViewDe);
 
         try {
             System.out.println("Position Clicked is:");
             System.out.println(position);
             System.out.println("Position Clicked was:");
 
-            String Voc = (String) lvWordList.getItemAtPosition(position);
+            String vocItem = (String) lvWordList.getItemAtPosition(position);
+            String[] vocArray = vocItem.split(":");
+            final String vocToFind = vocArray[1].trim();
 
-            JSONArray myJson = vocabulary.getVocabArray();
-            JSONObject myVocabulary = myJson.getJSONObject(vocabulary.findByName(Voc));
-            System.out.println(myVocabulary.getString("german"));
-            System.out.println(myVocabulary.getString("english"));
+            final JSONArray myJson = vocabulary.getVocabArray();
+            final int objectId = vocabulary.findByName(vocToFind);
+            JSONObject currWord= myJson.getJSONObject(objectId);
 
+            textViewEn.setText(currWord.getString("english"));
+            textViewDe.setText(currWord.getString("german"));
+
+            final RatingBar ratingBar = (RatingBar)findViewById(R.id.ratingBar);
+            if (!currWord.has("rating")) {
+                currWord.put("rating", 2);
+            } else {
+                ratingBar.setRating((float)currWord.getDouble("rating"));
+            }
+
+            final ArrayList<String> tagsArray = new ArrayList<String>();
+            if (!currWord.has("tags")) {
+                JSONArray tmpArray = new JSONArray();
+                currWord.put("tags", tmpArray);
+            } else {
+                System.out.println(currWord.getString("tags"));
+                JSONArray tagsFromFile = currWord.getJSONArray("tags");
+
+                for(int i=0; i < tagsFromFile.length();i++){
+                    tagsArray.add(tagsFromFile.getString(i));
+                }
+            }
+
+            final ListView lvTags = (ListView)findViewById(R.id.lvTags);
+            final ArrayAdapter<String> adapter = new ArrayAdapter<>(AddWordsActivity.this, android.R.layout.simple_list_item_1, tagsArray);
+            lvTags.setAdapter(adapter);
+
+            Button addTagsButton = (Button)findViewById(R.id.btnAddTag);
+            addTagsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditText tagsText = findViewById(R.id.ptNewTag);
+                    String toAddTag = tagsText.getText().toString();
+                    // Add tag to ArrayList
+                    tagsArray.add(toAddTag);
+
+                    // Add tag to file.
+                    vocabulary.addTags(objectId, tagsArray);
+
+                    // Reset the input text.
+                    tagsText.setText("");
+
+                    // Update listview.
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+            lvTags.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    String tagToDelete = (String) lvTags.getItemAtPosition(position);
+
+                    // Remove the tag from file.
+                    vocabulary.removeTag(objectId, tagToDelete);
+
+                    // Remove the tag from the view.
+                    adapter.remove(tagToDelete);
+                    adapter.notifyDataSetChanged();
+                }
+
+            });
+
+            Button submitButton = (Button)findViewById(R.id.btnRatingSubmit);
+            submitButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    float rating = ratingBar.getRating();
+
+                    vocabulary.addRating(objectId, rating);
+                    vocabulary.addTags(objectId, tagsArray);
+
+
+                    finish();
+                    startActivity(new Intent(AddWordsActivity.this, AddWordsActivity.class));
+                }
+            });
         }
         catch(JSONException e) {
+            System.out.println("exceptoin @ openRatingActivity");
             e.printStackTrace();
-            //
         }
-
-
-        System.out.println("Set Content View 1" );
-        setContentView(R.layout.activity_rating);
-
-        TextView textViewDe = (TextView)findViewById(R.id.textViewDe);
-        TextView textViewEn = (TextView)findViewById(R.id.textViewEn);
-        System.out.println("Text Views Found:");
-
-        String[] sel_word_de;
-        sel_word_de =  getResources().getStringArray(R.array.dewords);
-        String[] sel_word_en;
-        sel_word_en =  getResources().getStringArray(R.array.enwords);
-        System.out.println("Vocabulary is:" );
-
-        textViewDe.setText(sel_word_de[position]);
-        textViewEn.setText(sel_word_en[position]);
-
-
     }
 
     public void openImportActivity() {

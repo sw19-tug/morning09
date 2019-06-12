@@ -108,4 +108,27 @@ public class AddWordsActivityEspressoTest {
                 check(matches(isDisplayed()));
     }
 
+    @Test
+    public void testRatingWithSampleInput() {
+
+        onData(anything()).inAdapterView(withId(R.id.lvWordList)).atPosition(0).perform(click());
+
+        String inputTag = "difficult";
+
+        onView(withId(R.id.ptNewTag)).perform(typeText(inputTag));
+
+        closeSoftKeyboard();
+
+        onView(withId(R.id.btnAddTag)).perform(click());
+
+        ListView lvWordList = (ListView)addWordsActivityTestRule.getActivity().findViewById(R.id.lvTags);
+        int lvItemsCount = lvWordList.getAdapter().getCount();
+
+        onData(anything())
+                .inAdapterView(withId(R.id.lvTags))
+                .atPosition(lvItemsCount-1)
+                .check(matches(withText(inputTag)));
+
+    }
+
 }

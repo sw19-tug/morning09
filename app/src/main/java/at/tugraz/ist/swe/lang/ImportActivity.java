@@ -164,7 +164,7 @@ public class ImportActivity extends AppCompatActivity {
                     vocabulary.importVocabularyTFromFile(fileToImport);
                     vocabulary.storeFile();
 
-                    filePath.setText("File successfully Importet");
+                    filePath.setText("File successfully Imported");
 
                 } catch (Exception e) {
                     e.printStackTrace();

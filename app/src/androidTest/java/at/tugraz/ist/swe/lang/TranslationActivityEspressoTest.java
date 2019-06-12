@@ -35,7 +35,7 @@ public class TranslationActivityEspressoTest {
     }
 
 
-    @Test
+   @Test
     public void onViewList() {
 
         Vocabulary vocabulary = (Vocabulary)mActivityTestRule.getActivity().vocabulary;

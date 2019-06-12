@@ -22,21 +22,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-       // btnLegal = findViewById(R.id.btnLegal);
-       /* btnLegal.setOnClickListener(new View.OnClickListener() {
+        btnLegal = findViewById(R.id.btnLegal);
+        btnLegal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openLegal();
             }
-        });*/
+        });
 
-        /*btnHelp = findViewById(R.id.btnHelp);
+        btnHelp = findViewById(R.id.btnHelp);
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openHelp();
             }
-        });*/
+        });
 
 
         addWords = findViewById(R.id.btMainAddWords);
@@ -124,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*public void openLegal() {
-        Intent intent_legal = new Intent(this, legalActivity.class);
+    public void openLegal() {
+        Intent intent_legal = new Intent(this, LegalActivity.class);
         startActivity(intent_legal);
 
     }
@@ -134,6 +134,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent_help = new Intent(this, HelpActivity.class);
         startActivity(intent_help);
 
-    }*/
+    }
 }
 

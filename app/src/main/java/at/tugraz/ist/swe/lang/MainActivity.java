@@ -1,24 +1,43 @@
 package at.tugraz.ist.swe.lang;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button addWords;
-    private Button translation;
-    private Button simpleTest;
-    private Button btnCategory;
-    private Button btnSettings;
-    private Button btnAdvanceTest;
-  
+    RelativeLayout addWords, btnCategory, translation, simpleTest,
+            btnSettings, btnAdvanceTest, btnHelp, btnLegal;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+       // btnLegal = findViewById(R.id.btnLegal);
+       /* btnLegal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLegal();
+            }
+        });*/
+
+        /*btnHelp = findViewById(R.id.btnHelp);
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openHelp();
+            }
+        });*/
+
 
         addWords = findViewById(R.id.btMainAddWords);
         addWords.setOnClickListener(new View.OnClickListener() {
@@ -104,5 +123,17 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent_settings);
 
     }
+
+    /*public void openLegal() {
+        Intent intent_legal = new Intent(this, legalActivity.class);
+        startActivity(intent_legal);
+
+    }
+
+    public void openHelp() {
+        Intent intent_help = new Intent(this, HelpActivity.class);
+        startActivity(intent_help);
+
+    }*/
 }
 

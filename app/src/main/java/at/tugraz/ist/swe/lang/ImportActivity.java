@@ -63,7 +63,6 @@ public class ImportActivity extends AppCompatActivity {
                 showFileChooser();
             }
         }else {
-
             showFileChooser();
         }
     }

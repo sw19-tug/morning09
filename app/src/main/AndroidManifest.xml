@@ -18,6 +18,7 @@
         <activity android:name=".TestsActivity" />
         <activity android:name=".CreateTestActivity" />
         <activity android:name=".TakeTestActivity" />
+        <activity android:name=".PerformTest" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

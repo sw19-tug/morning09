@@ -88,76 +88,35 @@ public class TakeTestActivity extends AppCompatActivity {
                         else
                             wordArray.add(rrr);
                     }
-                    performTest();
+                    //performTest();
 
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
                 }
                 Toast.makeText(TakeTestActivity.this, "Start test " + title_ot_test + " with " + wordArray.size() + " questions.", Toast.LENGTH_LONG).show();
+                openPerformTest();
                 //performTest(wordArray);
             }
         });
     }
 
-    private void performTest() {
-        final View vv = getLayoutInflater().inflate(R.layout.activity_take_test, null);
-        setContentView(vv);
-        //setContentView(R.layout.activity_take_test);
-        wordToTest = vv.findViewById(R.id.word_to_test);
-        testedWord = (EditText)vv.findViewById((R.id.tested_word));
-        tryTest = vv.findViewById(R.id.try_test);
+    public void openPerformTest() {
+        Intent intent_add = new Intent(this, PerformTest.class);
+        Bundle b = new Bundle();
+        b.putStringArrayList("wordArray", wordArray);
+        intent_add.putExtras(b);
+        startActivity(intent_add);
 
-
-        while (wordArray.size() > counter) {
-            final String[] words = wordArray.get(counter).split(" : ");
-            wordToTest.setText(words[0]);
-
-            tryTest.setOnClickListener(new Button.OnClickListener() {
-                @Override
-                public void onClick(View vv) {
-                    if (testedWord.getText().toString().equals(words[1])) {
-                        counter++;
-                        myScore++;
-                    }
-                    else
-                    {
-                        Toast.makeText(TakeTestActivity.this, "Error!", Toast.LENGTH_LONG).show();
-                    }
-                    myAttemps++;
-                }
-            });
-        }
-        youWin();
     }
 
-    private void youWin() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TakeTestActivity.this);
-        alertDialogBuilder
-                .setMessage("Well done!!! You passed your exam with: " +myScore + " Correct Answers in " +myAttemps + " Attemps")
-                .setCancelable(false)
-                .setPositiveButton("Retry?",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                                startActivity(new Intent(getApplicationContext(),TakeTestActivity.class));
-                                finish();
-
-                            }
-                        })
-                .setNegativeButton("Exit",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                                finish();
-
-                            }
-                        });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
+    public ArrayList<String> getArray() {
+        return wordArray;
     }
+
+    //private void performTest() {
+    //    final View vv = getLayoutInflater().inflate(R.layout.activity_take_test, null );
+
 
 
 }

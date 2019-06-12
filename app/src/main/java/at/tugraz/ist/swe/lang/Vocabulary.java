@@ -244,14 +244,18 @@ public class Vocabulary {
 
             if(findByName(myImportedVoc.get("german").toString()) > 0)
             {
-                // Vocabulary not found
+                // Vocabulary found -> do not insert again
                 // ToDo: put popup here
-
-
 
                 return ;
             }
-           vocabArray_.put(myImportedVoc);
+            else
+            {
+                // Vocabulary not found -> Call Add Method
+                add(myImportedVoc.get("german").toString(), myImportedVoc.get("english").toString());
+            }
+
+
 
 
         } catch(IOException e)

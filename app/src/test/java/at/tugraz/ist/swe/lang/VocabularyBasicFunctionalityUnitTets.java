@@ -57,10 +57,9 @@ public class VocabularyBasicFunctionalityUnitTets {
 
         when(mockContext.openFileOutput("vocabulary.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
         when(mockContext.openFileInput("vocabulary.json")).thenReturn(fileInputStream);
-
         CreateTestFile();
-
-        when(mockContext.openFileOutput("testfile.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
+    //  Deactivated because org.mockito.exceptions.misusing.UnnecessaryStubbingException otherwise.
+    //    when(mockContext.openFileOutput("testfile.json", Context.MODE_PRIVATE)).thenReturn(fileOutputStream);
         when(mockContext.openFileInput("testfile.json")).thenReturn(fileInputStream);
     }
 
@@ -108,14 +107,6 @@ public class VocabularyBasicFunctionalityUnitTets {
 
     }
 
-    @Test
-    public void VocabularyStoreByName() {
-        vocabulary.init();
-
-        String filename = "testfile.json";
-        vocabulary.storeFileByName(filename);
-        assert (file.exists());
-    }
 
     @Test
     public void VocabularyLoadByName() {

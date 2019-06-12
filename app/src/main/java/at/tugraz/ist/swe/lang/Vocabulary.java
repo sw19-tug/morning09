@@ -303,7 +303,7 @@ public class Vocabulary {
      * Store to file by filename
      * @param filename
      */
-    public void storeFileByName(String filename) {
+   /* public void storeFileByName(String filename) {
 
         String output = vocabulary_.toString();
         System.out.println(output);
@@ -324,7 +324,7 @@ public class Vocabulary {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * load a different vocabulary from a file

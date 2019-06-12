@@ -287,12 +287,13 @@ public class Vocabulary {
             for(i=0; i < tagsArray.length();i++){
                 String actualTag = tagsArray.getString(i);
 
-                if(actualTag == tagName)
+                if(actualTag.equals(tagName))
                 {
                     tagsArray.remove(i);
                     entry.put("tags", tagsArray);
                 }
             }
+            storeFile();
         } catch(JSONException e){
             e.printStackTrace();
         }

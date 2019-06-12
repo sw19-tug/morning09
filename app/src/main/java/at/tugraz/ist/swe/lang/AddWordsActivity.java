@@ -147,12 +147,17 @@ public class AddWordsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     EditText tagsText = findViewById(R.id.ptNewTag);
                     String toAddTag = tagsText.getText().toString();
+                    // Add tag to ArrayList
                     tagsArray.add(toAddTag);
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(AddWordsActivity.this, android.R.layout.simple_list_item_1, tagsArray);
-                    lvTags.setAdapter(adapter);
+                    // Add tag to file.
+                    vocabulary.addTags(objectId, tagsArray);
 
+                    // Reset the input text.
                     tagsText.setText("");
+
+                    // Update listview.
+                    adapter.notifyDataSetChanged();
                 }
             });
 
@@ -160,13 +165,17 @@ public class AddWordsActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    //TODO delete Tag
+                    String tagToDelete = (String) lvTags.getItemAtPosition(position);
 
+                    // Remove the tag from file.
+                    vocabulary.removeTag(objectId, tagToDelete);
+
+                    // Remove the tag from the view.
+                    adapter.remove(tagToDelete);
+                    adapter.notifyDataSetChanged();
                 }
 
             });
-
-
 
             Button submitButton = (Button)findViewById(R.id.btnRatingSubmit);
             submitButton.setOnClickListener(new View.OnClickListener() {
@@ -180,12 +189,8 @@ public class AddWordsActivity extends AppCompatActivity {
 
                     finish();
                     startActivity(new Intent(AddWordsActivity.this, AddWordsActivity.class));
-                    //TODO go back to overview.
                 }
             });
-
-
-
         }
         catch(JSONException e) {
             System.out.println("exceptoin @ openRatingActivity");

@@ -97,6 +97,9 @@ public class ImportActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+
+        // Source: https://www.blueappsoftware.com/how-to-read-text-file-in-android-tutorial/ hereafter
+
         if (requestCode == FILE_SELECT_CODE){
             if (resultCode == RESULT_OK){
                 try {
@@ -118,13 +121,7 @@ public class ImportActivity extends AppCompatActivity {
                         String type = split[0];
                         id = split[1];
                         Uri contenturi = null;
-                        if (type.equals("image")){
-                            contenturi = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                        }else if (type.equals("video")){
-                            contenturi = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                        }else if (type.equals("audio")){
-                            contenturi = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                        }
+
                         String selector = "_id=?";
                         actualfilepath = getFileData( contenturi, selector, new String[]{id}  );
                     } else if (fileUri.getAuthority().equals("com.android.providers.downloads.documents")){
@@ -139,11 +136,11 @@ public class ImportActivity extends AppCompatActivity {
                         String[] split = tempID.split(":");
                         String type = split[0];
                         id = split[1];
-                        //Uri contenturi = null;
                         if (type.equals("primary")){
                             actualfilepath=  Environment.getExternalStorageDirectory()+"/"+id;
                         }
                     }
+
                     File fileToImport = new File(actualfilepath);
 
                     String tempPath =  uri.getPath();
@@ -159,9 +156,11 @@ public class ImportActivity extends AppCompatActivity {
 
                     // TODO: 2019-06-04
                     vocabulary.importVocabularyTFromFile(fileToImport);
-                    vocabulary.storeFile();
+                    filePath.setText("File successfully Imported");
 
-                    filePath.setText("File successfully Importet");
+
+
+
 
                 } catch (Exception e) {
                     e.printStackTrace();

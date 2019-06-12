@@ -138,7 +138,7 @@ public class AddWordsActivity extends AppCompatActivity {
             }
 
             final ListView lvTags = (ListView)findViewById(R.id.lvTags);
-            final ArrayAdapter<String> adapter = new CustomListviewTagAdapter<String>(AddWordsActivity.this, tagsArray, objectId);
+            final ArrayAdapter<String> adapter = new ArrayAdapter<>(AddWordsActivity.this, android.R.layout.simple_list_item_1, tagsArray);
             lvTags.setAdapter(adapter);
 
             Button addTagsButton = (Button)findViewById(R.id.btnAddTag);
@@ -149,12 +149,24 @@ public class AddWordsActivity extends AppCompatActivity {
                     String toAddTag = tagsText.getText().toString();
                     tagsArray.add(toAddTag);
 
-                    ArrayAdapter<String> adapter = new CustomListviewTagAdapter<String>(AddWordsActivity.this, tagsArray, objectId);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(AddWordsActivity.this, android.R.layout.simple_list_item_1, tagsArray);
                     lvTags.setAdapter(adapter);
 
                     tagsText.setText("");
                 }
             });
+
+            lvTags.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    //TODO delete Tag
+
+                }
+
+            });
+
+
 
             Button submitButton = (Button)findViewById(R.id.btnRatingSubmit);
             submitButton.setOnClickListener(new View.OnClickListener() {

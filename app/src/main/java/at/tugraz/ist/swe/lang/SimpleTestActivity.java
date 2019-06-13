@@ -23,7 +23,7 @@ public class SimpleTestActivity extends AppCompatActivity {
     private String correctAnswer;
     public int score = 0;
     public int attemps = 0;
-    private ArrayAdapter answersAdapter;
+    public ArrayAdapter answersAdapter;
     ArrayList<String> quizQuestions = new ArrayList<String>();
     TextView tvScore, tvQuestion;
     ListView tvAnswers;

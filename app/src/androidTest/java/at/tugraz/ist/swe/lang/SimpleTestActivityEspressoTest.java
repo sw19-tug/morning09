@@ -1,11 +1,19 @@
 package at.tugraz.ist.swe.lang;
 
 import static org.hamcrest.Matchers.anything;
+
+import android.os.SystemClock;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,12 +35,24 @@ public class SimpleTestActivityEspressoTest {
     @Rule
     public ActivityTestRule<SimpleTestActivity> mActivityTestRule = new ActivityTestRule<>(SimpleTestActivity.class);
 
+    @BeforeClass
+    public static void insertWords() {
+        Vocabulary vocabulary = new Vocabulary(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        vocabulary.resetVocab();
+
+        vocabulary.add("Apfel", "Apple");
+        vocabulary.add("Banane", "Banana");
+        vocabulary.add("Birne", "Pear");
+        vocabulary.add("Orange", "Orange");
+        vocabulary.add("Pfirsich", "Peach");
+        vocabulary.storeFile();
+    }
+
     @Test
     public void onViewElements() {
         onView(withId(R.id.score)).check(matches(isDisplayed()));
         onView(withId(R.id.question)).check(matches(isDisplayed()));
         onView(withId(R.id.multiple)).check(matches(isDisplayed()));
-
     }
 
     @Test
@@ -46,10 +66,22 @@ public class SimpleTestActivityEspressoTest {
         String translateWord = questionTxt.getText().toString();
         String answer = vocab.getTranslation("german", translateWord);
 
-        onView(withText(answer))
+        ArrayAdapter adapter = (ArrayAdapter) mActivityTestRule.getActivity().tvAnswers.getAdapter();
+
+        int index = 0;
+
+        for (;index < adapter.getCount()-1; index++) {
+            if(adapter.getItem(index).toString() == answer)
+                break;
+        }
+
+        onData(anything())
+                .inAdapterView(withId(R.id.multiple))
+                .atPosition(index)
                 .perform(click());
 
         onView(withId(id.score)).check(matches(withText("Score: "+ ++score)));
+
     }
 
     @Test
@@ -84,6 +116,11 @@ public class SimpleTestActivityEspressoTest {
         }
 
         onView(withId(id.score)).check(matches(withText("Score: "+ score)));
+    }
 
+    @AfterClass
+    public static void deleteVocab() {
+        Vocabulary vocabulary = new Vocabulary(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        vocabulary.resetVocab();
     }
 }

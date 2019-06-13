@@ -84,7 +84,7 @@ public class CategorizationActivity extends AppCompatActivity {
                 if ("Select language".compareTo(spLanguageSort.getSelectedItem().toString()) != 0) {
                     sortAlphabet(spLanguageSort.getSelectedItem().toString());
                 } else {
-                    Toast.makeText(getBaseContext(), "No language selected!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "NO LANGUAGE SELECTED", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -200,7 +200,7 @@ public class CategorizationActivity extends AppCompatActivity {
                         //sharingIntent.putExtra(Intent.EXTRA_TEXT, exportString);
                         sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + exportFile.getAbsolutePath()));
                         //sharingIntent.setType()
-                        startActivity(Intent.createChooser(sharingIntent, "share file with"));
+                        startActivity(Intent.createChooser(sharingIntent, "SHARE THE WORD"));
                         Toast.makeText(getBaseContext(), exportFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
 
 

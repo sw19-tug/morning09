@@ -26,7 +26,7 @@ public class CategorizationActivityEspressoTest {
     @Rule
     public ActivityTestRule<CategorizationActivity> CategorizationActivityTestRule = new ActivityTestRule<>(CategorizationActivity.class);
 
-    String toast = "No language selected!";
+    String toast = "NO LANGUAGE SELECTED";
 
     @Test
     public void testElementsVisible() {

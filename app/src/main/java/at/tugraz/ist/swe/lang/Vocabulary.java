@@ -25,7 +25,6 @@ public class Vocabulary {
     JSONObject vocabulary_;
 
     static String filename_ = "vocabulary.json";
-    public File FileName;
 
     public Vocabulary(Context context) {
         context_ = context;
@@ -39,6 +38,20 @@ public class Vocabulary {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void resetVocab() {
+        deleteVocab();
+        //check if file exists
+        file_ = new File(context_.getFilesDir(), filename_);
+        if (!file_.exists()) {
+            try {
+                file_.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        init();
     }
 
     /**
@@ -348,7 +361,7 @@ public class Vocabulary {
             }
         }
         try{
-            FileOutputStream fos = context_.openFileOutput(file_.getAbsolutePath(), Context.MODE_PRIVATE);
+            FileOutputStream fos = context_.openFileOutput(filename_, Context.MODE_PRIVATE);
             fos.write(output.getBytes());
             fos.close();
         } catch (FileNotFoundException e) {

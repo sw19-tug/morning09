@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="at.tugraz.ist.swe.lang">
 
-   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:remove="android:maxSdkVersion">
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:remove="android:maxSdkVersion" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        tools:remove="android:maxSdkVersion" />
 
-   </uses-permission>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:remove="android:maxSdkVersion">
-
-    </uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".LegalActivity"></activity>
+        <activity android:name=".HelpActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".TranslationActivity" />
         <activity android:name=".AddWordsActivity" />
@@ -26,8 +28,7 @@
         <activity android:name=".TestsActivity" />
         <activity android:name=".CreateTestActivity" />
         <activity android:name=".TakeTestActivity" />
-        <activity android:name=".ImportActivity"></activity>
-
+        <activity android:name=".ImportActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

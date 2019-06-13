@@ -39,7 +39,6 @@ public class AddWordsActivityEspressoTest {
         Vocabulary vocabulary = new Vocabulary(InstrumentationRegistry.getInstrumentation().getTargetContext());
         vocabulary.resetVocab();
 
-        vocabulary.add("Apfel", "Apple");
         vocabulary.add("Banane", "Banana");
         vocabulary.add("Birne", "Pear");
         vocabulary.add("Orange", "Orange");

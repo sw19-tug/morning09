@@ -183,6 +183,7 @@ public class AddWordsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     System.out.println(textViewDe.getText().toString());
                     vocabulary.removeByName(textViewDe.getText().toString());
+                    vocabulary.storeFile();
                     finish();
                 }
             });

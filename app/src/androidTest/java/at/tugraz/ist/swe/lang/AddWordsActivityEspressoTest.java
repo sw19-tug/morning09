@@ -24,6 +24,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.anything;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class AddWordsActivityEspressoTest {
@@ -62,6 +63,33 @@ public class AddWordsActivityEspressoTest {
                 .inAdapterView(withId(R.id.lvWordList))
                 .atPosition(lvItemsCount-1)
                 .check(matches(withText(display)));
+    }
+
+    @Test
+    public void testAddAndDeleteWordsVisible() {
+        String inputEnglish = "Apple_delete";
+        String inputGerman = "Apfel_loeschen";
+        String display = inputEnglish + " : " + inputGerman;
+
+        onView(withId(R.id.ptAddEnglish)).perform(typeText(inputEnglish));
+        onView(withId(R.id.ptAddGerman)).perform(typeText(inputGerman));
+
+        closeSoftKeyboard();
+
+        onView(withId(R.id.btnAdd)).perform(click());
+
+        ListView lvWordList = (ListView)addWordsActivityTestRule.getActivity().findViewById(R.id.lvWordList);
+        int lvItemsCountBeforeDelete = lvWordList.getAdapter().getCount();
+
+        onView(withId(R.id.btnDeleteWord)).perform(click());
+
+        int lvItemsCountAfterDelete = lvWordList.getAdapter().getCount();
+
+        // For TestingPurposes decreement
+        lvItemsCountBeforeDelete--;
+
+        // Must be equal if delete was successful.
+        assertEquals(lvItemsCountBeforeDelete,lvItemsCountAfterDelete);
     }
 
     @Test

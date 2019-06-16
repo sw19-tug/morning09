@@ -4,12 +4,12 @@ public class Questions extends SimpleTestActivity {
 
     public String myQuestions[] = {
 
-            "Translate the following word: Foot",
-            "Translate the following word: Room",
-            "Translate the following word: Light",
-            "Translate the following word: Eight",
-            "Translate the following word: Mirror",
-            "Translate the following word: Jacket"
+            "Foot",
+            "Room",
+            "Light",
+            "Eight",
+            "Mirror",
+            "Jacket"
 
     };
 

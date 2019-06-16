@@ -7,6 +7,8 @@ import android.support.test.runner.AndroidJUnit4;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +33,19 @@ public class AddWordsActivityEspressoTest {
     public ActivityTestRule<AddWordsActivity> addWordsActivityTestRule = new ActivityTestRule<>(AddWordsActivity.class);
 
     String toast = "Empty input!";
+
+    @BeforeClass
+    public static void insertWords() {
+        Vocabulary vocabulary = new Vocabulary(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        vocabulary.resetVocab();
+
+        vocabulary.add("Banane", "Banana");
+        vocabulary.add("Birne", "Pear");
+        vocabulary.add("Orange", "Orange");
+        vocabulary.add("Pfirsich", "Peach");
+        vocabulary.storeFile();
+    }
+
 
     @Test
     public void testElementsVisible() {
@@ -106,6 +121,36 @@ public class AddWordsActivityEspressoTest {
         onView(withText(toast)).
                 inRoot(withDecorView(not(is(activity.getWindow().getDecorView())))).
                 check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testRatingWithSampleInput() {
+
+        onData(anything()).inAdapterView(withId(R.id.lvWordList)).atPosition(0).perform(click());
+
+        String inputTag = "difficult";
+
+        onView(withId(R.id.ptNewTag)).perform(typeText(inputTag));
+
+        closeSoftKeyboard();
+
+        onView(withId(R.id.btnAddTag)).perform(click());
+
+        ListView lvWordList = (ListView)addWordsActivityTestRule.getActivity().findViewById(R.id.lvTags);
+        int lvItemsCount = lvWordList.getAdapter().getCount();
+
+        onData(anything())
+                .inAdapterView(withId(R.id.lvTags))
+                .atPosition(lvItemsCount-1)
+                .check(matches(withText(inputTag)));
+
+    }
+
+
+    @AfterClass
+    public static void deleteVocab() {
+        Vocabulary vocabulary = new Vocabulary(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        vocabulary.resetVocab();
     }
 
 }

@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class AddWordsActivity extends AppCompatActivity {
 
-    Button btnAdd;
+    Button btnAdd, btnImport;
     EditText ptAddEnglish, ptAddGerman;
     ListView lvWordList;
     Vocabulary vocabulary;
@@ -31,10 +31,15 @@ public class AddWordsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_words);
 
+
+
         ptAddEnglish = (EditText)findViewById(R.id.ptAddEnglish);
         ptAddGerman = (EditText)findViewById(R.id.ptAddGerman);
         lvWordList = (ListView)findViewById(R.id.lvWordList);
         btnAdd = (Button)findViewById(R.id.btnAdd);
+        btnImport = (Button)findViewById(R.id.btnImport);
+
+
 
         vocabulary = new Vocabulary(getApplicationContext());
         vocabulary.init();
@@ -56,6 +61,15 @@ public class AddWordsActivity extends AppCompatActivity {
                 }
                 ptAddEnglish.getText().clear();
                 ptAddGerman.getText().clear();
+            }
+        });
+
+        btnImport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                openImportActivity();
+
             }
         });
     }
@@ -195,5 +209,10 @@ public class AddWordsActivity extends AppCompatActivity {
             System.out.println("exceptoin @ openRatingActivity");
             e.printStackTrace();
         }
+    }
+
+    public void openImportActivity() {
+        Intent intent = new Intent(this, ImportActivity.class);
+        startActivity(intent);
     }
 }

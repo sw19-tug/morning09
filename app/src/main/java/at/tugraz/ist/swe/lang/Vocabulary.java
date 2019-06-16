@@ -11,6 +11,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+
 import java.util.ArrayList;
 
 
@@ -21,8 +23,8 @@ public class Vocabulary {
     public File file_;
     private JSONArray vocabArray_;
     JSONObject vocabulary_;
-    static String filename_ = "vocabulary.json";
 
+    static String filename_ = "vocabulary.json";
 
     public Vocabulary(Context context) {
         context_ = context;
@@ -36,6 +38,20 @@ public class Vocabulary {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void resetVocab() {
+        deleteVocab();
+        //check if file exists
+        file_ = new File(context_.getFilesDir(), filename_);
+        if (!file_.exists()) {
+            try {
+                file_.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        init();
     }
 
     /**
@@ -112,6 +128,35 @@ public class Vocabulary {
         }
 
         return -1;
+    }
+
+
+
+    public JSONObject getByName(String vocabularyName)
+    {
+        try {
+            for(int i=0; i < vocabArray_.length();i++){
+                JSONObject entry = vocabArray_.getJSONObject(i);
+
+                if(entry.getString("german").equals(vocabularyName))
+                {
+                    return entry;
+
+                }
+
+            }
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    public void exportToVocabulary(Vocabulary vocToExport, String FileName){
+        getByName(FileName);
+
+
     }
 
     /**
@@ -201,6 +246,75 @@ public class Vocabulary {
         }
     }
 
+    public void exportVocabularyToFile(JSONObject vocToExport, File FileName)
+    {
+        String output = vocToExport.toString();
+        System.out.println(output);
+        file_ = FileName;
+        if (!file_.exists()) {
+            try {
+                file_.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try{
+
+            FileOutputStream fos1 = new FileOutputStream(file_);
+            fos1.write(output.getBytes());
+            fos1.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        //return 0;
+    }
+
+    public void importVocabularyTFromFile(File FileName)
+    {
+         String readString = null;
+        try {
+            FileInputStream is = new FileInputStream(FileName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            readString = new String(buffer, "UTF-8");
+
+
+            JSONObject myImportedVoc = new JSONObject(readString);
+
+            if(findByName(myImportedVoc.get("german").toString()) > 0)
+            {
+                // Vocabulary found -> do not insert again
+                // ToDo: put popup here
+
+                return ;
+            }
+            else
+            {
+                // Vocabulary not found -> Call Add Method
+                add(myImportedVoc.get("german").toString(), myImportedVoc.get("english").toString());
+            }
+
+
+
+
+        } catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (JSONException e1)
+        {
+            e1.printStackTrace();
+        }
+
+        return;
+    }
+
     /**
      * Reads content (Json) from file
      * @return returnString
@@ -247,7 +361,7 @@ public class Vocabulary {
             }
         }
         try{
-            FileOutputStream fos = context_.openFileOutput(filename, Context.MODE_PRIVATE);
+            FileOutputStream fos = context_.openFileOutput(filename_, Context.MODE_PRIVATE);
             fos.write(output.getBytes());
             fos.close();
         } catch (FileNotFoundException e) {
@@ -275,6 +389,21 @@ public class Vocabulary {
         init();
         return true;
     }
+
+    public File getFileByName(String filename) {
+
+        filename_ = filename;
+
+        //check if file exists
+        file_ = new File(context_.getFilesDir(), filename_);
+        if (!file_.exists()) {
+            return null;
+        }
+
+        //init();
+        return file_;
+    }
+
 
     public void deleteVocab() {
         File deleteFile = new File(context_.getFilesDir(), filename_);

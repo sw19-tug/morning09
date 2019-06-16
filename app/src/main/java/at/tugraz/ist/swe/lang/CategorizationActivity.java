@@ -127,11 +127,9 @@ public class CategorizationActivity extends AppCompatActivity {
     }
 
     public void filterTags(String choice) {
-        System.out.println("TODO TODO TODO sort by tag: " + choice);
-        System.out.println("TODO TODO TODO sort by tag: " + choice);
-        System.out.println("TODO TODO TODO sort by tag: " + choice);
         // needs tag implementation first, shifting to new issue
         JSONArray jsonArray = vocabulary.getVocabArray();
+        ArrayList<String> filteredWordArray = new ArrayList<String>();
         for (int i = 0; i < jsonArray.length(); i++) {
 
             try {
@@ -143,30 +141,28 @@ public class CategorizationActivity extends AppCompatActivity {
                 } else {
                     System.out.println("iterate tags for this word.");
                     JSONArray tagsFromFile = currWord.getJSONArray("tags");
-                    ArrayList<String> filteredWordArray = new ArrayList<String>();
 
-                    // TODO Iterate the tags in current word.
+                    // Iterate the tags in current word.
                     for(int j=0; j < tagsFromFile.length();j++){
                         System.out.println(tagsFromFile.getString(j));
 
                         if (choice.equals(tagsFromFile.getString(j))) {
                             System.out.println("currWord contains this Tag");
-                            System.out.println("currWord = " + currWord.get("german"));
+                            System.out.println("currWord " + currWord.get("german") + " gets added to new list.");
 
-                            // TODO update list view...
                             String entry = currWord.getString("english") + " : " + currWord.getString("german");
+                            // Add word to new filtered List.
                             filteredWordArray.add(entry);
-                            ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(CategorizationActivity.this, android.R.layout.simple_list_item_1, filteredWordArray);
-                            lvVocabulary.setAdapter(adapter1);
                         }
 
                     }
-
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(CategorizationActivity.this, android.R.layout.simple_list_item_1, filteredWordArray);
+        lvVocabulary.setAdapter(adapter1);
     }
 
     public void updateLanguages() {
@@ -184,7 +180,7 @@ public class CategorizationActivity extends AppCompatActivity {
 
         JSONArray jsonArray = vocabulary.getVocabArray();
 
-        // TODO Iterate the words in vocabulary.
+        // Iterate the words in vocabulary.
         ArrayList<String> tagsArray = new ArrayList<String>();
         for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -198,7 +194,7 @@ public class CategorizationActivity extends AppCompatActivity {
                     System.out.println("iterate tags for this word.");
                     JSONArray tagsFromFile = currWord.getJSONArray("tags");
 
-                    // TODO Iterate the tags in current word.
+                    // Iterate the tags in current word.
                     for(int j=0; j < tagsFromFile.length();j++){
                         System.out.println(tagsFromFile.getString(j));
                         if (!tagsArray.contains(tagsFromFile.getString(j))) {
@@ -211,10 +207,9 @@ public class CategorizationActivity extends AppCompatActivity {
             }
         }
 
-        // TODO Iterte over tagsArray and fill the dropdwon.
+        // Iterte over tagsArray and fill the dropdwon.
         if (tagsArray.isEmpty()) {
             tagList.add("Select Tag");
-            // TODO show popup?
         } else {
             tagList.add("Select Tag");
             for (int i=0; i < tagsArray.size(); i++) {

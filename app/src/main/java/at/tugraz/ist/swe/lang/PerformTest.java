@@ -51,6 +51,7 @@ public class PerformTest extends AppCompatActivity {
                     Toast.makeText(PerformTest.this, "You are a boss!", Toast.LENGTH_LONG).show();
                     counter++;
                     myScore++;
+                    testedWord.getText().clear();
 
                     if (counter == wordArray.size()) {
                         youWin();
@@ -62,7 +63,8 @@ public class PerformTest extends AppCompatActivity {
 
                 }
                 else {
-                    Toast.makeText(PerformTest.this, "Error!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PerformTest.this, "WRONG, TRY AGAIN!!", Toast.LENGTH_LONG).show();
+                    testedWord.getText().clear();
                 }
             }
         });

@@ -90,7 +90,8 @@ public class HelpActivity extends AppCompatActivity {
         alertDialogBuilder
                 .setMessage("To add a word, you tap on Add a word, enter the german and english Word in the respective text fields and click Add word \n" +
                         "Or you can tap on import a word and select the file a friend sent you\n" +
-                        "You can also tap on an indevidual Word in the list to rate it.")
+                        "You can also tap on an indevidual Word in the list to rate it.\n\n" +
+                        "To Delete a Word, tap on it and tap on the \"X\" next to Delete a Word to do so.")
                 .setCancelable(false)
                 .setPositiveButton("Ok",
                         new DialogInterface.OnClickListener() {
@@ -110,7 +111,7 @@ public class HelpActivity extends AppCompatActivity {
     public void translatehelp() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HelpActivity.this);
         alertDialogBuilder
-                .setMessage("A list is populated by the Words you enterd and you can select the words you want the words to appear in. If you tap on a word, you can see it\'s translation to the other language. ")
+                .setMessage("A list is populated by the Words you entered and you can select the language you want the words to appear in. If you tap on a word, you can see it\'s translation to the other language. ")
                 .setCancelable(false)
                 .setPositiveButton("Ok",
                         new DialogInterface.OnClickListener() {

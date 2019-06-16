@@ -11,7 +11,6 @@ import android.widget.Button;
 public class HelpActivity extends AppCompatActivity {
 
     Button addHelp;
-    Button deleteHelp;
     Button translateHelp;
     Button simpleHelp;
     Button advancedHelp;
@@ -33,13 +32,6 @@ public class HelpActivity extends AppCompatActivity {
             }
         });
 
-        deleteHelp = findViewById(R.id.DeleteHelp);
-        deleteHelp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteHelp();
-            }
-        });
 
 
         translateHelp = findViewById(R.id.TranslateHelp);
@@ -99,7 +91,8 @@ public class HelpActivity extends AppCompatActivity {
         alertDialogBuilder
                 .setMessage("To add a word, you tap on Add a word, enter the german and english Word in the respective text fields and click Add word \n" +
                         "Or you can tap on import a word and select the file a friend sent you\n" +
-                        "You can also tap on an indevidual Word in the list to rate it.")
+                        "You can also tap on an indevidual Word in the list to rate it.\n\n" +
+                        "To Delete a Word, tap on it and tap on the \"X\" next to Delete a Word to do so.")
                 .setCancelable(false)
                 .setPositiveButton("Ok",
                         new DialogInterface.OnClickListener() {
@@ -119,7 +112,7 @@ public class HelpActivity extends AppCompatActivity {
     public void translatehelp() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HelpActivity.this);
         alertDialogBuilder
-                .setMessage("A list is populated by the Words you enterd and you can select the words you want the words to appear in. If you tap on a word, you can see it\'s translation to the other language. ")
+                .setMessage("A list is populated by the Words you entered and you can select the language you want the words to appear in. If you tap on a word, you can see it\'s translation to the other language. ")
                 .setCancelable(false)
                 .setPositiveButton("Ok",
                         new DialogInterface.OnClickListener() {
@@ -219,25 +212,7 @@ public class HelpActivity extends AppCompatActivity {
     }
 
 
-    public void deleteHelp() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HelpActivity.this);
-        alertDialogBuilder
-                .setMessage("To delete a Word go to Add a Word and tap on the Word you want to delete. Then Tap on the \"X\" next to \"Delete a Word\"")
-                .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                                startActivity(new Intent(getApplicationContext(),HelpActivity.class));
-                                finish();
-
-                            }
-                        });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
 
     public void ImportExportHelp() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HelpActivity.this);

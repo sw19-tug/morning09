@@ -35,14 +35,14 @@ public class ImportActivity extends AppCompatActivity {
     Vocabulary vocabulary;
     TextView filePath;
     Button goBack;
-    Button selectFile;
+//    Button selectFile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import);
         filePath =(TextView) findViewById(R.id.filePath);
         goBack =(Button) findViewById(R.id.goToMain);
-        selectFile = (Button) findViewById(R.id.selectFile);
+//        selectFile = (Button) findViewById(R.id.selectFile);
 
         vocabulary = new Vocabulary(getApplicationContext());
         vocabulary.init();
@@ -54,12 +54,12 @@ public class ImportActivity extends AppCompatActivity {
             }
         });
 
-        selectFile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFileChooser();
-            }
-        });
+//        selectFile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showFileChooser();
+//            }
+//        });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             // start runtime permission

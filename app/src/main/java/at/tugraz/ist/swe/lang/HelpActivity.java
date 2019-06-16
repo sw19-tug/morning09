@@ -33,7 +33,6 @@ public class HelpActivity extends AppCompatActivity {
         });
 
 
-
         translateHelp = findViewById(R.id.TranslateHelp);
         translateHelp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,9 +209,6 @@ public class HelpActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
-
-
 
     public void ImportExportHelp() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HelpActivity.this);

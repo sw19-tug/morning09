@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -49,7 +50,7 @@ import static android.icu.lang.UCharacter.toLowerCase;
 
 public class CategorizationActivity extends AppCompatActivity {
 
-    Button btnAlphabeticSort;
+    Button btnAlphabeticSort, btnReset;
     Spinner spLanguageSort, spTagSort;
     Vocabulary vocabulary;
     ListView lvVocabulary;
@@ -63,13 +64,12 @@ public class CategorizationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categorization);
 
+        btnAlphabeticSort = (Button)findViewById(R.id.btnAlphabeticSort);
+        btnReset = (Button)findViewById(R.id.btnReset);
+        spLanguageSort = (Spinner)findViewById(R.id.spLanguageSort);
+        spTagSort = (Spinner)findViewById(R.id.spTagSort);
+        lvVocabulary = (ListView)findViewById(R.id.lvVocabulary);
 
-
-
-        btnAlphabeticSort = (Button) findViewById(R.id.btnAlphabeticSort);
-        spLanguageSort = (Spinner) findViewById(R.id.spLanguageSort);
-        spTagSort = (Spinner) findViewById(R.id.spTagSort);
-        lvVocabulary = (ListView) findViewById(R.id.lvVocabulary);
         vocabulary = new Vocabulary(getApplicationContext());
         vocabulary.init();
         vocabArray = vocabulary.getVocabArray();
@@ -78,13 +78,35 @@ public class CategorizationActivity extends AppCompatActivity {
         updateLanguages();
         updateTags();
         updateVocabulary();
+
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spLanguageSort.setSelection(0);
+                spTagSort.setSelection(0);
+                updateVocabulary();
+            }
+        });
+
         btnAlphabeticSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ("Select language".compareTo(spLanguageSort.getSelectedItem().toString()) != 0) {
+
+                if (("Select language".compareTo(spLanguageSort.getSelectedItem().toString()) !=0 ) &&
+                        ("Select Tag".compareTo(spTagSort.getSelectedItem().toString()) == 0)){
                     sortAlphabet(spLanguageSort.getSelectedItem().toString());
+                }
+                else if(("Select language".compareTo(spLanguageSort.getSelectedItem().toString()) != 0 ) &&
+                        ("Select Tag".compareTo(spTagSort.getSelectedItem().toString()) != 0)) {
+                    filterTags(spTagSort.getSelectedItem().toString());
+                    sortAlphabet(spLanguageSort.getSelectedItem().toString());
+                }
+                else if(("Select language".compareTo(spLanguageSort.getSelectedItem().toString()) == 0 ) &&
+                        ("Select Tag".compareTo(spTagSort.getSelectedItem().toString()) != 0)) {
+                    filterTags(spTagSort.getSelectedItem().toString());
+
                 } else {
-                    Toast.makeText(getBaseContext(), "NO LANGUAGE SELECTED", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "No language or tag selected!", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -134,8 +156,43 @@ public class CategorizationActivity extends AppCompatActivity {
 
     }
 
-    public void filterTags() {
+    public void filterTags(String choice) {
         // needs tag implementation first, shifting to new issue
+        JSONArray jsonArray = vocabulary.getVocabArray();
+        ArrayList<String> filteredWordArray = new ArrayList<String>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+
+            try {
+                JSONObject currWord = jsonArray.getJSONObject(i);
+
+                if (!currWord.has("tags")) {
+                    JSONArray tmpArray = new JSONArray();
+                    currWord.put("tags", tmpArray);
+                } else {
+                    System.out.println("iterate tags for this word.");
+                    JSONArray tagsFromFile = currWord.getJSONArray("tags");
+
+                    // Iterate the tags in current word.
+                    for(int j=0; j < tagsFromFile.length();j++){
+                        System.out.println(tagsFromFile.getString(j));
+
+                        if (choice.equals(tagsFromFile.getString(j))) {
+                            System.out.println("currWord contains this Tag");
+                            System.out.println("currWord " + currWord.get("german") + " gets added to new list.");
+
+                            String entry = currWord.getString("english") + " : " + currWord.getString("german");
+                            // Add word to new filtered List.
+                            filteredWordArray.add(entry);
+                        }
+
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(CategorizationActivity.this, android.R.layout.simple_list_item_1, filteredWordArray);
+        lvVocabulary.setAdapter(adapter1);
     }
 
     public void updateLanguages() {
@@ -150,12 +207,49 @@ public class CategorizationActivity extends AppCompatActivity {
 
     public void updateTags() {
 
-        tagList.add("Select Tag");
-        tagList.add("Fruit");
-        tagList.add("Hardcore");
+
+        JSONArray jsonArray = vocabulary.getVocabArray();
+
+        // Iterate the words in vocabulary.
+        ArrayList<String> tagsArray = new ArrayList<String>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+
+            try {
+                JSONObject currWord = jsonArray.getJSONObject(i);
+
+                if (!currWord.has("tags")) {
+                    JSONArray tmpArray = new JSONArray();
+                    currWord.put("tags", tmpArray);
+                } else {
+                    System.out.println("iterate tags for this word.");
+                    JSONArray tagsFromFile = currWord.getJSONArray("tags");
+
+                    // Iterate the tags in current word.
+                    for(int j=0; j < tagsFromFile.length();j++){
+                        System.out.println(tagsFromFile.getString(j));
+                        if (!tagsArray.contains(tagsFromFile.getString(j))) {
+                            tagsArray.add(tagsFromFile.getString(j));
+                        }
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Iterte over tagsArray and fill the dropdwon.
+        if (tagsArray.isEmpty()) {
+            tagList.add("Select Tag");
+        } else {
+            tagList.add("Select Tag");
+            for (int i=0; i < tagsArray.size(); i++) {
+                System.out.println("Add " + tagsArray.get(i) + " tag to dropdown list.");
+                tagList.add(tagsArray.get(i));
+            }
+        }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(CategorizationActivity.this, android.R.layout.simple_dropdown_item_1line, tagList);
         spTagSort.setAdapter(adapter);
-
     }
 
     public void updateVocabulary() {

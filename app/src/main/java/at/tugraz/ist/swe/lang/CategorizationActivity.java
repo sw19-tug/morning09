@@ -23,7 +23,7 @@ import static android.icu.lang.UCharacter.toLowerCase;
 
 public class CategorizationActivity extends AppCompatActivity {
 
-    Button btnAlphabeticSort;
+    Button btnAlphabeticSort, btnReset;
     Spinner spLanguageSort, spTagSort;
     Vocabulary vocabulary;
     ListView lvVocabulary;
@@ -37,6 +37,7 @@ public class CategorizationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_categorization);
 
         btnAlphabeticSort = (Button)findViewById(R.id.btnAlphabeticSort);
+        btnReset = (Button)findViewById(R.id.btnReset);
         spLanguageSort = (Spinner)findViewById(R.id.spLanguageSort);
         spTagSort = (Spinner)findViewById(R.id.spTagSort);
         lvVocabulary = (ListView)findViewById(R.id.lvVocabulary);
@@ -47,21 +48,36 @@ public class CategorizationActivity extends AppCompatActivity {
         updateLanguages();
         updateTags();
         updateVocabulary();
+
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spLanguageSort.setSelection(0);
+                spTagSort.setSelection(0);
+                updateVocabulary();
+            }
+        });
+
         btnAlphabeticSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ("Select language".compareTo(spLanguageSort.getSelectedItem().toString()) !=0){
+                if (("Select language".compareTo(spLanguageSort.getSelectedItem().toString()) !=0 ) &&
+                        ("Select Tag".compareTo(spTagSort.getSelectedItem().toString()) == 0)){
                     sortAlphabet(spLanguageSort.getSelectedItem().toString());
                 }
-                else
-                {
-                    if ("Select Tag".compareTo(spTagSort.getSelectedItem().toString()) !=0) {
-                        // TODO implement sorting!
-                        filterTags(spTagSort.getSelectedItem().toString());
-                    } else {
-                        Toast.makeText(getBaseContext(), "No language or tag selected!", Toast.LENGTH_LONG).show();
-                    }
+                else if(("Select language".compareTo(spLanguageSort.getSelectedItem().toString()) != 0 ) &&
+                        ("Select Tag".compareTo(spTagSort.getSelectedItem().toString()) != 0)) {
+                    filterTags(spTagSort.getSelectedItem().toString());
+                    sortAlphabet(spLanguageSort.getSelectedItem().toString());
                 }
+                else if(("Select language".compareTo(spLanguageSort.getSelectedItem().toString()) == 0 ) &&
+                        ("Select Tag".compareTo(spTagSort.getSelectedItem().toString()) != 0)) {
+                    filterTags(spTagSort.getSelectedItem().toString());
+
+                } else {
+                Toast.makeText(getBaseContext(), "No language or tag selected!", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }
@@ -127,6 +143,7 @@ public class CategorizationActivity extends AppCompatActivity {
                 } else {
                     System.out.println("iterate tags for this word.");
                     JSONArray tagsFromFile = currWord.getJSONArray("tags");
+                    ArrayList<String> filteredWordArray = new ArrayList<String>();
 
                     // TODO Iterate the tags in current word.
                     for(int j=0; j < tagsFromFile.length();j++){
@@ -137,11 +154,14 @@ public class CategorizationActivity extends AppCompatActivity {
                             System.out.println("currWord = " + currWord.get("german"));
 
                             // TODO update list view...
-                            //ArrayList<String> wordArray = new ArrayList<String>();
-                            //wordArray.add(entry);
-                            //lvVocabulary.setAdapter(adapter);
+                            String entry = currWord.getString("english") + " : " + currWord.getString("german");
+                            filteredWordArray.add(entry);
+                            ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(CategorizationActivity.this, android.R.layout.simple_list_item_1, filteredWordArray);
+                            lvVocabulary.setAdapter(adapter1);
                         }
+
                     }
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

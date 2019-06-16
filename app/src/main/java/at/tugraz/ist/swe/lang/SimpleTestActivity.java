@@ -81,7 +81,7 @@ public class SimpleTestActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(),"Invalid answer",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"WRONG, TRY AGAIN!!!",Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -11,6 +11,7 @@ import android.widget.Button;
 public class HelpActivity extends AppCompatActivity {
 
     Button addHelp;
+    Button deleteHelp;
     Button translateHelp;
     Button simpleHelp;
     Button advancedHelp;
@@ -29,6 +30,14 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addHelp();
+            }
+        });
+
+        deleteHelp = findViewById(R.id.DeleteHelp);
+        deleteHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteHelp();
             }
         });
 
@@ -193,6 +202,27 @@ public class HelpActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HelpActivity.this);
         alertDialogBuilder
                 .setMessage("You can save your entire Vocabulary as a backup and revert to one from an earlier state and the ability to manage your backups is also available")
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                startActivity(new Intent(getApplicationContext(),HelpActivity.class));
+                                finish();
+
+                            }
+                        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+
+    public void deleteHelp() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HelpActivity.this);
+        alertDialogBuilder
+                .setMessage("To delete a Word go to Add a Word and tap on the Word you want to delete. Then Tap on the \"X\" next to \"Delete a Word\"")
                 .setCancelable(false)
                 .setPositiveButton("Ok",
                         new DialogInterface.OnClickListener() {

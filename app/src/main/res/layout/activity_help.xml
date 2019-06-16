@@ -16,12 +16,22 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
+    <Button
+        android:id="@+id/DeleteHelp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="87dp"
+        android:background="@drawable/button"
+        android:text="Help to delete a word"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="28dp" />
+
 
     <Button
         android:id="@+id/TranslateHelp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="87dp"
+        android:layout_marginTop="158dp"
         android:background="@drawable/button"
         android:text="Help with tranlations"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,7 +41,7 @@
         android:id="@+id/SimpleHelp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="158dp"
+        android:layout_marginTop="230dp"
         android:background="@drawable/button"
         android:text="Help with Simple Tests"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,7 +51,7 @@
         android:id="@+id/AdvancedHelp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="229dp"
+        android:layout_marginTop="302dp"
         android:background="@drawable/button"
         android:text="Help with advanced Tests"
         app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +61,7 @@
         android:id="@+id/CategoryHelp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="370dp"
         android:background="@drawable/button"
         android:text="Help with Categories"
         app:layout_constraintTop_toTopOf="parent"
@@ -61,16 +71,17 @@
         android:id="@+id/SettingHelp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="371dp"
+        android:layout_marginTop="442dp"
         android:background="@drawable/button"
         android:text="Help with Settings"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
+
     <Button
         android:id="@+id/ImportExportHelp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="442dp"
+        android:layout_marginTop="518dp"
         android:background="@drawable/button"
         android:text="Help with Import/Export"
         app:layout_constraintTop_toTopOf="parent"

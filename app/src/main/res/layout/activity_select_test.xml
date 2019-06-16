@@ -34,14 +34,10 @@
 
     <Button
         android:id="@+id/btnTakeTest"
-        android:layout_width="209dp"
+        android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:layout_marginStart="101dp"
-        android:layout_marginEnd="101dp"
         android:layout_marginBottom="37dp"
-        android:text="Take Test"
         android:background="@drawable/button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Take Test"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </android.support.constraint.ConstraintLayout>

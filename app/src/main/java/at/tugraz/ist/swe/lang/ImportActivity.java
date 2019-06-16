@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class ImportActivity extends AppCompatActivity {
     private int request_code =1, FILE_SELECT_CODE =101;
 
-    private String TAG ="mainactivty";
+    private String TAG ="main_activty";
     public String  actualfilepath="";
     Vocabulary vocabulary;
     TextView filePath;

@@ -63,7 +63,7 @@ public class PerformTest extends AppCompatActivity {
 
                 }
                 else {
-                    Toast.makeText(PerformTest.this, "WRONG!!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PerformTest.this, "WRONG, TRY AGAIN!!", Toast.LENGTH_LONG).show();
                     testedWord.getText().clear();
                 }
             }

@@ -287,13 +287,13 @@ public class CategorizationActivity extends AppCompatActivity {
                         }else {
                             writeToFile(exportString);
                         }
-                        File exportFile = new File("/storage/emulated/0/Download/export_vocabulary.json");
+                        File exportFile = new File("/storage/emulated/0/Download/exportedWord.json");
                         vocabulary.exportVocabularyToFile(export, exportFile);
                         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                         sharingIntent.setType("text/*");
 
                         sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + exportFile.getAbsolutePath()));
-                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "You've got a Word and it is "+ Value);
+                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "You've got a Word and it is: "+ Value);
                         sharingIntent.putExtra(Intent.EXTRA_TEXT, "A friend would like you too, to be able to intoxicate society with the exuberance of your verbosity. \n This tremendous ne Word is \n \n: "+Value + "\n \n");
                        sharingIntent.putExtra(Intent.EXTRA_TEXT, "To import this word, save the attached file on your Device\n" +
                                "Go to \"Add a Word\" \n Then \"Import a Word from File\"\n" +
@@ -351,7 +351,7 @@ public class CategorizationActivity extends AppCompatActivity {
 
     protected void requestPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            Toast.makeText(this, "Write External Storage permission allows us to do store files. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Storage permission are not granted, please enable that in settings.", Toast.LENGTH_LONG).show();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
             }

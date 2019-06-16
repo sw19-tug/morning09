@@ -26,12 +26,14 @@ public class CategorizationActivityEspressoTest {
     @Rule
     public ActivityTestRule<CategorizationActivity> CategorizationActivityTestRule = new ActivityTestRule<>(CategorizationActivity.class);
 
-    String toast = "No language selected!";
+    String toast = "No language or tag selected!";
 
     @Test
     public void testElementsVisible() {
         onView(withId(R.id.btnAlphabeticSort)).check(matches(isDisplayed()));
         onView(withId(R.id.btnAlphabeticSort)).check(matches(withText("Sort")));
+        onView(withId(R.id.btnReset)).check(matches(isDisplayed()));
+        onView(withId(R.id.btnReset)).check(matches(withText("reset filter")));
         onView(withId(R.id.spLanguageSort)).check(matches(isDisplayed()));
         onView(withId(R.id.spTagSort)).check(matches(isDisplayed()));
         onView(withId(R.id.lvVocabulary)).check(matches(isDisplayed()));

@@ -15,6 +15,8 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="24sp"
         app:layout_constraintBaseline_creator="@android:integer/config_shortAnimTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,6 +30,8 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewEn" />
@@ -48,34 +52,47 @@
         android:id="@+id/ptNewTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:autofillHints=""
         android:ems="10"
+        android:hint="Enter a tag"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lvTags" />
 
+
+    <!--android:id="@+id/btnAddTag"-->
+
     <Button
         android:id="@+id/btnAddTag"
-        android:layout_width="wrap_content"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="ADD"
+        android:layout_marginTop="508dp"
         android:background="@drawable/button"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Add"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ptNewTag" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnRatingSubmit"
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="508dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/button"
+        android:text="Submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ListView
         android:id="@+id/lvTags"
         android:layout_width="395dp"
         android:layout_height="114dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="120dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -89,18 +106,9 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp" />
 
-    <Button
-        android:id="@+id/btnRatingSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Submit"
-        android:background="@drawable/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddTag" />
+
+    <!--android:id="@+id/btnRatingSubmit"-->
+
 
     <TextView
         android:id="@+id/tvHint"
@@ -110,13 +118,15 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:paddingStart="20dp"
         android:text="Tap Tag to delete it"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/lvTags"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ratingBar"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.827" />
 
     <ImageButton
         android:id="@+id/btnDeleteWord"
@@ -125,29 +135,30 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/buttonlight"
+        android:tint="#ffffff"
         app:layout_constraintBottom_toTopOf="@+id/lvTags"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.339"
         app:layout_constraintStart_toEndOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/ratingBar"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:drawable/ic_delete" />
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/delete" />
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="205dp"
+        android:layout_height="18dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:text="Delete Word"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tvHint"
-        app:layout_constraintEnd_toStartOf="@+id/btnDeleteWord"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:paddingStart="20dp"
+        android:text="Delete the Word"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/lvTags"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ratingBar"
-        app:layout_constraintVertical_bias="0.205" />
+        app:layout_constraintVertical_bias="0.395" />
+
 
 </android.support.constraint.ConstraintLayout>

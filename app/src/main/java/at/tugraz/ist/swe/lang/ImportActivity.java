@@ -34,21 +34,30 @@ public class ImportActivity extends AppCompatActivity {
     public String  actualfilepath="";
     Vocabulary vocabulary;
     TextView filePath;
-    Button goToMain;
+    Button goBack;
+    Button selectFile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import);
         filePath =(TextView) findViewById(R.id.filePath);
-        goToMain =(Button) findViewById(R.id.goToMain);
+        goBack =(Button) findViewById(R.id.goToMain);
+        selectFile = (Button) findViewById(R.id.selectFile);
 
         vocabulary = new Vocabulary(getApplicationContext());
         vocabulary.init();
 
-        goToMain.setOnClickListener(new View.OnClickListener() {
+        goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMainActivity();
+                openAddWords();
+            }
+        });
+
+        selectFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFileChooser();
             }
         });
 
@@ -57,7 +66,7 @@ public class ImportActivity extends AppCompatActivity {
             Boolean hasPermission =( ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED);
             if (!hasPermission){
-                Toast.makeText(getBaseContext(), "Please grant the possitions", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Please grant the permissions", Toast.LENGTH_LONG).show();
                 ActivityCompat.requestPermissions( this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, request_code);
             }else {
                 showFileChooser();
@@ -95,7 +104,7 @@ public class ImportActivity extends AppCompatActivity {
     // Source: https://www.blueappsoftware.com/how-to-read-text-file-in-android-tutorial/ hereafter
 
 
-    // TODO: 2019-06-05 clean up this section and Get source
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -121,13 +130,6 @@ public class ImportActivity extends AppCompatActivity {
                         String type = split[0];
                         id = split[1];
                         Uri contenturi = null;
-                        if (type.equals("image")){
-                            contenturi = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                        }else if (type.equals("video")){
-                            contenturi = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                        }else if (type.equals("audio")){
-                            contenturi = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                        }
                         String selector = "_id=?";
                         actualfilepath = getFileData( contenturi, selector, new String[]{id}  );
                     } else if (fileUri.getAuthority().equals("com.android.providers.downloads.documents")){
@@ -142,7 +144,7 @@ public class ImportActivity extends AppCompatActivity {
                         String[] split = tempID.split(":");
                         String type = split[0];
                         id = split[1];
-                        //Uri contenturi = null;
+
                         if (type.equals("primary")){
                             actualfilepath=  Environment.getExternalStorageDirectory()+"/"+id;
                         }
@@ -155,12 +157,10 @@ public class ImportActivity extends AppCompatActivity {
                     }
                     if ( actualfilepath.equals("") || actualfilepath.equals(" ")) {
                         fileToImport = new File(tempPath);
-                    }else {
-                        // fileToImport = new File("file://"+actualfilepath);
                     }
 
 
-                    // TODO: 2019-06-04
+
                     vocabulary.importVocabularyTFromFile(fileToImport);
                     vocabulary.storeFile();
 
@@ -173,7 +173,7 @@ public class ImportActivity extends AppCompatActivity {
         }
     }
 
-    // TODO: 2019-06-05 Get source
+
 
     public String getFileData( Uri uri, String selection, String[] selectarg){
         String filepath ="";
@@ -190,7 +190,7 @@ public class ImportActivity extends AppCompatActivity {
         return  filepath;
     }
 
-    public void openMainActivity() {
+    public void openAddWords() {
         Intent intent = new Intent(this, AddWordsActivity.class);
         startActivity(intent);
     }

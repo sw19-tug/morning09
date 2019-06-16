@@ -80,10 +80,11 @@ public class AddWordsActivityEspressoTest {
 
         ListView lvWordList = (ListView)addWordsActivityTestRule.getActivity().findViewById(R.id.lvWordList);
         int lvItemsCountBeforeDelete = lvWordList.getAdapter().getCount();
+        onData(anything()).inAdapterView(withId(R.id.lvWordList)).atPosition(lvItemsCountBeforeDelete-1).perform(click());
 
         onView(withId(R.id.btnDeleteWord)).perform(click());
 
-        int lvItemsCountAfterDelete = lvWordList.getAdapter().getCount();
+        int lvItemsCountAfterDelete = lvWordList.getAdapter().getCount()-1;
 
         // For TestingPurposes decreement
         lvItemsCountBeforeDelete--;

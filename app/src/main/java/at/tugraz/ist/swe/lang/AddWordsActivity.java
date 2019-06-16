@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -76,6 +77,7 @@ public class AddWordsActivity extends AppCompatActivity {
 
     public void updateListView() {
         try{
+
             JSONArray jsonArray = vocabulary.getVocabArray();
             ArrayList<String> wordArray = new ArrayList<String>();
 
@@ -85,6 +87,7 @@ public class AddWordsActivity extends AppCompatActivity {
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddWordsActivity.this, android.R.layout.simple_list_item_1, wordArray);
             lvWordList.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
             lvWordList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -112,7 +115,7 @@ public class AddWordsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rating);
 
         TextView textViewEn = (TextView)findViewById(R.id.textViewEn);
-        TextView textViewDe = (TextView)findViewById(R.id.textViewDe);
+        final TextView textViewDe = (TextView)findViewById(R.id.textViewDe);
 
         try {
             System.out.println("Position Clicked is:");
@@ -171,6 +174,17 @@ public class AddWordsActivity extends AppCompatActivity {
 
                     // Update listview.
                     adapter.notifyDataSetChanged();
+                }
+            });
+
+            ImageButton btnDeleteWords = (ImageButton)findViewById(R.id.btnDeleteWord);
+            btnDeleteWords.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println(textViewDe.getText().toString());
+                    vocabulary.removeByName(textViewDe.getText().toString());
+                    vocabulary.storeFile();
+                    finish();
                 }
             });
 

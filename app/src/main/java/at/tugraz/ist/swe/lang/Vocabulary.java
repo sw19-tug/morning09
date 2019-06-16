@@ -206,7 +206,7 @@ public class Vocabulary {
         int i = -1;
 
         try {
-            for(i=0; i < vocabArray_.length();i++){
+            for(i=0; i < vocabArray_.length(); i++){
                 JSONObject entry = vocabArray_.getJSONObject(i);
 
                 if(entry.getString("german") == vocabularyName)

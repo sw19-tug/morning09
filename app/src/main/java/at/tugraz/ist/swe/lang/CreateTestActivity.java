@@ -19,34 +19,45 @@ import java.util.ArrayList;
 
 public class CreateTestActivity extends AppCompatActivity {
 
+    private ListView vocabList;
     private TextView name_of_test;
     private Button saveTest;
-    private ListView vocabList;
     Vocabulary vocabulary;
-    JSONArray vocabArray = new JSONArray();
+    Test test;
+    int total_items;
+    private static String title_ = "TITLE:";
+    private String[] words;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_create);
 
         name_of_test = (EditText)findViewById(R.id.test_name);
         saveTest = findViewById(R.id.saveTest_btn);
         vocabList = (ListView)findViewById(R.id.vocabList);
+
         vocabulary = new Vocabulary(getApplicationContext());
         vocabulary.init();
-        vocabArray = vocabulary.getVocabArray();
+        test = new Test(getApplicationContext());
+        test.init();
 
         try {
             JSONArray jsonArray = vocabulary.getVocabArray();
             ArrayList<String> wordArray = new ArrayList<String>();
 
             for (int i = 0; i < jsonArray.length(); i++) {
-                String entry = jsonArray.getJSONObject(i).getString("english") + " : " + jsonArray.getJSONObject(i).getString("german");
+                String entry = jsonArray.getJSONObject(i).getString("english") + " : " +
+                                            jsonArray.getJSONObject(i).getString("german");
                 wordArray.add(entry);
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(CreateTestActivity.this, android.R.layout.simple_list_item_multiple_choice, wordArray);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(CreateTestActivity.this,
+                                android.R.layout.simple_list_item_multiple_choice, wordArray);
+
             vocabList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             vocabList.setAdapter(adapter);
+            total_items = vocabList.getAdapter().getCount();
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -56,32 +67,40 @@ public class CreateTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String selected = "";
-                int cntChoice = vocabList.getCount();
+                int j = 0;
 
                 if (name_of_test.getText().length() == 0)
                 {
                     Toast.makeText(getBaseContext(), "Empty name!", Toast.LENGTH_LONG).show();
                 }
-                else if (cntChoice == 1)
-                {
-                    Toast.makeText(getBaseContext(), "Choose at least one word!", Toast.LENGTH_LONG).show();
-                }
                 else {
+                    String title = name_of_test.getText().toString();
+                    test.add(title_, title);
 
                     SparseBooleanArray sparseBooleanArray = vocabList.getCheckedItemPositions();
 
-                    for (int i = 0; i < cntChoice; i++) {
+                    for (int i = 0; i < total_items; i++) {
 
                         if (sparseBooleanArray.get(i)) {
 
-                            selected += vocabList.getItemAtPosition(i).toString() + "\n";
+                            words = vocabList.getItemAtPosition(i).toString().split(" : ");
+                            test.add(words[0], words[1]);
+                            j++;
+
                         }
                     }
-                    Toast.makeText(CreateTestActivity.this, name_of_test.getText() +
-                            " saved!", Toast.LENGTH_LONG).show();
+                    if (j != 0) {
+                        Toast.makeText(CreateTestActivity.this, name_of_test.getText().
+                                            toString() + " saved!", Toast.LENGTH_LONG).show();
+                        test.storeFile();
+                    }
+                    else {
+                        Toast.makeText(CreateTestActivity.this, "Choose at least one " +
+                                "word!", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
     }
+
 }

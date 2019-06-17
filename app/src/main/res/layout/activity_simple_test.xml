@@ -10,26 +10,26 @@
 
     <TextView
         android:id="@+id/score"
-        android:layout_width="363dp"
+        android:layout_width="match_parent"
         android:layout_height="39dp"
-        android:layout_marginStart="23dp"
+        android:layout_marginStart="0dp"
         android:layout_marginBottom="140dp"
         android:text="SCORE"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/question"
-        android:layout_width="379dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="14dp"
+        android:layout_width="236dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="16dp"
-        android:text="QUESTION"
-        app:layout_constraintBottom_toTopOf="@+id/multiple"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:text="Translate:"
+        android:textColor="#000000"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,8 +40,21 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:drawSelectorOnTop="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/question" />
+
+    <TextView
+        android:id="@+id/tvQuestion"
+        android:layout_width="150dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

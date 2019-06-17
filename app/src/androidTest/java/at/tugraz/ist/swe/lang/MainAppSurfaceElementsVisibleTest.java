@@ -32,10 +32,28 @@ public class MainAppSurfaceElementsVisibleTest {
     public void testButtonsVisible() {
 
         onView(withId(R.id.btMainAddWords)).check(matches(isDisplayed()));
-        onView(withId(R.id.btMainAddWords)).check(matches(withText("Add Words")));
+//        onView(withId(R.id.btMainAddWords)).check(matches(withText("ADD WORD")));
+
         onView(withId(R.id.main_btn_translate)).check(matches(isDisplayed()));
-        onView(withId(R.id.main_btn_translate)).check(matches(withText("Translate Words")));
+//        onView(withId(R.id.main_btn_translate)).check(matches(withText("TRANSLATE")));
+
+        onView(withId(R.id.simpleTest_btn)).check(matches(isDisplayed()));
+//        onView(withId(R.id.simpleTest_btn)).check(matches(withText("SIMPLE TEST")));
+
+
+        onView(withId(R.id.test_btn)).check(matches(isDisplayed()));
+//        onView(withId(R.id.test_btn)).check(matches(withText("ADVANCED TEST")));
+
+        onView(withId(R.id.btnSettings)).check(matches(isDisplayed()));
+//        onView(withId(R.id.btnSettings)).check(matches(withText("SETTINGS")));
+
+        onView(withId(R.id.btnHelp)).check(matches(isDisplayed()));
+//        onView(withId(R.id.btnHelp)).check(matches(withText("HELP")));
+
         onView(withId(R.id.btnCategory)).check(matches(isDisplayed()));
-        onView(withId(R.id.btnCategory)).check(matches(withText("Show All Words")));
+//        onView(withId(R.id.btnCategory)).check(matches(withText("CATEGORIES")));
+
+        onView(withId(R.id.btnLegal)).check(matches(isDisplayed()));
+//        onView(withId(R.id.btnLegal)).check(matches(withText("LEGAL")));
     }
 }

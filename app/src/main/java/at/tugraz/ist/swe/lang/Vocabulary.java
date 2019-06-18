@@ -361,7 +361,7 @@ public class Vocabulary {
             }
         }
         try{
-            FileOutputStream fos = context_.openFileOutput(filename_, Context.MODE_PRIVATE);
+            FileOutputStream fos = context_.openFileOutput(filename, Context.MODE_PRIVATE);
             fos.write(output.getBytes());
             fos.close();
         } catch (FileNotFoundException e) {
